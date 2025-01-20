@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./pentest/prism/prism.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controles</title>
+    <!-- ===== Datatable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+
+    <!-- ===== DIST ===== -->
+    <link rel="stylesheet" href="./dist/css/menu.css">
+
+
+    <link rel="stylesheet" href="./seguridad/css/seguridad.css">
+
+    <!-- ===== Font -->
+    <link rel="stylesheet" href="./librerias/fontawesome-free-6.2.0-web/css/all.css">
+    <link rel="stylesheet" href="./librerias/fontawesome-free-6.2.0-web/css/v4-shims.css">
+    <link rel="stylesheet" href="./librerias/fontawesome-free-6.2.0-web/css/brands.css">
+
+    <!-- Bootstrap v5 CSS -->
+    <link rel="stylesheet" href="./librerias/bootstrap_5.2.3/css/bootstrap_whatch.css">
+
+    <!-- add icon  -->
+    <link rel="icon" href="./dist/img/ko.png" type="image/x-icon">
+
+    <!-- Colores  -->
+    <link rel="stylesheet" href="./pentest/prism/prism.css">
+
+    <!-- sweetAlert -->
+    <script src="./librerias/sweetalert2/sweetalert2.all.js"></script>
+    <link rel="stylesheet" href="./librerias/sweetalert2/sweetalert2.css">
+
+    <!-- Iconos Google-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <!--===== Code mirror =====-->
+    <link rel="stylesheet" href="./librerias/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" href="./librerias/codemirror/addon/display/fullscreen.css" />
+    <link rel="stylesheet" href="./librerias/codemirror/theme/rubyblue.css">
+
+    <!--  Summer sin Bootstrap -->
+    <link href="./librerias/summernote/summernote-lite.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="wrapper hover_collapse">
+        <!-- ===== Header ===== -->
+        <div class="top_navbar">
+            <div class="logo">Controles</div>
+            <div class="menu">
+                <div class="hamburger">
+                    <svg enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="20px" fill="var(--colorDark1)">
+                        <g>
+                            <rect fill="none" height="24" width="24" />
+                            <g>
+                                <path d="M2,4v16h20V4H2z M20,8.67h-2.5V6H20V8.67z M17.5,10.67H20v2.67h-2.5V10.67z M4,6h11.5v12H4V6z M17.5,18v-2.67H20V18H17.5z" />
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <li style="width: 75%">
+                </li>
+                <div class="profile_wrap">
+                    <div class="profile">
+                        <img src="./dist/img/hack.png" alt="profile_pic">
+                        <span class="name">Jim KO</span>
+                        <span class="icon">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ===== Side bar ===== -->
+        <div class="sidebar">
+            <div class="sidebar_inner">
+                <ul>
+                   
+                    
+                    <li>
+                        <a href="index.html" style="background: var(--fondoDark6); border-left: 3px solid var(--hoverDark1); border-right: 1px solid var(--hoverDark1);">
+                            <span class="icon"><i class="logo-icon p-l-10"><img src="./dist/img/control.png" style="height: 25px"></i></span>
+                            <span class="text">Controles Nube</span>
+                        </a>
+                    </li>   
+                    <li>
+                        <a href="seguridad.html">
+                            <span class="icon"><i class="logo-icon p-l-10"><img src="./dist/img/seguridad.png" style="height: 25px"></i></span>
+                            <span class="text">Seguridad Defensiva</span>
+                        </a>
+                    </li>
+
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div class="main_container" style="background: #141d2b;border: none;">
+            <div class="container-fluid" style="padding: 0px; background: #141d2b;">
+                <!-- ===== Menu A ===== -->
+
+                <div class="warpper">
+
+                    <input class="radio" id="uno" name="grupoa" type="radio" checked>
+                    <input class="radio" id="dos" name="grupoa" type="radio">
+                    <input class="radio" id="tres" name="grupoa" type="radio">
+                    <div class="tabs">
+                        <label class="tab" id="uno-tab" for="uno">Status Habilitadores</label>
+                        <label class="tab" id="dos-tab" for="dos">Plantilla Habilitadores</label>
+                        <label class="tab" id="tres-tab" for="tres">Habilitadores por Etapa</label>
+                    </div>
+                    <div class="panels">
+                        <div class="panel" id="uno-panel">
+
+                            <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                                <div class="col-6">
+                                    <div class="input-group input-group mb-1">
+                                        <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Squad</span>
+                                        <select id="squadHabi" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                            <option value="0">Seleccione un Squad ...</option>
+                                        </select>
+                                        <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Iniciativa</span>
+                                        <select id="Hab_iniciativa" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                            <option value="0">Seleccione una Iniciativa ...</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div class="input-group-sm input-group mb-1">
+
+                                        <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Editor</span>
+
+                                        <button id="agregarIniciativa" class="boton_prin ">Agregar Iniciativa</button>
+                                        <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Inprescindible</span>
+                                        <select id="habiliImpre" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                            <option value="All">All</option>
+                                            <option value="SI">SI</option>
+                                        </select>
+                                        <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Cumplimiento</span>
+                                        <select id="habiliCumpli" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                            <option value="0">Seleccione ...</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="bordeDataTaHabi">
+                                        <table id="HabilitaSquad" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Hab</th>
+                                                    <th>Nombre</th>
+                                                    <th>Estado</th>
+                                                    <th>Nota</th>
+                                                    <th>E</th>
+                                                    <th>I</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-6" style="padding: 0">
+
+
+                                    <div class="bordeGrafico">
+
+                                        <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 81.04">
+                                            <defs>
+                                                <style>
+                                                    .cls-1,
+                                                    .cls-15 {
+                                                        fill: #141d2b;
+                                                    }
+
+                                                    .cls-2 {
+                                                        fill: #1a2332;
+                                                    }
+
+                                                    .cls-3 {
+                                                        fill: #83c607;
+                                                    }
+
+                                                    .cls-8 {
+                                                        fill: #a4b1cd;
+                                                    }
+
+                                                    .cls-11 {
+                                                        fill: #83c607;
+                                                    }
+
+                                                    .cls-4 {
+                                                        font-size: 11px;
+                                                    }
+
+
+                                                    .cls-5 {
+                                                        font-size: 13px;
+                                                    }
+
+                                                    .cls-13,
+                                                    .cls-16,
+                                                    .cls-4,
+                                                    .cls-6 {
+                                                        fill: #a4b1cd;
+                                                    }
+
+                                                    .cls-16,
+                                                    .cls-4,
+                                                    .cls-5,
+                                                    .cls-6 {
+                                                        font-family: sans-serif;
+                                                    }
+
+                                                    .cls-5 {
+                                                        fill: #a4b1cd;
+                                                    }
+
+                                                    .cls-11,
+                                                    .cls-6 {
+                                                        font-size: 7px;
+                                                    }
+
+                                                    .cls-7 {
+                                                        letter-spacing: -0.06em;
+                                                    }
+
+                                                    .cls-8 {
+                                                        font-size: 6px;
+                                                    }
+
+                                                    .cls-11,
+                                                    .cls-8 {
+                                                        font-family: Arial;
+                                                        font-weight: 700;
+                                                    }
+
+                                                    .cls-9 {
+                                                        letter-spacing: -0.02em;
+                                                    }
+
+                                                    .cls-10 {
+                                                        letter-spacing: -0.09em;
+                                                    }
+
+                                                    .cls-12 {
+                                                        fill: #293b56;
+                                                    }
+
+                                                    .cls-14,
+                                                    .cls-17 {
+                                                        fill: none;
+                                                    }
+
+                                                    .cls-14,
+                                                    .cls-15,
+                                                    .cls-17 {
+                                                        stroke: #a4b1cd;
+                                                        stroke-width: 1px;
+                                                    }
+
+                                                    .cls-14,
+                                                    .cls-15 {
+                                                        stroke-width: 1px;
+                                                        stroke: #293b56;
+                                                    }
+
+                                                    .cls-16 {
+                                                        font-size: 5px;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <title>svg4</title>
+                                            <rect class="cls-1" width="490" height="80" />
+                                            <path class="cls-2" d="M464,66H396l-1-1V55l1-1h68l1,1V65Z" transform="translate(0)" />
+                                            <polygon class="cls-3" points="360.97 77 356.97 77 360.97 73 364.97 73 360.97 77" />
+                                            <path class="cls-2" d="M77,38H11L9,36V20l2-2H77l2,2V36Z" transform="translate(0)" /><text class="cls-4" transform="translate(26.2 31.72) scale(0.98 1)">Aplica</text>
+                                            <path class="cls-2" d="M108,38H88l-2-2V20l2-2h20l2,2V36Z" transform="translate(0)" />
+                                            <text id="cumpAplica" class="cls-4" transform="translate(90.5 33.11) scale(0.98 1)">-</text>
+                                            <path class="cls-2" d="M482,24H470l-1-1V13l1-1h12l1,1V23Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M464,38H396l-1-1V27l1-1h68l1,1V37Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M482,38H470l-1-1V27l1-1h12l1,1V37Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M464,52H396l-1-1V41l1-1h68l1,1V51Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M482,52H470l-1-1V41l1-1h12l1,1V51Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M482,66H470l-1-1V55l1-1h12l1,1V65Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M370,66H302l-1-1V55l1-1h68l1,1V65Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M370,24H302l-1-1V13l1-1h68l1,1V23Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M388,24H376l-1-1V13l1-1h12l1,1V23Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M370,38H302l-1-1V27l1-1h68l1,1V37Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M388,38H376l-1-1V27l1-1h12l1,1V37Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M370,52H302l-1-1V41l1-1h68l1,1V51Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M388,52H376l-1-1V41l1-1h12l1,1V51Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M388,66H376l-1-1V55l1-1h12l1,1V65Z" transform="translate(0)" /><text class="cls-6" transform="translate(306.05 21.17) scale(0.98 1)">Si Cumple</text><text class="cls-6" transform="translate(305.61 35.17) scale(0.98 1)">Cumple Parcial</text><text class="cls-6" transform="translate(305.6 50.17) scale(0.98 1)">En Proceso</text><text class="cls-6" transform="translate(398.2 35.17) scale(0.98 1)">Con Observaciones</text><text class="cls-6" transform="translate(305.12 62.17) scale(0.98 1)">Dependencia</text><text class="cls-6" transform="translate(399.18 49.17) scale(0.98 1)">Otro</text><text class="cls-6" transform="translate(399.18 62.17) scale(0.98 1)">No Cumple</text>
+                                            <path class="cls-2" d="M77,63H11L9,61V45l2-2H77l2,2V61Z" transform="translate(0)" />
+                                            <text class="cls-4" transform="translate(15.9 57.72) scale(0.98 1)">No Aplica
+                                            </text>
+                                            <path class="cls-2" d="M108,63H88l-2-2V45l2-2h20l2,2V61Z" transform="translate(0)" />
+                                            <text id="cumpNoAplica" class="cls-4" transform="translate(90.5 58.11) scale(0.98 1)">-</text><text class="cls-8" transform="translate(366.75 78.78) scale(0.98 1)">CUMPLIMIENTO
+                                            </text>
+                                            <polygon class="cls-3" points="417.89 77 421.89 77 417.89 73 413.89 73 417.89 77" />
+                                            <polygon class="cls-3" points="188.01 77 184.01 77 188.01 73 192.01 73 188.01 77" /><text class="cls-8" transform="translate(193.82 78.78) scale(0.98 1)">SQUAD</text>
+                                            <polygon class="cls-3" points="221.94 77 225.94 77 221.94 73 217.94 73 221.94 77" />
+                                            <polygon class="cls-3" points="36.01 77 32.01 77 36.01 73 40.01 73 36.01 77" /><text class="cls-8" transform="translate(44.83 78.78) scale(0.98 1)">ANALYZE
+                                            </text>
+                                            <polygon class="cls-3" points="82.94 77 86.94 77 82.94 73 78.94 73 82.94 77" /><text class="cls-11" transform="translate(108.08 7.69) scale(0.98 1)">Habilitadores de Seguridad</text>
+                                            <polygon class="cls-3" points="203.5 9 199.5 9 203.5 5 207.5 5 203.5 9" />
+                                            <polygon class="cls-3" points="103.22 9 107.22 9 103.22 5 99.22 5 103.22 9" />
+
+                                            <text id="cumpCumpleParcial" class="cls-6" x="77.9%" y="40%" alignment-baseline="middle" text-anchor="middle">-</text>
+                                            <text id="cumpSiCumple" class="cls-6" x="77.9%" y="23%" alignment-baseline="middle" text-anchor="middle">-</text>
+
+                                            <text id="cumpEnProgre" class="cls-6" x="77.9%" y="56.5%" alignment-baseline="middle" text-anchor="middle">-</text>
+
+                                            <text id="cumpDependencia" class="cls-6" x="77.9%" y="75.0%" alignment-baseline="middle" text-anchor="middle">-</text>
+
+                                            <text id="cumpFaltaEvi" class="cls-6" x="97.1%" y="22.5%" alignment-baseline="middle" text-anchor="middle">-</text>
+
+                                            <text id="cumpConObser" class="cls-6" x="97.1%" y="40%" alignment-baseline="middle" text-anchor="middle">-</text>
+
+
+                                            <text id="cumpOtro" class="cls-6" x="97.1%" y="57%" alignment-baseline="middle" text-anchor="middle">-</text>
+
+                                            <text id="cumpNoCumple" class="cls-6" x="97.1%" y="75%" alignment-baseline="middle" text-anchor="middle">-</text>
+                                            <polygon class="cls-12" points="384.5 24 379.5 24 380.75 22 383.25 22 384.5 24" />
+                                            <polygon class="cls-12" points="478.5 24 473.5 24 474.75 22 477.25 22 478.5 24" />
+                                            <polygon class="cls-12" points="478.5 38 473.5 38 474.75 36 477.25 36 478.5 38" />
+                                            <polygon class="cls-12" points="478.5 52 473.5 52 474.75 50 477.25 50 478.5 52" />
+                                            <polygon class="cls-12" points="478.5 66 473.5 66 474.75 64 477.25 64 478.5 66" />
+                                            <polygon class="cls-12" points="384.5 38 379.5 38 380.75 36 383.25 36 384.5 38" />
+                                            <polygon class="cls-12" points="384.5 52 379.5 52 380.75 50 383.25 50 384.5 52" />
+                                            <polygon class="cls-12" points="384.5 66 379.5 66 380.75 64 383.25 64 384.5 66" />
+                                            <polygon class="cls-13" points="101 38 96 38 97.25 36 99.75 36 101 38" />
+                                            <polygon class="cls-13" points="100.61 18 95.61 18 96.86 20 99.36 20 100.61 18" />
+                                            <polygon class="cls-13" points="100.69 63 95.69 63 96.94 61 99.44 61 100.69 63" />
+                                            <polygon class="cls-13" points="100.3 43 95.3 43 96.55 45 99.05 45 100.3 43" />
+                                            <path class="cls-14" d="M482.5,68.5h-181l-3-3v-53l3-3h181l3,3v53Z" transform="translate(0)" />
+                                            <path class="cls-14" d="M111.5,68H7.5l-3-3V17l3-3h104l3,3V65Z" transform="translate(0)" />
+                                            <path class="cls-2" d="M464,24H396l-1-1V13l1-1h68l1,1V23Z" transform="translate(0)" />
+                                            <path class="cls-15" d="M291.5,30l4-4V17l-3-3h-172l-3,3V27l4,4V50l-4,4V65l3,3h172l3-3V53l-4-4Z" transform="translate(0)" />
+                                            <polygon class="cls-3" points="117.5 48.5 117.5 52.5 120.5 49.5 120.5 45.5 117.5 48.5" />
+                                            <polygon class="cls-3" points="117.5 43.5 117.5 47.5 120.5 44.5 120.5 40.5 117.5 43.5" />
+                                            <polygon class="cls-3" points="117.5 38.5 117.5 42.5 120.5 39.5 120.5 35.5 117.5 38.5" />
+                                            <polygon class="cls-3" points="117.5 37.5 117.5 28.5 120.5 31.5 120.5 34.5 117.5 37.5" />
+                                            <polygon class="cls-3" points="295.5 47.5 295.5 51.5 292.5 48.5 292.5 44.5 295.5 47.5" />
+                                            <polygon class="cls-3" points="295.5 42.5 295.5 46.5 292.5 43.5 292.5 39.5 295.5 42.5" />
+                                            <polygon class="cls-3" points="295.5 37.5 295.5 41.5 292.5 38.5 292.5 34.5 295.5 37.5" />
+                                            <polygon class="cls-3" points="295.5 36.5 295.5 27.5 292.5 30.5 292.5 33.5 295.5 36.5" />
+                                            <text id="cumpSquad" class="cls-5" x="42.5%" y="38%" alignment-baseline="middle" text-anchor="middle">-</text>
+                                            <text id="cumpIniciativa" class="cls-16" x="42.5%" y="60%" alignment-baseline="middle" text-anchor="middle">-
+
+                                            </text>
+
+                                            <text class="cls-6" transform="translate(398.79 20.57) scale(0.98 1)">
+                                                Falta Evidencia
+                                            </text>
+                                            <path class="cls-17" d="M485.5,5.5h-276l-5,5h-102l-5-5H4.5l-4,4v63l4,4h26l5-5h48l5,5h94l5-5h35l5,5h128l5-5h58l5,5h62l4-4V9.5Z" transform="translate(0)" />
+                                        </svg>
+                                        <div class="pagGraficos">
+                                            <figure class="highcharts-figure" style="border: solid 1px #83c607;">
+                                                <div id="container"></div>
+
+                                            </figure>
+                                            <figure class="highcharts-figure" style="border: solid 1px #83c607;">
+                                                <div id="container2"></div>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="panel" id="dos-panel">
+
+                            <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                                <div id="" class="col-lg-3" style="padding-right: 1px; padding-left: 5px;">
+                                    <div class="borTabPlan">
+                                        <table id="tablaComando" class=" table-striped" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Dominio</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="testConta" class="col-lg-9" style="padding-left: 15px;padding-right: 15px; background: #1a2332;">
+                                    <div class="tituloSVGCon">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 40.89">
+                                            <defs>
+                                                <style>
+                                                    .a,
+                                                    .b {
+                                                        fill: #141d2b;
+                                                    }
+
+                                                    .b {
+                                                        stroke: #a4b1cd;
+                                                        stroke-miterlimit: 10;
+                                                    }
+
+                                                    .c {
+                                                        font-size: 9px;
+                                                    }
+
+                                                    .c,
+                                                    .f,
+                                                    .j,
+                                                    .l {
+                                                        fill: #a4b1cd;
+                                                    }
+
+                                                    .c,
+                                                    .f,
+                                                    .h,
+                                                    .j,
+                                                    .l {
+                                                        font-family: Arial;
+                                                    }
+
+                                                    .d {
+                                                        letter-spacing: -0.06em;
+                                                    }
+
+                                                    .e {
+                                                        letter-spacing: 0em;
+                                                    }
+
+                                                    .f {
+                                                        font-size: 14px;
+                                                    }
+
+                                                    .g,
+                                                    .h {
+                                                        fill: #303030;
+                                                    }
+
+                                                    .h,
+                                                    .l {
+                                                        font-size: 7px;
+                                                    }
+
+                                                    .i {
+                                                        fill: #303030;
+                                                    }
+
+                                                    .j {
+                                                        font-size: 12px;
+                                                    }
+
+                                                    .k {
+                                                        fill: #303030;
+                                                    }
+
+                                                    .m {
+                                                        letter-spacing: -0.02em;
+                                                    }
+
+                                                    .z {
+                                                        fill: #303030;
+                                                    }
+
+                                                    .r {
+
+                                                        fill: #83c607;
+                                                        font-size: 7px;
+                                                    }
+
+                                                    .textoDondeIn {
+                                                        fill: #303030;
+
+                                                    }
+
+                                                    .textoDondeCe {
+                                                        fill: #303030;
+
+                                                    }
+
+                                                    .textoDondePr {
+                                                        fill: #303030;
+
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <rect class="a" width="700" height="40" />
+                                            <path class="b" d="M691,4.5H81.5l-5,5h-40l-5-5H9l-5,5v19l5,5H224l5-5H471l5,5H633.5l5-5h21l5,5H691l5-5V9.5Z" />
+                                            <text id="hCDominio" class="c" x="50%" y="90%" alignment-baseline="middle" text-anchor="middle">Dominio ..
+                                            </text>
+                                            <text id="hCTitulo" class="f" x="50%" y="45%" alignment-baseline="middle" text-anchor="middle">Título ...</text>
+                                            <polygon class="g" points="75.5 8 71.5 8 75.5 4 79.5 4 75.5 8" />
+                                            <polygon class="g" points="70.5 8 66.5 8 70.5 4 74.5 4 70.5 8" />
+                                            <polygon class="g" points="65.5 8 61.5 8 65.5 4 69.5 4 65.5 8" />
+                                            <polygon class="g" points="60.5 8 56.5 8 60.5 4 64.5 4 60.5 8" />
+                                            <polygon class="g" points="55.5 8 51.5 8 55.5 4 59.5 4 55.5 8" />
+                                            <polygon class="g" points="50.5 8 46.5 8 50.5 4 54.5 4 50.5 8" />
+                                            <polygon class="g" points="45.5 8 41.5 8 45.5 4 49.5 4 45.5 8" />
+                                            <text id="hCPaquete" class="r" transform="translate(644.7 36.86) scale(0.98 1)">-</text>
+                                            <path class="z" d="M27.69,9.75l2.56,2.56V25.69l-2.56,2.56H12.31L9.75,25.69V12.31l2.56-2.56H27.69M28,9H12L9,12V26l3,3H28l3-3V12L28,9Z" />
+                                            <text id="hCId" class="r" x="2.8%" y="50%" alignment-baseline="middle" text-anchor="middle">-</text>
+                                            <path class="k" d="M690,12.25l.86.85.85.86V24l-.85.86-.86.85H667.46l-.86-.85-.85-.86V14l.85-.86.86-.85H690m.21-.5h-23l-2,2v10.5l2,2h23l2-2V13.75l-2-2Z" />
+                                            <path class="i" d="M660,9.5l.86.85.85.86V21.29l-.85.86L660,23H637.46l-.86-.85-.85-.86V11.21l.85-.86.86-.85H660m.21-.5h-23l-2,2V21.5l2,2h23l2-2V11l-2-2Z" />
+                                            <path class="g" d="M630,12.25l.86.85.85.86V24l-1.2,1.2-.51.51H607.46l-.86-.85-.85-.86V14l.85-.86.86-.85H630m.21-.5h-23l-2,2v10.5l2,2h23l2-2V13.75l-2-2Z" />
+                                            <text class="textoDondeIn l" transform="translate(608.1 21.87) scale(0.98 1)">INICIO</text>
+                                            <text class="textoDondeCe l" transform="translate(638.52 18.87) scale(0.98 1)">CERTI</text>
+                                            <text class="textoDondePr l" transform="translate(669.03 21.87) scale(0.96 1)">PROD</text>
+                                        </svg>
+                                    </div>
+                                    <div id="" class="hojaDesCentralc match-braces" data-prismjs-copy="Copiar" data-prismjs-copy-error="Presiona Ctrl+C, para copiar" data-prismjs-copy-success="Copiado!">
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="tituloContr" style="font-size: 14px;">Control</div>
+                                                    <div class="detalleContr" id="hCNombre"> </div>
+                                                    <div class="tituloContr" style="font-size: 14px;">Criterios de cumplimiento</div>
+                                                    <div class="detalleContr" id="hCCriterios_Cumpli"></div>
+
+                                                    <div id="cambiosRender"></div>
+                                                    <div id="comentariosRender"></div>
+                                                    <div class="tituloContr" style="font-size: 14px;">Responsable</div>
+                                                    <div class="detalleContr" id="hCResponsable"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="tituloContr" style="font-size: 14px;">Captura de Evidencia Ambiente</div>
+                                                    <div class="detalleContr" id="hCCaptura_Ambiente"></div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="tituloContr" style="font-size: 14px;">Etapa Captura de Evidencia</div>
+                                                    <div class="detalleContr" id="hCEtapa_Evidencia"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="detalleContr" id="lineamientoRender"></div>
+                                                    <div class="tituloContr" style="font-size: 14px;">Entregable Evidencia</div>
+                                                    <div class="detalleContr" id="hCModelo_Evidencia"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="panel" id="tres-panel">
+
+                            <div style="width: 50%;">
+
+
+                                <div class="input-group input-group-sm mb-1">
+                                    <span class="input-group-text" style="background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Squad</span>
+                                    <input disabled id="squadNomEtapa" type="text" class="form-control" style="background: var(--fondoDark5);font-weight: 500; color: var(--hoverDark1); border: none;  ">
+
+                                    <span class="input-group-text" style="background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Iniciativa</span>
+                                    <input disabled id="iniciativaEtapa" type="text" class="form-control" style="background: var(--fondoDark5);font-weight: 500; color: var(--hoverDark1); border: none;  ">
+
+                                    <button id="testEtapa" class="boton_prin "><i class="fa-solid fa-retweet"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="marcoEtapa">
+                                <table class="tablaPrinEtapa">
+                                    <tr>
+                                        <td class="bordeTablaGru">
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar Dispositivos en MDM</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_1" class="habNum etaHab_1">#1</div>
+                                                    <div id="etaHab_2" class="habNum etaHab_2">#2</div>
+                                                </div>
+                                            </div>
+
+                                            <div id="etaHab_9_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar versión AKS</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_9" class="habNum etaHab_9">#9</div>
+                                                    <div id="etaHabTitu_4" class="habBrupoNota etaHab_9_">4</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_37_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Registro de Historias en Jira</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_37" class="habNum etaHab_37">#37</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Diagrama físico</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_3" class="habNum etaHab_3">#3</div>
+                                                    <div id="etaHab_6" class="habNum etaHab_6">#6</div>
+                                                    <div id="etaHab_38" class="habNum etaHab_38">#38</div>
+                                                    <div id="etaHab_41" class="habNum etaHab_41">#41</div>
+                                                    <div id="etaHab_55" class="habNum etaHab_55">#55</div>
+                                                    <div id="etaHab_81" class="habNum etaHab_81">#81</div>
+
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Diagrama lógico</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_38" class="habNum etaHab_38">#38</div>
+                                                    <div id="etaHab_39" class="habNum etaHab_39">#39</div>
+                                                    <div id="etaHab_41" class="habNum etaHab_41">#41</div>
+                                                    <div id="etaHab_55" class="habNum etaHab_55">#55</div>
+                                                </div>
+                                                <div class="tabInterHab">
+
+                                                    <div id="etaHab_74" class="habNum etaHab_74">#74</div>
+                                                    <div id="etaHabTitu_1" class="habBrupoNota etaHab_74_">1</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_11" class="habNum etaHab_11">#11</div>
+                                                    <div id="etaHab_17" class="habNum etaHab_17">#17</div>
+                                                    <div id="etaHab_18" class="habNum etaHab_18">#18</div>
+                                                    <div id="etaHab_19" class="habNum etaHab_19">#19</div>
+                                                    <div id="etaHab_22" class="habNum etaHab_22">#22</div>
+                                                    <div id="etaHab_23" class="habNum etaHab_23">#23</div>
+                                                    <div id="etaHab_28" class="habNum etaHab_28">#28</div>
+                                                    <div id="etaHabTitu_2" class="habBrupoNota etaHab_28_">2</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_35_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Catálogo de funcionalidades MFA
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_35" class="habNum etaHab_35">#35</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_47_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Gestión de Pull Resquest
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_47" class="habNum etaHab_47">#47</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_67_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Ofuscación de Datos</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_67" class="habNum etaHab_67">#67</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_54_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Cuantificación de riegos</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_54" class="habNum etaHab_54">#54</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_40_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar Reporte Anchore</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_40" class="habNum etaHab_40">#40</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar controles de seguridad</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_47" class="habNum etaHab_47">#47</div>
+                                                    <div id="etaHabTitu_12" class="habBrupoNota etaHab_47_">12</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_48" class="habNum etaHab_48">#48</div>
+                                                    <div id="etaHabTitu_13" class="habBrupoNota etaHab_48_">13</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_5_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar Security Headers</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_5" class="habNum etaHab_5">#5</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Log Auditoría</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_77" class="habNum etaHab_77">#77</div>
+                                                    <div id="etaHab_78" class="habNum etaHab_78">#78</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_68_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Conformidad Legal y Cumplimiento</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_68" class="habNum etaHab_68">#68</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_34_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Politicas de API Product</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_34" class="habNum etaHab_34">#34</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_33_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Autenticación entre componentes</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_33" class="habNum etaHab_33">#33</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_52_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Aprobación del Ticket en  Jira por Analista Seg.</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_52" class="habNum etaHab_52">#52</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Gestión Matriz de roles</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_29" class="habNum etaHab_29">#29</div>
+                                                    <div id="etaHab_30" class="habNum etaHab_30">#30</div>
+                                                    <div id="etaHab_32" class="habNum etaHab_32">#32</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_58_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Linea Base de Seguridad</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_58" class="habNum etaHab_58">#58</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_82_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Configuración de Umbrales </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_82" class="habNum etaHab_82">#82</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Monitoreo de componentes</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_42" class="habNum etaHab_42">#42</div>
+                                                    <div id="etaHab_82" class="habNum etaHab_82">#82</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Gestión de usuarios en PMP</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_13" class="habNum etaHab_13">#13</div>
+                                                    <div id="etaHabTitu_6" class="habBrupoNota etaHab_13_">6</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_14" class="habNum etaHab_14">#14</div>
+                                                    <div id="etaHabTitu_10" class="habBrupoNota etaHab_14_">10</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_16" class="habNum etaHab_16">#16</div>
+                                                    <div id="etaHabTitu_11" class="habBrupoNota etaHab_16_">11</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tablaEtapa">
+                                            <div class="fat-arrow">
+                                                <div class="flo-arrow">01</div>
+                                                <div class="inner">Analyze</div>
+                                            </div>
+                                        </td>
+                                        <td class="tablaEtapa">
+                                            <div class="fat-arrow">
+                                                <div class="flo-arrow">02</div>
+                                                <div class="inner">Design</div>
+                                            </div>
+                                        </td>
+                                        <td class="tablaEtapa">
+                                            <div class="fat-arrow">
+                                                <div class="flo-arrow">03</div>
+                                                <div class="inner">Implement</div>
+                                            </div>
+                                        </td>
+                                        <td class="tablaEtapa">
+                                            <div class="fat-arrow">
+                                                <div class="flo-arrow">04</div>
+                                                <div class="inner">Test</div>
+                                            </div>
+                                        </td>
+                                        <td class="tablaEtapa">
+                                            <div class="fat-arrow">
+                                                <div class="flo-arrow">05</div>
+                                                <div class="inner">Deploy</div>
+                                            </div>
+                                        </td>
+                                        <td class="tablaEtapa">
+                                            <div class="fat-arrow">
+                                                <div class="flo-arrow">06</div>
+                                                <div class="inner">Maintain</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_12_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar permisos a Play store y/o App store
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_12" class="habNum etaHab_12">#12</div>
+                                                    <div id="etaHabTitu_5" class="habBrupoNota etaHab_12_">5</div>
+                                                </div>
+                                            </div>
+
+                                            <div id="etaHab_39_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Estándar de desarrollo seguro en DoR</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_39" class="habNum etaHab_39">#39</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="bordeTablaGru">
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Diagrama de Secuencia
+
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_55" class="habNum etaHab_55">#55</div>
+                                                    <div id="etaHab_69" class="habNum etaHab_69">#69</div>
+                                                    <div id="etaHab_72" class="habNum etaHab_72">#72</div>
+                                                </div>
+                                            </div>
+
+                                            <div id="etaHab_61_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">ARO 09</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_61" class="habNum etaHab_61">#61</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Modelo de Amenazas (IriusRisk)</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_43" class="habNum etaHab_43">#43</div>
+                                                    <div id="etaHab_55" class="habNum etaHab_55">#55</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_25_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">MFA en operaciones críticas</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_25" class="habNum etaHab_25">#25</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">SAST</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_45" class="habNum etaHab_45">#45</div>
+                                                    <div id="etaHab_46" class="habNum etaHab_46">#46</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_73_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Tratamiento de Datos Externos</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_73" class="habNum etaHab_73">#73</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_63_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Prácticas criptográficas</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_63" class="habNum etaHab_63">#63</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="bordeTablaGru">
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Validar TLS 1.2 y Cipher suites</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_4" class="habNum etaHab_4">#4</div>
+                                                    <div id="etaHab_10" class="habNum etaHab_10">#10</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Ethical Hacking</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_18" class="habNum etaHab_18">#18</div>
+                                                    <div id="etaHab_20" class="habNum etaHab_20">#20</div>
+                                                    <div id="etaHab_39" class="habNum etaHab_39">#39</div>
+                                                    <div id="etaHab_44" class="habNum etaHab_44">#44</div>
+                                                    <div id="etaHab_48" class="habNum etaHab_48">#48</div>
+                                                    <div id="etaHab_53" class="habNum etaHab_53">#53</div>
+                                                    <div id="etaHab_55" class="habNum etaHab_55">#55</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_21" class="habNum etaHab_21">#21</div>
+                                                    <div id="etaHab_26" class="habNum etaHab_26">#26</div>
+                                                    <div id="etaHab_27" class="habNum etaHab_27">#27</div>
+                                                    <div id="etaHab_32" class="habNum etaHab_32">#32</div>
+                                                    <div id="etaHabTitu_8" class="habBrupoNota etaHab_32_">8</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_49" class="habNum etaHab_49">#49</div>
+                                                    <div id="etaHabTitu_9" class="habBrupoNota etaHab_49_">9</div>
+                                                </div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_40" class="habNum etaHab_40">#40</div>
+                                                    <div id="etaHabTitu_14" class="habBrupoNota etaHab_40_">14</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_51_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Pruebas de Rendimiento</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_51" class="habNum etaHab_51">#51</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_60_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Documentar el cambio</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_60" class="habNum etaHab_60">#60</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_59_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Ticket a producción finalizado</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_59" class="habNum etaHab_59">#59</div>
+                                                </div>
+                                            </div>
+                                            <div class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Seguridad sobre la BD</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_64" class="habNum etaHab_64">#64</div>
+                                                    <div id="etaHab_65" class="habNum etaHab_65">#65</div>
+                                                    <div id="etaHab_66" class="habNum etaHab_66">#66</div>
+                                                    <div id="etaHab_70" class="habNum etaHab_70">#70</div>
+                                                    <div id="etaHab_75" class="habNum etaHab_75">#75</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_63_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Llaves de cifrado</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_63" class="habNum etaHab_63">#63</div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="bordeTablaGru">
+                                            <div id="etaHab_7_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">Gestión de VM (Ports RDP/SHH)</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_7" class="habNum etaHab_7">#7</div>
+                                                    <div id="etaHabTitu_3" class="habBrupoNota etaHab_7_">3</div>
+                                                </div>
+                                            </div>
+                                            <div id="etaHab_15_" class="habEtapaGrupo">
+                                                <div class="habEtapaGrupoTitu">MFA en portales de administración</div>
+                                                <div class="tabInterHab">
+                                                    <div id="etaHab_15" class="habNum etaHab_15">#15</div>
+                                                    <div id="etaHabTitu_7" class="habBrupoNota etaHab_15_">7</div>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalFiltro" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #1a2332;color: #83c607;">
+                    <h5 class="modal-title">Seleccionar controles</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background: var(--fondoDark5)">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        1
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="2" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        2
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="3" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        3
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="4" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        4
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="5" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        5
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="6" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        6
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="7" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        7
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="8" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        8
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="9" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        9
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="10" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        10
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="11" id="defaultCheck1">
+                                    <label class="form-check-label">
+                                        11
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="12" id="defaultCheck1">
+                                    <label class="form-check-label">12</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="13" id="defaultCheck1">
+                                    <label class="form-check-label">13</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="14" id="defaultCheck1">
+                                    <label class="form-check-label">14</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="15" id="defaultCheck1">
+                                    <label class="form-check-label">15</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="16" id="defaultCheck1">
+                                    <label class="form-check-label">16</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="17" id="defaultCheck1">
+                                    <label class="form-check-label">17</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="18" id="defaultCheck1">
+                                    <label class="form-check-label">18</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="19" id="defaultCheck1">
+                                    <label class="form-check-label">19</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="20" id="defaultCheck1">
+                                    <label class="form-check-label">20</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="21" id="defaultCheck1">
+                                    <label class="form-check-label">21</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="22" id="defaultCheck1">
+                                    <label class="form-check-label">22</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="23" id="defaultCheck1">
+                                    <label class="form-check-label">23</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="24" id="defaultCheck1">
+                                    <label class="form-check-label">24</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="25" id="defaultCheck1">
+                                    <label class="form-check-label">25</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="26" id="defaultCheck1">
+                                    <label class="form-check-label">26</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="27" id="defaultCheck1">
+                                    <label class="form-check-label">27</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="28" id="defaultCheck1">
+                                    <label class="form-check-label">28</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="29" id="defaultCheck1">
+                                    <label class="form-check-label">29</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="30" id="defaultCheck1">
+                                    <label class="form-check-label">30</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="31" id="defaultCheck1">
+                                    <label class="form-check-label">31</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="32" id="defaultCheck1">
+                                    <label class="form-check-label">32</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="33" id="defaultCheck1">
+                                    <label class="form-check-label">33</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="34" id="defaultCheck1">
+                                    <label class="form-check-label">34</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="35" id="defaultCheck1">
+                                    <label class="form-check-label">35</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="36" id="defaultCheck1">
+                                    <label class="form-check-label">36</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="37" id="defaultCheck1">
+                                    <label class="form-check-label">37</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="38" id="defaultCheck1">
+                                    <label class="form-check-label">38</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="39" id="defaultCheck1">
+                                    <label class="form-check-label">39</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="40" id="defaultCheck1">
+                                    <label class="form-check-label">40</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="41" id="defaultCheck1">
+                                    <label class="form-check-label">41</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="42" id="defaultCheck1">
+                                    <label class="form-check-label">42</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="43" id="defaultCheck1">
+                                    <label class="form-check-label">43</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="44" id="defaultCheck1">
+                                    <label class="form-check-label">44</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="45" id="defaultCheck1">
+                                    <label class="form-check-label">45</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="46" id="defaultCheck1">
+                                    <label class="form-check-label">46</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="47" id="defaultCheck1">
+                                    <label class="form-check-label">47</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="48" id="defaultCheck1">
+                                    <label class="form-check-label">48</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="49" id="defaultCheck1">
+                                    <label class="form-check-label">49</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="50" id="defaultCheck1">
+                                    <label class="form-check-label">50</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="51" id="defaultCheck1">
+                                    <label class="form-check-label">51</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="52" id="defaultCheck1">
+                                    <label class="form-check-label">52</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="53" id="defaultCheck1">
+                                    <label class="form-check-label">53</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="54" id="defaultCheck1">
+                                    <label class="form-check-label">54</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="55" id="defaultCheck1">
+                                    <label class="form-check-label">55</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="56" id="defaultCheck1">
+                                    <label class="form-check-label">56</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="57" id="defaultCheck1">
+                                    <label class="form-check-label">57</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="58" id="defaultCheck1">
+                                    <label class="form-check-label">58</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="59" id="defaultCheck1">
+                                    <label class="form-check-label">59</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="60" id="defaultCheck1">
+                                    <label class="form-check-label">60</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="61" id="defaultCheck1">
+                                    <label class="form-check-label">61</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="62" id="defaultCheck1">
+                                    <label class="form-check-label">62</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="63" id="defaultCheck1">
+                                    <label class="form-check-label">63</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="64" id="defaultCheck1">
+                                    <label class="form-check-label">64</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="65" id="defaultCheck1">
+                                    <label class="form-check-label">65</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="66" id="defaultCheck1">
+                                    <label class="form-check-label">66</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="67" id="defaultCheck1">
+                                    <label class="form-check-label">67</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="68" id="defaultCheck1">
+                                    <label class="form-check-label">68</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="69" id="defaultCheck1">
+                                    <label class="form-check-label">69</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="70" id="defaultCheck1">
+                                    <label class="form-check-label">70</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="71" id="defaultCheck1">
+                                    <label class="form-check-label">71</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="72" id="defaultCheck1">
+                                    <label class="form-check-label">72</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="73" id="defaultCheck1">
+                                    <label class="form-check-label">73</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="74" id="defaultCheck1">
+                                    <label class="form-check-label">74</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="75" id="defaultCheck1">
+                                    <label class="form-check-label">75</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="76" id="defaultCheck1">
+                                    <label class="form-check-label">76</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="77" id="defaultCheck1">
+                                    <label class="form-check-label">77</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="78" id="defaultCheck1">
+                                    <label class="form-check-label">78</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="79" id="defaultCheck1">
+                                    <label class="form-check-label">79</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="80" id="defaultCheck1">
+                                    <label class="form-check-label">80</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="81" id="defaultCheck1">
+                                    <label class="form-check-label">81</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="82" id="defaultCheck1">
+                                    <label class="form-check-label">82</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="83" id="defaultCheck1">
+                                    <label class="form-check-label">83</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="84" id="defaultCheck1">
+                                    <label class="form-check-label">84</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="85" id="defaultCheck1">
+                                    <label class="form-check-label">85</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="selectControl" class="form-check-input" type="checkbox" value="86" id="defaultCheck1">
+                                    <label class="form-check-label">86</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background: var(--fondoDark3)">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button id="seleccionarComando" type="button" class="btn btn-primary">Filtar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para CRUD-->
+    <div id="modalComando" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: #101e2f">
+                <form id="formComando">
+                    <div class="modal-header" style="padding-left: 50px; padding-top: 5px;padding-bottom: 5px; border: none; color: #83c607;">
+                        <h5 class="modal-title"></h5>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="btnGuardar" class="btn btn-success btn-sm">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body" style="padding: 2px; background: var(--header);">
+                        <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                            <div class="col-lg-5 modalNombre" style="overflow-y: auto;  max-height: 918px">
+                                <div class="input-group input-group mb-1">
+                                    <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Control</span>
+                                    <input id="mCId" type="number" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                                    <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Dimención</span>
+                                    <input id="mCDimension" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none; width: 300px !important;" />
+                                </div>
+                                <div class="input-group input-group mb-1">
+                                    <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;">Dominio</span>
+                                    <input id="mCDominio" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                                </div>
+                                <div class="input-group input-group mb-1">
+                                    <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;">Título</span>
+                                    <input id="mCTitulo" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                                </div>
+                                <div class="tituloPen">Criterios de cumplimiento Pacifico</div>
+
+
+                                <div id="mCNombre"></div>
+
+                                <div class="tituloPen">Criterios de cumplimiento Pacifico</div>
+                                <div class="input-group input-group mb-1">
+                                    <div id="mCCriterios_Cumpli"></div>
+                                </div>
+                                <div class="tituloPen">Acciones / Comentarios *</div>
+                                <div class="input-group input-group mb-1">
+                                    <div id="mCAcciones_Comenta" style="width: 100%;"></div>
+                                </div>
+                                <div class="tituloPen">Cambios</div>
+                                <div class="input-group input-group mb-1">
+                                    <textarea id="mCCambios" class="form-control" rows="3" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                </div>
+                                <div class="input-group input-group mb-1">
+                                    <span class="input-group-text" style="justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Imprescindible</span>
+                                    <select id="mCImprescindible" required class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                        <option value="SI">SI</option>
+                                        <option value="-">-</option>
+                                        <option value="NO">Otro</option>
+                                    </select>
+                                    <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Paquete</span>
+                                    <input id="mCPaquete" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                                    <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Cumplimiento</span>
+                                    <select id="mCCumplimiento" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                        <option value="Deprecado">Deprecado</option>
+                                        <option value="-">-</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="tituloPen">Responsable</div>
+                                <div class="input-group input-group mb-1">
+                                    <textarea id="mCResponsable" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-6" style="padding: 1px;">
+                                            <div class="tituloPen">De que Ambiente</div>
+                                            <div class="input-group input-group mb-1">
+                                                <textarea id="mCCaptura_Ambiente" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" style="padding: 1px;">
+                                            <div class="tituloPen">En que Etapa</div>
+                                            <div class="input-group input-group mb-1">
+                                                <textarea id="mCEtapa_Evidencia" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tituloPen">Entregables</div>
+                                <textarea id="mCEntregables" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+
+                                <div class="tituloPen">Comentarios</div>
+                                <div class="input-group input-group mb-1">
+                                    <textarea id="mCComentarios" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                </div>
+                                <div class="tituloPen">Lineamiento</div>
+                                <div class="input-group input-group mb-1">
+                                    <textarea id="mCLineamiento" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                </div>
+                                <div class="tituloPen">Pendientes</div>
+                                <div class="input-group input-group mb-1">
+                                    <textarea id="mCPendiente" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                </div>
+                                <div class="tituloPen">Comentario Analista</div>
+                                <div class="input-group input-group mb-1">
+                                    <textarea id="mCComen_Analis" class="form-control" rows="5" style="width: 100%; text-align: justify; background: var(--fondoDark5) ; color: var(--colorDark1); border: none;"></textarea>
+                                </div>
+                                <div class="input-group input-group mb-1">
+                                    <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Estado</span>
+                                    <select id="mCEstado" required class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                        <option value="Finalizado">Finalizado</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Por Revisar">Por Revisar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-7" style="padding: 2px;">
+                                <div id="mCModelo_Evidencia"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalHabSquad" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="background: #101e2f">
+
+                <form id="formHabiliUnico">
+
+                    <div class="modal-header" style="padding: 7px 25px;">
+                        <h5 class="modal-title">-</h5>
+
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" id="actualizarHabiliSq" class="btn btn-outline-info">Actualizar</button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group input-group mb-1">
+                            <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">ID</span>
+                            <input disabled id="mCIdHab" type="number" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                            <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Habilitador</span>
+                            <input disabled id="mCHabSquad" type="number" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+
+                            <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Cumplimiento</span>
+                            <select id="mCEstadoHabSquad" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                <option value="Si Cumple">Si Cumple</option>
+                                <option value="Con Observaciones">Con Observaciones</option>
+                                <option value="Cumple Parcial">Cumple Parcial</option>
+                                <option value="No Cumple">No Cumple</option>
+                                <option value="No Aplica">No Aplica</option>
+                                <option value="Deprecado">Deprecado</option>
+                                <option value="Falta Evidencia">Falta Evidencia</option>
+                                <option value="Dependencia">Dependencia</option>
+                                <option value="En Progreso">En Progreso</option>
+                                <option value="Aplica">Aplica</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group mb-1">
+
+                            <span class="input-group-text" style="width: 90px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Título</span>
+                            <input disabled id="mCTituloHabSquad" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                        </div>
+                        <div class="input-group input-group mb-1">
+
+
+                        </div>
+                        <div class="input-group input-group mb-1">
+
+                            <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Nota</span>
+                            <textarea id="mCObserHabSquad" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                            </textarea>
+                        </div>
+                        <div id="mCEvidenciaHabSquad">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="modalAddIniciativa" class="modal modalAddIniciativa" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background: #101e2f">
+                <form id="formAddIniciativa">
+                    <div class="modal-header" style="padding: 7px 25px;">
+                        <h4 class="modal-title" style="color: var(--hoverDark1)">Agregar Iniciativa</h4>
+
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="sumit" id="" class="btn btn-outline-info">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group input-group mb-1">
+                            <span class="input-group-text" style="width: 190px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Squad</span>
+                            <select id="mAiId_Squad" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                <option value="0">Seleccione un Squad ...</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group mb-1">
+                            <span class="input-group-text" style="width: 190px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Nombre de la Iniciativa</span>
+                            <input id="mAiNombre" required autocomplete="off" class="form-control" style=" color:var(--colorDark1); background: var(--fondoDark5); border: none;" />
+                        </div>
+                        <div class="input-group input-group mb-1">
+                            <span class="input-group-text" style="width: 190px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Cumplimiento po Defecto</span>
+                            <select id="" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                <option value="No Aplica">No Aplica</option>
+                                <option value="Si Cumple">Si Cumple</option>
+                                <option value="Con Observaciones">Con Observaciones</option>
+                                <option value="Incompleto">Incompleto</option>
+                                <option value="No Cumple">No Cumple</option>
+                                <option value="Deprecado">Deprecado</option>
+                                <option value="Falta Evidencia">Falta Evidencia</option>
+                                <option value="Dependencia">Dependencia</option>
+                                <option value="En Progreso">En Progreso</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            <span class="input-group-text" style="width: 120px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Tipo</span>
+                            <select id="mAiTipo" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                                <option value="Nube">Nube</option>
+                                <option value="OnPremise">OnPremise</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group mb-1">
+                            <span class="input-group-text" style="width: 190px;justify-content: center; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">Nota</span>
+                            <textarea id="mAiNota" class="form-control" style=" background: var(--fondoDark5); color: var(--colorDark1); border: none;">
+                            </textarea>
+
+                        </div>
+                        <div id="mCEvidenciaHabSquad">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="plantillaHabi" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="background: #101e2f">
+
+                <div class="modal-header" style="padding: 7px 25px;">
+                    <h5 class="modal-title" style="color:var(--hoverDark1)">Evidencia</h5>
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cerrar</button>
+                        <button onclick="selectElementContents( document.getElementById('hojaPlantilla'));" type="button" id="" class="btn btn-outline-info">Copiar</button>
+
+                    </div>
+                </div>
+                <div class="modal-body" style="background: #DDD">
+                    <div class="paginaExtPlan">
+
+
+                        <div id="MainHTML">
+
+                            <div class="marcoPlantilla" id="hojaPlantilla">
+                                <table style="border-collapse: separate; border-spacing: 3px 2px; width: 100%">
+
+                                    <tr style="border: none;">
+                                        <th id="PLhCTitulo" class="habiliTituloPl" colspan="3">Título</th>
+                                    </tr>
+                                    <tr style="border: none;">
+                                        <th colspan="3" style=" border: 0.75pt solid #fff;padding: 0px;"></th>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td class="textTituHabPla1A">Dimensión</td>
+                                        <td id="PlhCDimension" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="textTituHabPla1A">Código habilitador</td>
+                                        <td id="PlhCHabSquad" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="textTituHabPla1A">Dominio</td>
+                                        <td id="PlhCDominio" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="textTituHabPla1A">Habilitador</td>
+                                        <td id="PLhCNombre" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="textTituHabPla1A">Criterios de cumplimiento</td>
+                                        <td id="PlhCCriterios_Cumpli" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="textTituHabPla1A">Imprescindible</td>
+                                        <td id="PlhCImprescindible" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="textTituHabPla1A">Cumplimiento</td>
+                                        <td id="PlhCEstadoHabSquad" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="textTituHabPla1A">Comentarios</td>
+                                        <td id="PlhCObserHabSquad" class="textTituHabPla1B" colspan="2">**</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="textTituHabPla1A">Evidencia</td>
+
+                                    </tr>
+                                    <tr>
+
+                                        <td id="PlhCEvidenciaHabSquad" class="textTituHabPla1B" colspan="3">**</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--===== MAIN JS =====-->
+    <script src="./librerias/jquery/jquery-3.6.0.min.js"></script>
+    <script src="./pentest/js/pentest_union.js"></script>
+    <script src="./seguridad/js/controles.js"></script>
+    <script src="./seguridad/js/controles_plantilla.js"></script>
+    <script src="./seguridad/js/etapa.js"></script>
+    <script src="./dist/js/jim.js"></script>
+
+    <!--===== Bootstratp 5 =====-->
+    <script src="./librerias/bootstrap_5.2.3/js/bootstrap.bundle.js"></script>
+    <script src="./librerias/bootstrap_5.2.3/js/bootstrap.js"></script>
+
+    <!--===== Code mirror =====-->
+    <script src="./librerias/codemirror/lib/codemirror.js"></script>
+    <script src="./librerias/codemirror/mode/javascript/javascript.js"></script>
+    <script src="./librerias/codemirror/mode/shell/shell.js"></script>
+    <script src="./librerias/codemirror/mode/powershell/powershell.js"></script>
+    <script src="./librerias/codemirror/mode/python/python.js"></script>
+    <script src="./librerias/codemirror/mode/xml/xml.js"></script>
+    <script src="./librerias/codemirror/mode/ruby/ruby.js"></script>
+    <script src="./librerias/codemirror/mode/php/php.js"></script>
+    <script src="./librerias/codemirror/mode/perl/perl.js"></script>
+    <script src="./librerias/codemirror/mode/nginx/nginx.js"></script>
+    <script src="./librerias/codemirror/mode/http/http.js"></script>
+    <script src="./librerias/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="./librerias/codemirror/mode/sql/sql.js"></script>
+    <script src="./librerias/codemirror/addon/display/fullscreen.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+
+    <!--  Summer sin Bootstrap -->
+    <script src="/librerias/summernote/summernote-lite.js"></script>
+
+
+    <script src="./pentest/prism/prism.js"></script>
+    <script src="./pentest/js/menu_resaltado.js"></script>
+
+
+    <!--  FontAs -->
+    <script src="./librerias/fontawesome-free-6.2.0-web/js/all.js"></script>
+    <script src="./librerias/fontawesome-free-6.2.0-web/js/v4-shims.js"></script>
+
+    <!-- Datatables -->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js"></script>
+
+
+    <!-- Para usar los botones -->
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
+
+    <!-- Para los estilos en Excel     -->
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
+
+    <!--  Summer Add Header Table -->
+    <script src="/librerias/summernote/summernote-table-headers-master/summernote-table-headers.js"></script>
+    <script src="/librerias/summernote/plugin/plugin_iframe.js"></script>
+
+    <!--===== Hi chart =====-->
+
+    <script src="/librerias/highcharts/highcharts.js"></script>
+    <script src="/librerias/highcharts/modules/data.js"></script>
+    <script src="/librerias/highcharts/modules/drilldown.js"></script>
+    <script src="/librerias/highcharts/modules/exporting.js"></script>
+    <script src="/librerias/highcharts/modules/export-data.js"></script>
+    <script src="/librerias/highcharts/modules/accessibility.js"></script>
+    <script src="/librerias/highcharts/themes/dark-blue.js"></script>
+    <script src="/librerias/highcharts/modules/xrange.js"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script src="/seguridad/js/export.js"></script>
+
+</body></html>

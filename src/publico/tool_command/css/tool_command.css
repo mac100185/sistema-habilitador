@@ -1,0 +1,348 @@
+.ko {
+    background: url(./../img/imgSolo.png);
+    background-color: #f8f8ff;
+    width: 100%;
+    color: #4b0082;
+    font-size: 13px;
+    border: 1px solid #bfbfbf;
+    padding: 3px 3px 3px 3px;
+    background-attachment: local;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+    border-color: #ccc;
+    margin-top: 0px;
+}
+
+.panel {
+    display: none;
+    animation: fadein 1.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.panel-title {
+    font-size: 1.5em;
+    font-weight: bold
+}
+
+.radio {
+    display: none;
+}
+
+
+/*===========================DataTable=======================*/
+.borTabProy {
+
+    border: 1px solid var(--descripcion);
+    background-color: var(--fondoDark);
+    color: var(--colorDark1);
+    border: none;
+    padding-top: 3px;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 918px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+table.dataTable {
+    color: var(--colorDark1);
+    border: solid 1px var(--fondoDark4) !important;
+    background: var(--fondoDark5);
+}
+
+table.dataTable thead {
+    color: var(--colorDark1);
+    font-size: 14px;
+    /* para que datatble este todo en una sola fila */
+    white-space: nowrap;
+    line-height: 0.7 !important;
+    text-align: center;
+    border: solid 1px var(--fondoDark4) !important;
+}
+
+
+/*Bonton Acendente y deacendente*/
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    background: none;
+    padding-left: 5px;
+    padding-right: 0;
+    margin: 0px;
+    color: var(--hoverDark1);
+}
+
+/*Bonton Acendente y deacendente*/
+.sort-btn {
+    padding: 1px;
+    float: down;
+    margin: 0px;
+    font-size: 1px !impotant;
+}
+
+/* Estilos para los botones de paginacion */
+.page-item.active .page-link {
+    background-color: var(--fondoDark5) !important;
+    color: var(--colorDark1) !important;
+    border: solid 1px var(--hoverDark1);
+
+    /* border: 1px solid black; */
+}
+
+.page-link {
+    font-size: 13px;
+    color: var(--colorDark1);
+    background: var(--fondoDark4);
+    border: solid 1px var(--fondoDark2);
+
+}
+
+.page-link:hover {
+    background: var(--fondoDark5);
+    color: var(--hoverDark1);
+    border: solid 1px var(--hoverDark1);
+}
+
+.page-item.disabled .page-link {
+    font-size: 13px;
+    color: var(--colorDark1);
+    background: var(--fondoDark4);
+    border: solid 1px var(--fondoDark2);
+}
+
+/*ocultar*/
+.dataTables_scrollBody {
+    /* overflow-y: hidden !important;*/
+}
+
+.dataTables_info {
+    color: var(--colorDark1);
+    font-size: 14px;
+}
+
+table.dataTable td {
+   white-space: normal;
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    color: var(--colorDark1);
+    vertical-align: middle;
+    border: solid 1px var(--menu);
+    
+}
+
+table.dataTable tbody > tr:nth-child(2n+1) td {
+    /* or th */
+    background-color: var(--fondoDark3);
+    color: var(--colorDark1);
+}
+
+table.dataTable tr {
+    border: solid 1px var(--menu);
+}
+
+/*centrado de texto*/
+.textDataCent {
+    text-align: center !important;
+
+}
+
+/* Efecto para td*/
+table.dataTable th {
+    width: 1px;
+    /*white-space: nowrap;*/
+    font-size: 14px;
+    line-height: 1.3 !important;
+    /* Centrar texto de tabla*/
+    vertical-align: middle;
+    color: var(--colorDark1);
+    border: solid 1px var(--menu);
+    border-bottom: solid 1px var(--hoverDark1);
+}
+
+table.dataTable tr {
+    border: solid 1px var(--menu);
+}
+
+/*Buscador*/
+.dataTables_filter input {
+    color: #a4b1cd;
+    background: var(--fondoDark5);
+    border: solid 1px var(--hoverDark1);
+    width: 120px !important;
+}
+
+.dataTables_filter input:focus {
+    color: #a4b1cd;
+    background: var(--fondoDark5);
+    border: solid 2px var(--hoverDark1);
+
+}
+
+
+
+/*==========Pantalla completa=======*/
+#hHEDetalleHerra.fullscreen {
+    z-index: 100;
+    width: 95%;
+    height: 90.5%;
+    position: fixed;
+    top: 91px !important;
+    left: 4%;
+    border: solid 1px #707070;
+}
+
+#hSEDetalleServicio.fullscreen {
+    z-index: 100;
+    width: 95%;
+    height: 90.5%;
+    position: fixed;
+    top: 91px !important;
+    left: 4%;
+    border: solid 1px #707070;
+}
+
+.tituloPen {
+    background: var(--menu);
+    border-color: var(--menu);
+    color: var(--colorDark1);
+    width: 100%;
+    margin-top: 2px;
+    margin-left: 1px;
+    margin-right: 2px;
+    cursor: pointer;
+    padding: 2px 20px;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 12px;
+    border-top: 4px solid var(--menu);
+    border-radius: 3px 3px 0px 0px;
+    box-shadow: 0 0.0rem 0.1rem var(--header);
+}
+
+.botonData {
+    color: aliceblue !important;
+    padding: 4px 7px !important;
+}
+
+
+.hojaDesCentral img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.button-prin {
+    background-color: var(--fondoDark2);
+    border-radius: 3px;
+    border: 1px solid var(--hoverDark1);
+    color: var(--hoverDark1);
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    margin: 0;
+    outline: none;
+    padding: 3px 4px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.button-prin:hover,
+.button-prin:focus {
+    background-color: var(--fondoDark5);
+    color: var(--hoverDark1);
+}
+
+.button-prin:focus {
+    box-shadow: 0 0 0 2px var(--hoverDark1);
+}
+
+.button-prin:active {
+    background-color: #a0c7e4;
+    box-shadow: none;
+    color: var(--hoverDark1);
+}
+
+
+.button_sec {
+    background-color: var(--fondoDark2);
+    border-radius: 3px;
+    border: 1px solid var(--colorDark1);
+    color: var(--colorDark1);
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    font-size: 11px;
+    margin: 0;
+    outline: none;
+    padding: 0px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.button_sec:hover,
+.button_sec:focus {
+    background-color: var(--fondoDark5);
+    color: var(--hoverDark1);
+}
+
+.button_sec:focus {
+    box-shadow: 0 0 0 2px var(--hoverDark1);
+}
+
+.button_sec:active {
+    background-color: #a0c7e4;
+    box-shadow: none;
+    color: var(--hoverDark1);
+}
+
+.botonNombre {
+    padding: 0px;
+    height: 26px;
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    color: var(--colorDark1);
+    padding: 1px 3px;
+}
+
+.botonNombre:hover {
+    color: var(--hoverDark1);
+    background: var(--fondoDark4);
+}
+
+.botonNombre:active {
+    color: var(--hoverDark1);
+}
+
+
+.highcharts-background{
+    background: red;
+}

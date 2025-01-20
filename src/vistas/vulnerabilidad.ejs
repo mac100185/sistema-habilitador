@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===== BOX ICONS ===== -->
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="./dist/css/jim.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+
+
+
+  <title>Vulnerabilidad</title>
+  <!-- add icon  -->
+  <link rel="icon" href="./dist/img/ko.png" type="image/x-icon">
+
+
+
+     <!-- traer jQuery 3.5.1 -->
+  <script src="./vulnerabilidad/js/jquery-3.5.1.js"></script>
+  <script>
+    let jQuery_3_5_1 = jQuery.noConflict();
+
+    
+  </script>
+    
+
+  <!-- Menu proyecto -->
+  <link rel="stylesheet" href="./dist/css/menu.css">
+
+  <!-- AES 256 Mult -->
+  <link rel="stylesheet" href="./aescbc256/aescbc256.css">
+
+  <!-- TLN -->
+  <link rel="stylesheet" href="./aescbc256/tln.css">
+  <style type="text/css">
+    /*nada de esto realmente importa, excepto quizás el tamaño de la envoltura */
+
+    label,
+    input {
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    #wrapper {
+      border-left: 1px solid skyblue;
+      position: relative;
+      height: 290px;
+      width: 100%;
+      margin: 3px auto;
+    }
+  </style>
+
+  <!-- mENU vULNERABILIDADES -Sub menu Vulnerabilidad-->
+
+  <link href="./vulnerabilidad/css/appVulnerabilidad.css" rel="stylesheet" />
+  <script type="text/javascript" src="./vulnerabilidad/js/appVulnerabilidad.js"></script>
+  <script type="text/javascript" src="./vulnerabilidad/js/Pvulnerabilidad.js"></script>
+
+
+  <!-- Iconos Google-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+
+  <!-- Matriz de riesgo-->
+ 
+  <link href="./matrizR/css/matrizJim.css" rel="stylesheet" />
+  <script type="text/javascript" src="./matrizR/js/riesgo.js"></script>
+ <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+</head>
+
+<body>
+
+
+ 
+
+  <div class="wrapper hover_collapse">
+
+    <!-- ===== Header ===== -->
+    <div class="top_navbar">
+      <div class="logo">Vulnerabilidad</div>
+      <div class="menu">
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+
+            
+            
+            
+        </div>
+
+
+        <li style="width: 25px;margin: 1px">
+          <a class="nav-link waves-effect waves-dark"><button type="button" class="botonIcono" onclick="menuCol7D()">
+              <i class="material-icons">format_align_left</i>
+            </button></a>
+        </li >
+
+        <li style="width: 25px;margin: 1px">
+          <a class="nav-link waves-effect waves-dark"><button type="button" class="botonIcono"
+              onclick="menuColNormal()">
+              <i class="material-icons" style="color: white">format_align_justify</i>
+            </button></a>
+        </li>
+
+
+          <li style="width: 25px;margin:1px">
+            <a class="nav-link waves-effect waves-dark"><button type="button" class="botonIcono" onclick="menuCol5D()">
+                <i class="material-icons">format_align_right</i>
+              </button></a>
+          </li>
+        
+
+          <li style="width: 75%">
+          
+            </li>
+
+
+
+        <div class="profile_wrap">
+          <div class="profile">
+            <img src="./dist/img/hack.png" alt="profile_pic">
+            <span class="name">Jim KO</span>
+            <span class="icon">
+              <i class="fas fa-angle-down"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ===== Side bar ===== -->
+    <div class="sidebar">
+      <div class="sidebar_inner">
+        <ul>
+          <li>
+            <a href="index.html">
+              <span class="icon"><i class="logo-icon p-l-10"><img src="./dist/img/hack.png"
+                    style="height: 25px"></i></span>
+              <span class="text">Hack Bar</span>
+            </a>
+          </li>
+          <li>
+            <a href="vulnerabilidad.html" style="background: #2A9FD6">
+              <span class="icon"><i class="logo-icon p-l-10"><img src="./dist/img/owasp.png"
+                    style="height: 25px"></i></span>
+              <span class="text">Vulnerabilidad</span>
+            </a>
+          </li>
+          <li>
+            <a href="proyecto.html">
+              <span class="icon"><i class="logo-icon p-l-10"><img src="./general/img/proyecto.png"
+                    style="height: 25px"></i></span>
+              <span class="text">Proyectos</span>
+            </a>
+          </li>
+          <li>
+            <a href="herramienta.html">
+              <span class="icon"><i class="logo-icon p-l-10"><img src="./general/img/tool.png"
+                    style="height: 25px"></i></span>
+              <span class="text">Herramientas</span>
+            </a>
+          </li>
+          <li>
+            <a href="hacks.html">
+              <span class="icon"><i class="logo-icon p-l-10"><img src="./general/img/hack3.png"
+                    style="height: 25px"></i></span>
+              <span class="text">Hacks</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+    <div class="main_container">
+
+      <div class="miContenido">
+
+
+        <div class="row" style=" margin-right: auto;  margin-left: auto;">
+          <!-- ===== Menu A ===== -->
+          <div id="menuDerecha" class="col-6 pl-0 pr-1">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                  aria-selected="true"><i class="logo-icon p-l-10"><img src="./dist/img/aes.png"
+                      style="height: 24px"></i>Vulnerabilidades</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                  aria-controls="profile" aria-selected="false"><i class="logo-icon p-l-10"><img
+                      src="./dist/img/aes.png" style="height: 24px"></i>AES DI</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                  aria-controls="contact" aria-selected="false"><i class="logo-icon p-l-10"><img
+                      src="./dist/img/aes.png" style="height: 24px"></i>AES 256 M</a>
+              </li>
+
+
+
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+               
+
+                <p class="bordeSupeVulne">
+                <table>
+                  <tr>
+                    <th class="vulT0Deta">
+
+                      Busqueda
+
+                    </th>
+
+                    <th class="vulT0BDeta">
+
+                      <select id="cboVulnerabilidadAPI" class="select2 form-control custom-select"
+                        onchange="selecVulneraAPI();" style="width:100%; height:20px;color: #2a9fd6 !important;">
+                        <option value="">Seleccione Vulnerabilidad...</option>
+                      </select>
+
+                    </th>
+                    <th class="vulT0CDeta">
+                      KO
+                    </th>
+                    <th class="vulT0DDeta">
+
+                    </th>
+
+                  </tr>
+                </table>
+
+
+
+
+
+                <p>
+                <p class="bordeSupeVulne">
+
+
+
+                <table>
+                  <tr>
+                    <th class="vulT1Deta">CVSSv3</th>
+                    <th id="nomVulnerabilidadAPI" class="vul0DetaA">-</th>
+                    <th class="vul0DetaB">
+                      Tipo
+                    </th>
+                    <th id="tipoVulnerabilidadAPI" class="vul0BDetaC">-</th>
+                    <th class="vul0DetaB">
+                      ID
+                    </th>
+                    <th id="idVulnerabilidadAPI" class="vul0BDetaC">-</th>
+                  </tr>
+                </table>
+
+
+
+
+
+
+
+                <p class="bordeSupeVulne">
+
+
+
+                <table>
+                  <tr>
+                    <th class="vulT1Deta">Vulnerabilidad</th>
+                    <th id="nomVulnerabilidadAPI" class="vul0DetaA">-</th>
+                    <th class="vul0DetaB">
+                      Tipo
+                    </th>
+                    <th id="tipoVulnerabilidadAPI" class="vul0BDetaC">-</th>
+                    <th class="vul0DetaB">
+                      ID
+                    </th>
+                    <th id="idVulnerabilidadAPI" class="vul0BDetaC">-</th>
+                  </tr>
+                </table>
+
+                <table>
+                  <tr>
+                    <th class="vul1Deta">Código de Vulnerabilidad</th>
+
+                    <th id="codVulnerabilidadAPI" class="vul1BDeta">-</th>
+                    <th class="vul1Deta">
+                      Código de la prueba OTG (ID OTG)
+                    </th>
+                    <th id="idOTGAPI" class="vul1BDeta">-</th>
+                    <th class="vul1Deta">
+                      Checklist de prueba OTG
+                    </th>
+                    <th id="cheklistOTGAPI" class="vul1BDetaB">-</th>
+                  </tr>
+                </table>
+
+
+
+                <table>
+                  <tr>
+                    <th class="vul2Deta">Afecta controles ISO 27002-2013</th>
+
+                    <th id="afectaControlAPI" class="vul2BDetaB">-</th>
+                    <th class="vul2Deta">
+                      AFECTA VERIFICACIÓN DE CUMPLIMIENTO
+                    </th>
+                    <th id="afectaRequeAPI" class="vul2BDeta">-</th>
+
+                  </tr>
+                </table>
+
+
+                <p>
+
+
+
+                <p class="bordeSuperiorRiesgoN">
+                  <strong>VALORACIÓN DEL RIESGO</strong>
+                
+
+
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="valoraResT">
+                      Resumen
+                    </th>
+                    <th class="valoraRes1A">
+                      Riesgo Ponderado (IMPACTO)
+                    </th>
+                    <th id="impactob" class="valoraRes1B">-</th>
+                    <th class="valParameHeaProg">
+                      <div id="progressBar">
+                        <div id="progressBarFull"></div>
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+
+                <p class="espacio1">
+
+                <table>
+                  <tr>
+                    <th class="desc-riesgo">Valor del Activo</th>
+                    <th id="activo" class="desc-riesgob">0</th>
+                    <th class="c3">Facilidad de Explotación</th>
+                    <th id="facilidad" class="c3b">BAJO</th>
+                    <th class="c3">Impacto</th>
+                    <th id="impactoa" class="c3b">0</th>
+                  </tr>
+                </table>
+
+                <table>
+                  <tr>
+                    <th rowspan="3" colspan="1" class="desc-riesgo">
+                      Probabilidad de Riesgo
+                    </th>
+                    <th class="c2b">Bajo</th>
+                    <th class="c2b">Medio</th>
+                    <th class="c2b">Alto</th>
+                  </tr>
+                  <tr>
+                    <th class="c2v"></th>
+                    <th class="c2a"></th>
+                    <th class="c2rb">.</th>
+                  </tr>
+                  <tr>
+                    <th id="pBajo" class="c2x">⌂</th>
+                    <th id="pMedio" class="c2x"></th>
+                    <th id="pAlto" class="c2x"></th>
+                  </tr>
+                </table>
+
+                <table>
+                  <tr>
+                    <th rowspan="3" colspan="1" class="desc-riesgo">
+                      Riesgo Ponderado (Impacto)
+                    </th>
+                    <th class="c2b">Bajo</th>
+                    <th class="c2b">Medio</th>
+                    <th class="c2b">Alto</th>
+                  </tr>
+                  <tr>
+                    <th id="impactoBajoa" class="c2v">1</th>
+                    <th id="impactoMedioa" class="c2a"></th>
+                    <th id="impactoAltoa" class="c2r"></th>
+                  </tr>
+                  <tr>
+                    <th id="impactoBajob" class="c2x">⌂</th>
+                    <th id="impactoMediob" class="c2x"></th>
+                    <th id="impactoAltob" class="c2x"></th>
+                  </tr>
+                </table>
+
+                <p>
+
+                
+                <table class="vulParameEspacio">
+                  <tr>
+                    <th class="vulParametros1">Valoración del Activo</th>
+                    <th class="vulParametros2">
+                      <select id="valorActivo" onchange="seleccionarActivo();" class="seleParametros">
+                        <option class="c2b" value="0">0</option>
+                        <option class="c2b" value="1">1</option>
+                        <option class="c2b" value="2">2</option>
+                        <option class="c2b" value="3">3</option>
+                        <option class="c2b" value="4">4</option>
+                      </select>
+                    </th>
+                    <th class="vulParametros1">
+                      Probalilidad de Ocurrencia
+                    </th>
+                    <th class="vulParametros2">
+                      <select id="probabilidadO" onchange="seleccionarActivo();" class="seleParametros">
+                        <option value="1" class="c2b">BAJO</option>
+                        <option value="2" class="c2b">MEDIO</option>
+                        <option value="3" class="c2b">ALTO</option>
+                      </select>
+                    </th>
+                    <th class="vulParametros1">
+                      Facilidad de Explotación
+                    </th>
+                    <th class="vulParametros2">
+                      <select id="facilidadExplot" onchange="seleccionarActivo()" class="seleParametros">
+                        <option value="1" class="c2b">BAJO</option>
+                        <option value="2" class="c2b">MEDIO</option>
+                        <option value="3" class="c2b">ALTO</option>
+                      </select>
+                    </th>
+                  </tr>
+                </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </div>
+
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <p class="bordeSuperiorAES">
+                Menu 2
+
+              </div>
+              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                <p class="bordeSuperiorAES">
+                Menu3
+
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+          <!-- ===== Menu B ===== -->
+
+          <div id="menuIzquierda" class="col-6 pl-1 pr-0">
+            <ul class="nav nav-tabs" id="myTabB" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tabB" data-toggle="tab" href="#homeB" role="tab"
+                  aria-controls="homeB" aria-selected="true">Vulnerabilidades</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tabB" data-toggle="tab" href="#profileB" role="tab"
+                  aria-controls="profileB" aria-selected="false">Diccionario</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tabB" data-toggle="tab" href="#contactB" role="tab"
+                  aria-controls="contactB" aria-selected="false">JWT</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContentB">
+              <div class="tab-pane fade show active" id="homeB" role="tabpanel" aria-labelledby="home-tabB">
+
+
+               <p class="bordeSupeVulne"></p>
+                <table>
+                  <tr>
+                    <th class="vul4Deta">Descripción de la Vulnerabilidad</th>
+                  </tr>
+                </table>
+
+                <textarea name="descVulnerabilidadAPI" id="descVulnerabilidadAPI" class="textAreaDesVul"
+                  rows="18"></textarea>
+                <table>
+
+                  <p class="bordeSupeVulne"></p>
+                  <tr>
+                    <th class="vul4Deta">Resultado</th>
+                  </tr>
+                </table>
+
+                <textarea name="resultadoAPI" id="resultadoAPI" class="textAreaDesVul" rows="6"></textarea>
+
+                <p class="bordeSupeVulne"></p>
+                <table>
+                  <tr>
+                    <th class="vul4Deta">Recomendación</th>
+                  </tr>
+                </table>
+
+                <textarea name="recomendacionAPI" id="recomendacionAPI" class="textAreaDesVul" rows="15"></textarea>
+
+
+
+
+
+
+
+              </div>
+              <div class="tab-pane fade" id="profileB" role="tabpanel" aria-labelledby="profile-tabB">Diccionario</div>
+              <div class="tab-pane fade" id="contactB" role="tabpanel" aria-labelledby="contact-tabB">JWT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--===== MAIN JS =====-->
+  <script src="./dist/js/jim.js"></script>
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+  <!--===== AES 256 JS =====-->
+  <script src="./aescbc256/aesMulti.js"></script>
+  <script src="./aescbc256/crypto-js.js"></script>
+  <script src="./aescbc256/tln.js"></script>
+<!-- select2 -->
+    <link rel="stylesheet" type="text/css" href="../general/select2/dist/css/select2.min.css" />
+    <script src="./general/select2/dist/js/select2.full.min.js"></script>
+    <script src="./general/select2/dist/js/select2.min.js"></script>
+    <script>
+      //***********************************//
+      // For select 2
+      //***********************************//
+      $(".select2").select2();
+    </script>
+    <!-- select2 fin -->
+    
+    
+   
+
+</body>
+
+</html>

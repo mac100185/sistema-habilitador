@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  dbsh:
+    image: mysql:8.1.0
+    container_name: sist-hab-db-prod
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=quanium
+      - MYSQL_DATABASE=sisthabpro
+      - MYSQL_USER=quanium
+      - MYSQL_PASSWORD=quanium
+    restart: always
+    volumes:
+      - /var/lib/mysql
+      - ./db/sisthabpro.sql:/docker-entrypoint-initdb.d/sisthabpro.sql
+  phpmyadminsh:
+     image: phpmyadmin/phpmyadmin
+     container_name: sist-hab-phpmyadmin-prod
+     restart: always
+     ports:
+      - "82:80"
+     links:
+      - "dbsh:db"
+     volumes:
+      - /etc/phpmyadmin/config.user.inc.php 
+     depends_on:
+      - dbsh
+  websh:
+    image: sistema-habilitador-prod:latest
+    build: .
+    container_name: sist-hab-prod
+    restart: always
+    volumes:
+      - /quanium/app/src/publico/imagen4
+    ports:
+      - "7777:7777"
+    links:
+      - "dbsh:db"
+    depends_on:
+      - dbsh
+  drawio:
+     image: jgraph/drawio
+     container_name: sist-hab-drawio-prod
+     restart: always
+     ports:
+      - "83:8080"
+      - "84:8443"

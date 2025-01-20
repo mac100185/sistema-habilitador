@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===== BOX ICONS ===== -->
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="./dist/css/jim.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+
+
+
+  <title>HACK TOOL KO 3.0</title>
+  <!-- add icon  -->
+  <link rel="icon" href="./dist/img/ko.png" type="image/x-icon">
+
+  <!-- Matriz Tools -->
+  <link rel="stylesheet" href="./matrizR/css/matrizJim.css">
+
+
+  <!-- Menu proyecto -->
+  <link rel="stylesheet" href="./dist/css/menu.css">
+
+  <!-- AES 256 Mult -->
+  <link rel="stylesheet" href="./aescbc256/aescbc256.css">
+
+  <!-- TLN -->
+  <link rel="stylesheet" href="./aescbc256/tln.css">
+  <style type="text/css">
+    /*nada de esto realmente importa, excepto quizás el tamaño de la envoltura */
+
+    label,
+    input {
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    #wrapper {
+      border-left: 1px solid skyblue;
+      position: relative;
+      height: 140px;
+      width: 100%;
+      margin: 3px auto;
+    }
+  </style>
+
+
+
+  <!-- Iconos Google-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- AES M-->
+  <link href="./aesM/css/aesM.css" rel="stylesheet" />
+  <script type="text/javascript" src="./aesM/js/appaesM.js"></script>
+
+  <!-- AES Sia-->
+  <link href="./aesSia/css/cifradoAesSia.css" rel="stylesheet" />
+  <script type="text/javascript" src="./aesSia/js/appAESSia.js"></script>
+  <script type="text/javascript" src="./aesSia/js/cripto.js"></script>
+
+
+  <!-- AES Di-->
+  <link href="" rel="stylesheet" />
+  <script type="text/javascript" src="./aesDi/js/appAESDi.js"></script>
+  <script type="text/javascript" src="./aesDi/js/cryptojs-aes-format.js"></script>
+
+
+  <!-- Base 64-->
+  <link href="./herramientas/base64/css/base64.css" rel="stylesheet" />
+  <script type="text/javascript" src="./herramientas/base64/js/base64.js"></script>
+
+  <!-- Base 64-->
+  <link href="" />
+  <script type="text/javascript" src="./herramientas/url/js/url.js"></script>
+
+  <!-- Matriz de riesgo-->
+  <link href="./matrizR/css/matrizTabla.css" />
+  <script type="text/javascript" src="./matrizR/js/riesgo.js"></script>
+
+</head>
+
+<body>
+
+
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+
+
+      <div class="miContenido">
+
+
+        <div class="row" style=" margin-right: auto;  margin-left: auto;">
+          <!-- ===== Menu A ===== -->
+          <div id="menuDerecha" class="col-12 pl-0 pr-1">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                  aria-selected="true"><i class="logo-icon p-l-10"><img src="./dist/img/aes.png"
+                      style="height: 24px"></i>AES</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                  aria-controls="profile" aria-selected="false"><i class="logo-icon p-l-10"><img
+                      src="./dist/img/aes.png" style="height: 24px"></i>AES DI</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                  aria-controls="contact" aria-selected="false"><i class="logo-icon p-l-10"><img
+                      src="./dist/img/aes.png" style="height: 24px"></i>AES 256 M</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#menu4a" role="tab" aria-controls="menu4a"
+                  aria-selected="false"><i class="logo-icon p-l-10"><img src="./dist/img/aes.png"
+                      style="height: 24px"></i>AES SI</a>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#menu5a" role="tab" aria-controls="menu5a"
+                  aria-selected="false"><i class="logo-icon p-l-10"><img src="./dist/img/aes.png"
+                      style="height: 24px"></i>Base 64</a>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#menu6a" role="tab" aria-controls="menu6a"
+                  aria-selected="false"><i class="logo-icon p-l-10"><img src="./dist/img/aes.png"
+                      style="height: 24px"></i>Encode URL</a>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#menu7a" role="tab" aria-controls="menu7a"
+                  aria-selected="false"><i class="logo-icon p-l-10"><img src="./dist/img/aes.png"
+                      style="height: 24px"></i>Tool</a>
+              </li>
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr>
+                    <th class="aes4Text">Cifrado</th>
+                    <th class="aes2">
+                      <select id="buscarAES" onchange="seleccionarAES();" style="width: 100%; height: 25px">
+                        <option value="1">AES</option>
+                        <option value="2">PASSPORTv4</option>
+                        <option value="3">SIMON</option>
+                        <option value="4">SISEVE</option>
+                        <option value="5">SISEVE TOKEN</option>
+                        <option value="6">Otro</option>
+                      </select>
+                    </th>
+                    <th class="aes1">Key Size</th>
+                    <th id="mostrarKeySi" class="aes1Bla">0</th>
+                    <th class="aes1">Padding</th>
+                    <th class="aes1Bla">Pkcs7</th>
+                  </tr>
+                </table>
+
+                <table>
+                  <tr>
+                    <th class="aes2b">Mode</th>
+                    <th class="aes2b2">
+                      <select id="buscarModo" onchange="seleccionarModoAES();" style="width: 100%; height: 25px">
+                        <option value="1">CBC</option>
+                        <option value="2">EBC</option>
+                      </select>
+                    </th>
+                    <th class="aes1b">Key</th>
+
+                    <th class="aes4b">
+                      <input class="textKeyJim" id="keyMulti" type="text" style="width: 100%"
+                        oninput="contarKeySize()" />
+                    </th>
+                    <th class="aes1b">IV</th>
+                    <th class="aes3b">
+                      <input id="ivMulti" maxlength="16" type="text" class="textKeyJim" />
+                    </th>
+                  </tr>
+                </table>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Input</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('textoAEScbc256M')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('textoAEScbc256M')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModoIn" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraAESinp" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayAESinp" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarInpAESmulti()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+
+                <div id="wrapper">
+                  <textarea oninput="contarInputAES()" class="textAreaJim" name="textoAEScbc256M" id="textoAEScbc256M"
+                    rows="7" placeholder="Texto" onclick="javascript: limpia(this);"
+                    onBlur="javascript: verifica(this);" required></textarea>
+                </div>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Output</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Output " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('resulAEScbc256M')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('resulAEScbc256M')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModoOut" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraAESout" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayAESout" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarAESmulti()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+                <div id="wrapper">
+                  <textarea id="resulAEScbc256M" class="textAreaJim" rows="7" oninput="contarOutAES()"></textarea>
+                </div>
+                <div>
+                  <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                    <div class="col-md-6 pl-0 pr-2">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">String</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarStAEScbc256M()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarStAEScbc256M()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div class="col-md-6 pl-2 pr-0">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">Lista</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarListaAEScbc256M()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarListaAEScbc256M()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <label>
+                  Ancho:
+                  <input oninput="wrapper.style.width=this.value;" type="range" value="100%" min="50%" max="100%" />
+                </label>
+                <label>
+                  Alto:
+                  <input oninput="wrapper.style.height=this.value+'px';" type="range" 500="100%" min="100" max="500" />
+                </label>
+
+
+
+              </div>
+
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr>
+                    <th class="aesSia1T">Cifrado</th>
+                    <th class="aesSia1A1">
+                      <select id="buscarAESDi" onchange="seleccionarAESDi();" style="width: 100%; height: 25px">
+                        <option value="1">AES F3</option>
+                        <option value="2">AES D1</option>
+                        <option value="3">AES D2</option>
+                        <option value="4">Otro</option>
+						
+                      </select>
+                    </th>
+                    <th class="aesSia1B1">Key</th>
+                    <th class="aesSia1C1"><input class="textKeyJim" id="keyAESDi" type="text" style="width: 100%"
+                        oninput="contKeySizeDi()" /></th>
+                    <th class="aesSia1B1">Size</th>
+
+                    <th id="KeySizeDi" class="aesSia1D1">0</th>
+                  </tr>
+                </table>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Input</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('textoAESDi')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('textoAESDi')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraAESDiinp" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayAESDiinp" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarInpAESDi()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarInpAESDi()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarInpAESDi()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+
+                <div id="wrapper">
+                  <textarea oninput="contarInputAESDi()" class="textAreaJim" id="textoAESDi" rows="7"
+                    placeholder="Texto" onclick="javascript: limpia(this);" onBlur="javascript: verifica(this);"
+                    required></textarea>
+                </div>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Output</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('resulAESDi')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('resulAESDi')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+                    <th id="nroCaraAESDiout" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+                    <th id="nroPayAESDiout" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarOutAESDi()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarOutAESDi()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarOutAESDi()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+                <div id="wrapper">
+                  <textarea id="resulAESDi" class="textAreaJim" rows="7" oninput="contarOutAESDi()"></textarea>
+                </div>
+
+                <div>
+                  <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                    <div class="col-md-6 pl-0 pr-2">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">String</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarAESDiString()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarAESDiString()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div class="col-md-6 pl-2 pr-0">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">Lista</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarAESDiLista()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+                          <th class="aesBoton2">
+                            <button onclick="descifrarAESDiLista()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr>
+                    <th class="aesM1A">Cifrado</th>
+                    <th class="aesM1B">
+                      <select id="buscarAESMa" onchange="seleccionarAESMa();" style="width: 100%; height: 25px">
+                        <option value="1">AES</option>
+                        <option value="2">MATRICULA 2021</option>
+                        <option value="3">Otro</option>
+                      </select>
+                    </th>
+                    <th class="aesM1C">Key</th>
+                    <th class="aesM1D"><input class="textKeyJim" id="keyAESMa" type="text" style="width: 100%"
+                        oninput="contarKeySizeMa()" /></th>
+                    <th class="aesM1E">Key Size</th>
+                    <th id="KeySiaesMa" class="aesM1F">0</th>
+                  </tr>
+                </table>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Input</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('textoAESMa')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('textoAESMa')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraInAESMa" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayInAESMa" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarInpAESMa()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarInpAESMa()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarInpAESMa()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+
+                <div id="wrapper">
+                  <textarea oninput="contarInputAESMa()" class="textAreaJim" name="textoAESMa" id="textoAESMa" rows="7"
+                    placeholder="Texto" onclick="javascript: limpia(this);" onBlur="javascript: verifica(this);"
+                    required></textarea>
+                </div>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Output</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('resulAESMa')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('resulAESMa')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraOuAESMa" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayOuAESMa" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarOutAESMa()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarOutAESMa()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarOutAESMa()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+                <div id="wrapper">
+                  <textarea id="resulAESMa" class="textAreaJim" rows="7" oninput="contarOutAESMa()"></textarea>
+                </div>
+
+                <div>
+                  <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                    <div class="col-md-6 pl-0 pr-2">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">String</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarStAESMa()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarStAESMa()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div class="col-md-6 pl-2 pr-0">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">Lista</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarListaAESMa()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarListaAESMa()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+                <label>
+                  Ancho:
+                  <input oninput="wrapper.style.width=this.value;" type="range" value="100%" min="50%" max="100%" />
+                </label>
+                <label>
+                  Alto:
+                  <input oninput="wrapper.style.height=this.value+'px';" type="range" 500="100%" min="100" max="500" />
+                </label>
+
+              </div>
+
+              <div class="tab-pane fade" id="menu4a" role="tabpanel" aria-labelledby="menu4a-tab">
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr>
+                    <th class="aesSia1T">Cifrado</th>
+
+                    <th class="aesSia1A1">
+                      <select id="buscarAESSia" onchange="seleccionarAESSia();" style="width: 100%; height: 25px">
+
+                        <option value="1">AES Format</option>
+                        <option value="2">SIAGIE</option>
+                        <option value="3">SIAGIE 2</option>
+                        <option value="4">SIFODS</option>
+                        <option value="5">Materiales</option>
+                      </select>
+                    </th>
+
+                    <th class="aesSia1B1">Key</th>
+                    <th class="aesSia1C1"><input class="textKeyJim" id="keyAESSia" type="text" style="width: 100%"
+                        oninput="contKeySizeSia()" /></th>
+                    <th class="aesSia1B1">Size</th>
+
+                    <th id="KeySizeSia" class="aesSia1D1">0</th>
+                  </tr>
+                </table>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Input</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('textoAES256LS')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('textoAES256LS')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraAESSiainp" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayAESSiainp" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarInpAESSia()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarInpAESSia()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarInpAESSia()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+
+                <div id="wrapper">
+                  <textarea oninput="contarInputAESSia()" class="textAreaJim" id="textoAES256LS" rows="7"
+                    placeholder="Texto" onclick="javascript: limpia(this);" onBlur="javascript: verifica(this);"
+                    required></textarea>
+                </div>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Output</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('resulAES256LS')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('resulAES256LS')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraAESSiaout" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayAESSiaout" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarOutAESSia()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarOutAESSia()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpiarOutAESSia()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+                <div id="wrapper">
+                  <textarea id="resulAES256LS" class="textAreaJim" rows="7" oninput="contarOutAESSia()"></textarea>
+                </div>
+
+                <div>
+                  <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                    <div class="col-md-6 pl-0 pr-2">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">String</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarAES256String()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarAES256String()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div class="col-md-6 pl-2 pr-0">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">Lista</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="cifrarAES256Lista()" type="button" class="botonAESencript">
+                              CIFRAR
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="descifrarAES256Lista()" type="button" class="botonAESencriptB">
+                              DESCIFRAR
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+                <label>
+                  Ancho:
+                  <input oninput="wrapper.style.width=this.value;" type="range" value="100%" min="50%" max="100%" />
+                </label>
+                <label>
+                  Alto:
+                  <input oninput="wrapper.style.height=this.value+'px';" type="range" 500="100%" min="100" max="500" />
+                </label>
+
+
+
+              </div>
+
+              <div class="tab-pane fade" id="menu5a" role="tabpanel" aria-labelledby="menu5a-tab">
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr>
+                    <th class="base64T1">Encode</th>
+                    <th class="base64B1">
+                      Base 64
+                    </th>
+                    <th class="base64G1">Detalle</th>
+                    <th class="base64B2">Base64 usan el rango de caracteres A-Z, a-z y 0-9 en este orden para los
+                      primeros 62 dígitos</th>
+                  </tr>
+                </table>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Input</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('textoBase64A')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('textoBase64A')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraInpBase64" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayInpBase64" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarInpBase64A()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarInpBase64A()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpInpBase64A()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+
+
+                  </tr>
+                </table>
+
+                <div id="wrapper">
+                  <textarea oninput="contInputBaseA()" class="textAreaJim" id="textoBase64A" rows="7"
+                    placeholder="Texto" onclick="javascript: limpia(this);" onBlur="javascript: verifica(this);"
+                    required></textarea>
+                </div>
+
+                <p class="bordeSuperiorAES"></p>
+
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Output</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('resulBase64A')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('resulBase64A')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraOutBase64" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayOutBase64" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarOutBase64A()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarOutBase64A()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpOutBase64A()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+
+
+                  </tr>
+                </table>
+                <div id="wrapper">
+                  <textarea id="resulBase64A" class="textAreaJim" rows="7" oninput="contOutBase64A()"></textarea>
+                </div>
+
+                <div>
+                  <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                    <div class="col-md-6 pl-0 pr-2">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">String</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="encBase64StrA()" type="button" class="botonAESencript">
+                              ENCODE
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="decBase64StrA()" type="button" class="botonAESencriptB">
+                              DECODE
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div class="col-md-6 pl-2 pr-0">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">Lista</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="encBase64ListA()" type="button" class="botonAESencript">
+                              ENCODE
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="decBase64ListA()" type="button" class="botonAESencriptB">
+                              DECODE
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <label>
+                  Ancho:
+                  <input oninput="wrapper.style.width=this.value;" type="range" value="100%" min="50%" max="100%" />
+                </label>
+                <label>
+                  Alto:
+                  <input oninput="wrapper.style.height=this.value+'px';" type="range" 500="100%" min="100" max="500" />
+                </label>
+
+
+
+              </div>
+              <div class="tab-pane fade" id="menu6a" role="tabpanel" aria-labelledby="menu6a-tab">
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr>
+                    <th class="base64T1">Encode</th>
+
+                    <th class="base64B1">
+                      URI
+                    </th>
+
+                    <th class="base64G1">Detalle</th>
+                    <th class="base64B2">encodeURIComponent - codifica todos los caracteres excepto: A-Z a-z 0-9 - _ . !
+                      ~ * ' ( )</th>
+
+                  </tr>
+                </table>
+
+                <p class="bordeSuperiorAES"></p>
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Input</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('textoURLA')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('textoURLA')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraInpURLA" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayInpURLA" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarInpURLA()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarInpURLA()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpInpURLA()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarInpAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+
+                  </tr>
+                </table>
+
+                <div id="wrapper">
+                  <textarea oninput="contInputURLA()" class="textAreaJim" id="textoURLA" rows="7" placeholder="Texto"
+                    onclick="javascript: limpia(this);" onBlur="javascript: verifica(this);" required></textarea>
+                </div>
+
+                <p class="bordeSuperiorAES"></p>
+
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="aes4Text">Output</th>
+                    <th class="aes0bText">
+                      <button title="Enumerar Input " type="button" class="miBotonAESN"
+                        onclick="TLN.append_line_numbers('resulURLA')">
+                        <i class="material-icons" style="font-size: 18px">format_list_numbered</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Desactivar Enumerado" type="button" class="miBotonAESN"
+                        onclick="TLN.remove_line_numbers('resulURLA')">
+                        <i class="material-icons" style="font-size: 18px">format_align_justify</i>
+                      </button>
+                    </th>
+                    <th class="aes2Text2">Formato:</th>
+                    <th class="aes2bText">
+                      <select id="buscarModo" onchange="seleccionarModo();" style="width: 100%; height: 25px">
+                        <option value="1">Texto Plano</option>
+                        <option value="2">URL</option>
+                        <option value="2">Base64</option>
+                      </select>
+                    </th>
+                    <th class="aes2Text">N° Caracteres</th>
+
+                    <th id="nroCaraOutURLA" class="aes1Text">0</th>
+                    <th class="aes2Text">N° Payloads</th>
+
+                    <th id="nroPayOutURLA" class="aes1Text">0</th>
+                    <th class="aes0bText">
+                      <button title="Copiar" class="miBotonAES" onclick="copiarOutURLA()">
+                        <i style="font-size: 18px" class="material-icons">content_copy</i>
+                      </button>
+                    </th>
+
+                    <th class="aes0bText">
+                      <button title="Cortar" type="button" class="miBotonAES" onclick="cortarOutURLA()">
+                        <i class="material-icons" style="font-size: 18px">content_cut</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Limpiar" type="button" class="miBotonAES" onclick="limpOutURLA()">
+                        <i class="material-icons" style="font-size: 18px">clear</i>
+                      </button>
+                    </th>
+                    <th class="aes0bText">
+                      <button title="Enviar " type="button" class="miBotonAES" onclick="enviarAESmulti()">
+                        <i class="material-icons" style="font-size: 18px">send</i>
+                      </button>
+                    </th>
+                  </tr>
+                </table>
+                <div id="wrapper">
+                  <textarea id="resulURLA" class="textAreaJim" rows="7" oninput="contOutURLA()"></textarea>
+                </div>
+
+                <div>
+                  <div class="row" style=" margin-right: auto;  margin-left: auto;">
+                    <div class="col-md-6 pl-0 pr-2">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">String</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="encStrURLA()" type="button" class="botonAESencript">
+                              ENCODE
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="decStrURLA()" type="button" class="botonAESencriptB">
+                              DECODE
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div class="col-md-6 pl-2 pr-0">
+                      <p class="bordeSuperiorAES"></p>
+                      <table>
+                        <tr class="AESheadJim">
+                          <th class="aesBoton1">Lista</th>
+
+                          <th class="aesBoton2">
+                            <button onclick="encListURLA()" type="button" class="botonAESencript">
+                              ENCODE
+                            </button>
+                          </th>
+
+                          <th class="aesBoton2">
+                            <button onclick="decListURLA()" type="button" class="botonAESencriptB">
+                              DECODE
+                            </button>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+                <label>
+                  Ancho:
+                  <input oninput="wrapper.style.width=this.value;" type="range" value="100%" min="50%" max="100%" />
+                </label>
+                <label>
+                  Alto:
+                  <input oninput="wrapper.style.height=this.value+'px';" type="range" 500="100%" min="100" max="500" />
+                </label>
+
+              </div>
+
+              <div class="tab-pane fade" id="menu7a" role="tabpanel" aria-labelledby="menu7a-tab">
+
+                
+
+
+               
+
+              
+
+                <p class="bordeSuperiorRiesgoN">
+                  <strong>VALORACIÓN DEL RIESGO</strong>
+                </p>
+                <table>
+                  <tr>
+                    <th class="desc-riesgo">Valor del Activo</th>
+                    <th id="activo" class="desc-riesgob">0</th>
+                    <th class="c3">Facilidad de Explotación</th>
+                    <th id="facilidad" class="c3b">BAJO</th>
+                    <th class="c3">Impacto</th>
+                    <th id="impactoa" class="c3b">0</th>
+                  </tr>
+                </table>
+
+                <table>
+                  <tr>
+                    <th rowspan="3" colspan="1" class="desc-riesgo">
+                      Probabilidad de Riesgo
+                    </th>
+                    <th class="c2b">Bajo</th>
+                    <th class="c2b">Medio</th>
+                    <th class="c2b">Alto</th>
+                  </tr>
+                  <tr>
+                    <th class="c2v"></th>
+                    <th class="c2a"></th>
+                    <th class="c2rb">.</th>
+                  </tr>
+                  <tr>
+                    <th id="pBajo" class="c2x">⌂</th>
+                    <th id="pMedio" class="c2x"></th>
+                    <th id="pAlto" class="c2x"></th>
+                  </tr>
+                </table>
+
+                <table>
+                  <tr>
+                    <th rowspan="3" colspan="1" class="desc-riesgo">
+                      Riesgo Ponderado (Impacto)
+                    </th>
+                    <th class="c2b">Bajo</th>
+                    <th class="c2b">Medio</th>
+                    <th class="c2b">Alto</th>
+                  </tr>
+                  <tr>
+                    <th id="impactoBajoa" class="c2v">1</th>
+                    <th id="impactoMedioa" class="c2a"></th>
+                    <th id="impactoAltoa" class="c2r"></th>
+                  </tr>
+                  <tr>
+                    <th id="impactoBajob" class="c2x">⌂</th>
+                    <th id="impactoMediob" class="c2x"></th>
+                    <th id="impactoAltob" class="c2x"></th>
+                  </tr>
+                </table>
+
+                <p class="espacio2"></p>
+
+
+
+                <table>
+                  <tr class="AESheadJim">
+                    <th class="valoraResT">
+                      Resumen
+                    </th>
+                    <th class="valoraRes1A">
+                      Riesgo Ponderado (IMPACTO)
+                    </th>
+                    <th id="impactob" class="valoraRes1B">-</th>
+                    <th class="valParameHeaProg">
+                      <div id="progressBar">
+                        <div id="progressBarFull"></div>
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+
+                <hr color="#9f9f9f" size=3 style="margin-top: 4px;
+    margin-bottom: 4px;">
+
+
+                <table class="vulParameEspacio">
+                  <tr>
+                    <th class="vulParametros1">Valoración del Activo</th>
+                    <th class="vulParametros2">
+                      <select id="valorActivo" onchange="seleccionarActivo();" class="seleParametros">
+                        <option class="c2b" value="0">0</option>
+                        <option class="c2b" value="1">1</option>
+                        <option class="c2b" value="2">2</option>
+                        <option class="c2b" value="3">3</option>
+                        <option class="c2b" value="4">4</option>
+                      </select>
+                    </th>
+                    <th class="vulParametros1">
+                      Probalilidad de Ocurrencia
+                    </th>
+                    <th class="vulParametros2">
+                      <select id="probabilidadO" onchange="seleccionarActivo();" class="seleParametros">
+                        <option value="1" class="c2b">BAJO</option>
+                        <option value="2" class="c2b">MEDIO</option>
+                        <option value="3" class="c2b">ALTO</option>
+                      </select>
+                    </th>
+                    <th class="vulParametros1">
+                      Facilidad de Explotación
+                    </th>
+                    <th class="vulParametros2">
+                      <select id="facilidadExplot" onchange="seleccionarActivo()" class="seleParametros">
+                        <option value="1" class="c2b">BAJO</option>
+                        <option value="2" class="c2b">MEDIO</option>
+                        <option value="3" class="c2b">ALTO</option>
+                      </select>
+                    </th>
+                  </tr>
+                </table>
+
+                
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+       
+        </div>
+      </div>
+   
+
+  <!--===== MAIN JS =====-->
+  <script src="./dist/js/jim.js"></script>
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+  <!--===== AES 256 JS =====-->
+  <script src="./aescbc256/aesMulti.js"></script>
+  <script src="./aescbc256/crypto-js.js"></script>
+  <script src="./aescbc256/tln.js"></script>
+
+
+</body>
+
+</html>

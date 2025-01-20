@@ -1,0 +1,1131 @@
+.btnMostrarCon {
+    padding: 0px;
+    height: 26px;
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    color: var(--colorDark1);
+    padding: 1px 3px;
+    cursor: pointer;
+}
+
+.btnMostrarCon:hover {
+    color: var(--hoverDark1);
+    background: var(--fondoDark4);
+}
+
+.btnMostrarCon:active {
+    color: var(--hoverDark1);
+}
+
+.textoBusCont {
+    width: 200px;
+    height: 28px;
+    font-size: 13px;
+    padding-left: 10px;
+    color: #b1b3b3;
+    border-style: inset;
+    border: solid 1px #212e3e;
+    background: #141d2b;
+    margin-bottom: 10px;
+}
+
+
+.tituloSVGCon #buscarDetalleCon {
+    position: absolute;
+    top: 32px;
+    left: 550px;
+}
+
+.tituloContr {
+    background: var(--fondoDark3);
+    border: solid 1px var(--fondoDark2);
+    color: var(--hoverDark1);
+    width: 100%;
+    margin-top: 15px;
+    cursor: pointer;
+    padding: 1px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 3px 3px 0px 0px;
+    box-shadow: 0 0.0rem 0.1rem var(--fondoDark7);
+}
+
+.detalleContr {
+    color: var(--colorDark1);
+    width: 100%;
+    margin-top: 5px;
+    padding: 7px 20px;
+    font-size: 15px;
+    border: 1px solid var(--fondoInput);
+    border-radius: 3px 3px 0px 0px;
+    box-shadow: 0 0.0rem 0.1rem var(--header);
+}
+
+/*Boton Editar*/
+
+.button_edit {
+    background-color: var(--fondoDark2);
+    border-radius: 3px;
+    border: 1px solid var(--fondoDark3);
+    color: var(--colorDark1);
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    font-size: 11px;
+    margin: 0;
+    outline: none;
+    padding: 0px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.button_edit:hover,
+.button_edit:focus {
+    background-color: var(--fondoDark5);
+    color: var(--hoverDark1);
+}
+
+.button_edit:focus {
+    box-shadow: 0 0 0 2px var(--hoverDark1);
+}
+
+.button_edit:active {
+    background-color: #a0c7e4;
+    box-shadow: none;
+    color: var(--hoverDark1);
+}
+
+
+
+/*===============================*/
+.season_tabs {
+    position: relative;
+    min-height: 915px;
+    /* This part sucks */
+    clear: both;
+    margin: 0 0;
+}
+
+.season_tab {
+    float: left;
+    clear: both;
+    height: 200px;
+}
+
+.season_tab_label {
+    margin-top: 60px;
+    left: -50px;
+    background: var(--fondoDark3);
+    padding: 2px 10px;
+    border: 1px solid var(--fondoDark4);
+    font-size: 16px;
+    text-align: center;
+    position: absolute;
+    width: 150px;
+    height: 35px;
+    display: table-cell;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    cursor: pointer;
+}
+
+.season_tab [type=radio] {
+    display: none;
+}
+
+.season_content {
+
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 40px;
+    background: var(--fondoDark4);
+    right: 0;
+    bottom: 0;
+    padding: 1px;
+    border: 1px solid var(--fondoDark2);
+}
+
+.season_content season_tab_label {
+    animation: 0.5s ease-out 0s 1 slideInFromTop;
+}
+
+[type=radio]:checked ~ label {
+    background: var(--fondoDark5);
+    border-top: 2px solid var(--hoverDark1);
+    z-index: 2;
+}
+
+[type=radio]:checked ~ label ~ .season_content {
+    z-index: 1;
+}
+
+.dt-body-center {
+    text-align: center;
+    padding: 2px;
+    margin: 10px 5px !important;
+}
+
+/*Grafica*/
+.highcharts-container {
+    width: 100% !important;
+}
+
+.formatoTextGra {
+    font-family: Arial;
+    font-size: 14px;
+    color: var(--colorDark1);
+
+}
+
+.formatoTextGraPorce {
+    font-family: Arial;
+    font-size: 12px;
+    color: var(--hoverDark1);
+    text-align: center;
+}
+
+/**/
+.bordeDataTaHabi {
+    border: solid 1px var(--fondoDark5);
+    padding: 5px;
+    max-height: 770px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+
+}
+
+/*====================== Palntilla========================*/
+
+.marcoPlantilla {
+    background: #ffffff;
+    width: 17.2cm !important;
+    border: none;
+
+}
+
+.marcoPlantilla img {
+    width: 17cm;
+    /*display: block;*/
+    /*ax-width: 100%;
+    max-height: 100%;   
+    /* remove extra space below image */
+}
+
+.marcoPlantilla ul li {
+
+    list-style: square;
+}
+
+
+.marcoPlantilla ol li {
+
+    list-style: decimal;
+}
+
+.paginaExtPlan {
+    background: #fff;
+    border: 0.5pt solid #cfcfcf;
+    margin: 0 auto;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    height: 810px;
+    width: 21cm;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 2.5cm;
+    padding-bottom: 2.5cm;
+}
+.habiliTituloPlNum {
+    background: #606060;
+    color: #ffffff;
+    width: 5%;
+    text-align: center;
+    padding: 3pt;   
+    font-size: 12pt;
+    border: none;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+.habiliTituloPl {
+    background: #2c4160;
+    border: 0.75pt solid #D6EFED;
+    color: #ffffff;
+    width: 95%;
+    text-align: center;
+    padding: 3pt;
+    padding-left: 7pt;
+    font-size: 12pt;
+    border: none;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+
+
+.squadLin{
+    border: none;
+    border-bottom: solid 3px red;
+    width: 30%;
+    color: #fff;
+    
+}
+.squadLinTex{
+    border: none;
+    color: #063852;
+    text-align: center;
+    width: 40%;
+    font-weight: bold;
+    font-family: Calibri;
+}
+.textTituHabPla1A {
+    background: #2c4160;
+    border: 0.75pt solid #063852;
+    border-top: 1.5pt solid #063852;
+    width: 25%;
+    padding: 4px;
+    padding-left: 8px;
+    text-align: left;
+    font-size: 11pt;
+    color: #a4b1cd;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+.textTituHabPla1A2 {
+    background: #2c4160;
+    border: 0.75pt solid #063852;
+    border-top: 1.5pt solid #063852;
+    width: 100%;
+    padding: 4px;
+    padding-left: 8px;
+    text-align: left;
+    font-size: 11pt;
+    color: #a4b1cd;
+    font-weight: bold;
+    font-family: Calibri;
+    text-align: center;
+}
+
+.textTituHabPla1B {
+    background: #fff;
+    border: none;
+    border-bottom: 0.75pt solid #2c4160;
+    border-top: 1.5pt solid #2c4160;
+    width: 75%;
+    padding: 4px;
+    padding-left: 8px;
+    text-align: justify;
+    font-size: 11pt;
+    color: #2c4160;
+    font-family: Calibri;
+}
+
+.textTituHabPla1B2 {
+    background: #fff;  
+    border: 0.75pt solid #2c4160;
+    border-top: 1.5pt solid #2c4160;
+    width: 100%;
+    padding: 4px;
+    padding-left: 8px;
+    text-align: justify;
+    font-size: 11pt;
+    color: #2c4160;
+    font-family: Calibri;
+}
+
+.cumpleColor{
+    background: #606060;   
+    border:none;
+    padding: 3px 7px;
+    color: #fff;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+.tabPlantHab1 {
+    background: #2c4160;
+    border: 0.75pt solid #063852;
+    border-top: 1.5pt solid #063852;
+    width: 5%;
+    padding: 4px;
+    text-align: center;
+    font-size: 11pt;
+    color: #a4b1cd;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+.tabPlantHab2 {
+    background: #2c4160;
+    border: 0.75pt solid #063852;
+    border-top: 1.5pt solid #063852;
+    width: 20%;
+    padding: 4px;
+    text-align: center;
+    font-size: 11pt;
+    color: #a4b1cd;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+
+.tabPlantHab3 {
+    background: #fff;
+    border: 0.75pt solid #2c4160;
+    border-top: 1.5pt solid #2c4160;
+    width: 78%;
+    padding: 4px;
+    padding-left: 8px;
+    text-align: justify;
+    font-size: 11pt;
+    color: #2c4160;
+    font-weight: bold;
+    font-family: Calibri;
+}
+
+.pagGraficos {
+
+    width: 100%;
+    border-radius: 3px;
+    padding: 10px;
+    height: 690px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sub80 {
+    cursor: pointer;
+    padding: 30px;
+    font-Size: 60px;
+    color: var(--colorDark1);
+    border-radius: 65px;
+}
+
+.sub80:hover {
+    color: var(--hoverDark1);
+
+}
+
+
+.sub34 {
+    cursor: pointer;
+    padding: 30px;
+    font-Size: 60px;
+    color: var(--colorDark1);
+    border-radius: 65px;
+}
+
+.sub34:hover {
+    color: var(--hoverDark1);
+
+}
+
+.highcharts-plot-background {
+    fill: var(--fondoDark4);
+}
+
+.bordeGrafico {
+
+    background: var(--fondoDark2);
+    padding: 5px;
+}
+
+/*===================================Plantilla=========================*/
+.borTabPlan {
+
+    border: 1px solid var(--descripcion);
+    background-color: var(--fondoDark);
+    color: var(--colorDark1);
+    border: none;
+    padding-top: 3px;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 850px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+
+.hojaDesCentralc {
+    /* position: absolute;*/
+    margin: auto;
+    background: var(--fondoDark);
+    border: none;
+    color: var(--colorDark2);
+    padding: 10px 35px;
+    width: 100%;
+    height: 760px;
+    border: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: justify;
+    font-size: 16.5px;
+    line-height: 30px;
+}
+
+.hojaDesCentralc ul li {
+
+    list-style: square;
+}
+
+
+.hojaDesCentralc ol li {
+
+    list-style: decimal;
+}
+
+.hojaDesCentralc img {
+    /* position: absolute;*/
+    /*margin: auto;*/
+    border: solid 1px var(--fondoDark2);
+    padding: 10px;
+    max-width: 100%;
+}
+
+.hojaDesCentralc h1 {
+    /* background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgOTYgOTYwIDk2MCIgd2lkdGg9IjQ4Ij48cGF0aCBkPSJNMjkwIDc2NmgxNDBWNjI2SDI5MHYxNDBabTI0MCAwaDE0MFY2MjZINTMwdjE0MFpNMjkwIDUyNmgxNDBWMzg2SDI5MHYxNDBabTI0MCAwaDE0MFYzODZINTMwdjE0MFpNMTgwIDkzNnEtMjQgMC00Mi0xOHQtMTgtNDJWMjc2cTAtMjQgMTgtNDJ0NDItMThoNjAwcTI0IDAgNDIgMTh0MTggNDJ2NjAwcTAgMjQtMTggNDJ0LTQyIDE4SDE4MFptMC02MGg2MDBWMjc2SDE4MHY2MDBabTAtNjAwdjYwMC02MDBaIi8+PC9zdmc+");
+    background-repeat: no-repeat;
+    background-size: 25px 25px;*/
+    margin-left: -5px;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 10px 1px 10px 1px;
+    color: var(--hoverDark1);
+    text-align: justify;
+    border: solid 5px var(--fondoDark);
+    border-bottom: solid 2px var(--hoverDark1);
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+}
+
+.hojaDesCentralc h1:before {
+    width: 10px;
+    height: 10px;
+    content: "▣";
+    padding-right: 5px;
+
+}
+
+.hojaDesCentralc h2 {
+    margin-left: -5px;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 10px 1px 10px 1px;
+    color: var(--colorDark2);
+    border: solid 5px var(--fondoDark);
+    border-bottom: solid 1px var(--hoverDrak);
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.hojaDesCentralc h2:before {
+    width: 10px;
+    height: 10px;
+    content: "▣";
+    padding-right: 4px;
+}
+
+.hojaDesCentralc h3 {
+    margin-left: -5px;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 1px 10px 1px;
+    color: var(--colorDark2);
+    border: solid 10px var(--fondoDark);
+    border-bottom: solid 1px var(--colorDark2);
+    margin-top: 9px;
+    margin-bottom: 9px;
+
+}
+
+.hojaDesCentralc h3:before {
+    width: 10px;
+    height: 10px;
+    content: "▣";
+    padding-right: 3px;
+}
+
+.hojaDesCentralc h4 {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 7px 1px 7px 1px;
+    color: var(--colorDark2);
+    border-bottom: solid 1px var(--fondoDark3);
+    margin-top: 7px;
+    margin-bottom: 7px;
+
+}
+
+.hojaDesCentralc h4:before {
+    width: 10px;
+    height: 10px;
+    content: "▣";
+    padding-right: 2px;
+}
+
+.hojaDesCentralc h5 {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px 1px 5px 1px;
+    padding: 5px;
+    color: var(--colorDark2);
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.hojaDesCentralc h5:before {
+    width: 10px;
+    height: 10px;
+    content: "▣";
+}
+
+.hojaDesCentralc h6 {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px;
+    color: var(--colorDark2);
+    padding: 3px 1px 3px 1px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+/*SDLC*/
+
+.tablaEtapa {
+
+    width: 16%;
+    border: none;
+    padding: 10px;
+
+    text-align: center;
+}
+
+.habEtapaGrupo {
+    text-align: center;
+    margin: 10px 5px;
+
+}
+
+.habEtapaGrupoTitu {
+    text-align: center;
+
+
+}
+
+.tabInterHab {
+    display: flex;
+    justify-content: center;
+    margin: 4px 1px;
+
+}
+
+
+.habNum {
+    border: solid 1px var(--colorDark1);
+    width: 37px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px 0px;
+    margin: 1px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.habBrupoNota {
+    border: solid 1px var(--fondoDark4);
+    border-top: solid 5px var(--fondoDark4);
+    border-bottom: solid 5px var(--fondoDark4);
+    font-size: 10px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px;
+    margin: 1px 1px;
+    cursor: pointer;
+
+}
+
+
+/*Data Title*/
+
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+}
+
+[data-title]:after {
+    content: attr(data-title);
+    background-color: var(--fondoDark5);
+    color: var(--hoverDark1);
+    font-size: 14px;
+    font-family: sans-serif;
+    position: absolute;
+    padding: 3px 20px;
+    bottom: -1.6em;
+    left: 100%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px var(--fondoDark3);
+    opacity: 0;
+    border: 1px solid var(--fondoDark4);
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+
+}
+
+[data-title] {
+    position: relative;
+}
+
+.marcoEtapa {
+    border: solid 1px var(--fondoDark5);
+    padding: 5px;
+}
+
+
+
+.flecha {
+    float: left;
+    position: relative;
+    height: 80px;
+    border: solid 1px var(--hoverDark1);
+    border-right: none;
+    padding: 18px 5px;
+    background: var(--fondoDark5);
+    text-align: center;
+    width: 90%;
+    margin-left: 10px;
+    border-left: none;
+}
+
+.flecha:after {
+    position: absolute;
+    top: 16px;
+    right: -25px;
+    width: 48px;
+    height: 47px;
+    border-left: solid 1px var(--hoverDark1);
+    border-top: solid 1px var(--hoverDark1);
+    transform: rotate(134deg) skewX(-10deg) skewY(-10deg);
+    background: var(--fondoDark5);
+    content: '';
+}
+
+.flecha:before {
+    position: absolute;
+    top: 16px;
+    left: -25px;
+    width: 48px;
+    height: 47px;
+    border-left: solid 1px var(--hoverDark1);
+    border-top: solid 1px var(--hoverDark1);
+    transform: rotate(134deg) skewX(-10deg) skewY(-10deg);
+
+    content: '';
+
+}
+
+
+/*Flotante*/
+#id_del_div {
+    position: fixed;
+    z-index: 100;
+    /*Crea una capa nueva por encima, si tenemos una con valor 2 estará a una altura o por encima de una con 
+                valor 1*/
+    margin-left: 1%;
+    /*Con este margen posicionamos el div donde queramos*/
+}
+
+.tablaPrinEtapa {
+    border-collapse: separate !important;
+    border-spacing: 7px 7px !important;
+    width: 100%;
+}
+
+.bordeTablaGru {
+    border: solid 1px var(--fondoDark5);
+    width: 16%;
+}
+
+
+/*************************/
+
+
+table.dataTable {
+    color: var(--colorDark1);
+    border: solid 1px var(--fondoDark4) !important;
+    background: var(--fondoDark5);
+}
+
+table.dataTable thead {
+    color: var(--colorDark1);
+    font-size: 14px;
+    /* para que datatble este todo en una sola fila */
+    white-space: nowrap;
+    line-height: 0.7 !important;
+    text-align: center;
+    border: solid 1px var(--fondoDark4) !important;
+}
+
+
+/*Bonton Acendente y deacendente*/
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    background: none;
+    padding-left: 5px;
+    padding-right: 0;
+    margin: 0px;
+    color: var(--hoverDark1);
+}
+
+/*Bonton Acendente y deacendente*/
+.sort-btn {
+    padding: 1px;
+    float: down;
+    margin: 0px;
+    font-size: 10px !important;
+}
+
+/* Estilos para los botones de paginacion */
+.page-item.active .page-link {
+    background-color: var(--fondoDark5) !important;
+    color: var(--colorDark1) !important;
+    border: solid 1px var(--hoverDark1);
+
+    /* border: 1px solid black; */
+}
+
+.page-link {
+    font-size: 13px;
+    color: var(--colorDark1);
+    background: var(--fondoDark4);
+    border: solid 1px var(--fondoDark2);
+
+}
+
+.page-link:hover {
+    background: var(--fondoDark5);
+    color: var(--hoverDark1);
+    border: solid 1px var(--hoverDark1);
+}
+
+.page-item.disabled .page-link {
+    font-size: 13px;
+    color: var(--colorDark1);
+    background: var(--fondoDark4);
+    border: solid 1px var(--fondoDark2);
+}
+
+/*ocultar*/
+/*.dataTables_scrollBody {
+     overflow-y: hidden !important;
+}
+*/
+.dataTables_info {
+    color: var(--colorDark1);
+    font-size: 14px;
+}
+
+table.dataTable td {
+    white-space: normal;
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    color: var(--colorDark1);
+    vertical-align: middle;
+    border: solid 1px var(--menu);
+
+}
+
+table.dataTable tbody > tr:nth-child(2n+1) td {
+    /* or th */
+    background-color: var(--fondoDark3);
+    color: var(--colorDark1);
+}
+
+table.dataTable tr {
+    border: solid 1px var(--menu);
+}
+
+/*centrado de texto*/
+.textDataCent {
+    text-align: center !important;
+
+}
+
+/* Efecto para td*/
+table.dataTable th {
+    width: 1px;
+    /*white-space: nowrap;*/
+    font-size: 14px;
+    line-height: 1.3 !important;
+    /* Centrar texto de tabla*/
+    vertical-align: middle;
+    color: var(--colorDark1);
+    border: solid 1px var(--menu);
+    border-bottom: solid 1px var(--hoverDark1);
+}
+
+table.dataTable tr {
+    border: solid 1px var(--menu);
+}
+
+/*Buscador*/
+.dataTables_filter input {
+    color: #a4b1cd;
+    background: var(--fondoDark5);
+    border: solid 1px var(--hoverDark1);
+    width: 120px !important;
+}
+
+.dataTables_filter input:focus {
+    color: #a4b1cd;
+    background: var(--fondoDark5);
+    border: solid 2px var(--hoverDark1);
+
+}
+
+/*Boton*/
+.button-prin {
+    background-color: var(--fondoDark2);
+    border-radius: 3px;
+    border: 1px solid var(--hoverDark1);
+    color: var(--hoverDark1);
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    margin: 0;
+    outline: none;
+    padding: 3px 4px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.button-prin:hover,
+.button-prin:focus {
+    background-color: var(--fondoDark5);
+    color: var(--hoverDark1);
+}
+
+.button-prin:focus {
+    box-shadow: 0 0 0 2px var(--hoverDark1);
+}
+
+.button-prin:active {
+    background-color: #a0c7e4;
+    box-shadow: none;
+    color: var(--hoverDark1);
+}
+
+/*Flecha*/
+
+.fat-arrow-rappa {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 800px;
+}
+
+.fat-arrow {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 56px;
+    position: relative;
+    background:#2c4160;
+    margin-right: 15px;
+    color: #83c607;
+    text-align: center;
+    line-height: 15px;
+     box-shadow: 1px 1px 2px 0px #293b56;
+    
+}
+
+.fat-arrow div.inner {
+    width: 115px;
+    margin-left: 30%;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+}
+
+.fat-arrow:nth-child(5) {
+    background: radial-gradient(circle, rgba(92, 53, 138, 1) 0%, rgba(70, 40, 105, 1) 100%);
+}
+
+.fat-arrow:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid #1a2332;
+    border-top: 28px solid transparent;
+    border-bottom: 28px solid transparent;
+    
+}
+
+.fat-arrow:before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid #2c4160;
+    border-top: 28px solid transparent;
+    border-bottom: 28px solid transparent;
+    
+}
+
+.flo-arrow {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 20px;
+    position: absolute;
+    left: 3px;
+    padding-left: 8px;
+    background: #04e4f4;
+    color: #24354e;
+    font-weight: bold;
+    z-index: 2;
+    box-shadow: 4px 4px 5px 0px #1a2332;
+}
+
+.flo-arrow:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 7px solid #1a2332;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.flo-arrow:before {
+    content: "";
+    position: absolute;
+    right: -7px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 7px solid #04e4f4;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.fat-arrow:nth-child(5)::before {
+    border-left-color: #04e4f4;
+}
+
+
+/*======Summernote===========*/
+.note-editable {
+    /*font-size: 14px !important; 
+    text-align: left !important; 
+    line-height: 0.3 !important;
+    color: rgb(50, 8, 90) !important;*/
+    background: var(--fondoDark5);
+    color: var(--colorDark1);
+    padding: 7px 30px !important;
+}
+
+.note-editable pre {
+    background: var(--fondoDark2);
+    padding: 5px;
+
+}
+
+.note-editable ul li {
+
+    list-style: square;
+}
+
+.note-editable ol li {
+
+    list-style: decimal;
+}
+
+/*=================Tema*/
+/* remove top and bottom padding */
+.note-color .dropdown-menu {
+    min-width: 168px !important;
+    padding: 0;
+
+}
+
+/* hide background color picker */
+.note-color .note-palette:first-child {
+    background:  !important;
+
+}
+
+/* remove palette title */
+.note-color .note-palette-title {
+    display: none;
+
+}
+
+/*
+.note-fontsize .note-btn-group button,
+.note-toolbar .note-para .note-btn-group button {
+    line-height: 12px !important;
+}
+*/
+
+.note-toolbar {
+    background: #505050 !important;
+    border: #606060 !important;
+}
+
+
+.note-btn-group button {
+    background: var(--fondoDark4);
+    border: 1px solid var(--fondoDark6) !important;
+    line-height: 18px !important;   
+}
+
+
+.note-palette note-btn-group button {
+    border: 1px solid #404040 !important;
+    line-height: 18px !important;
+    color: aliceblue;
+}
+
+.note-dropdown-menu {
+    background: #354c74 !important;
+    border: 1px solid #111927 !important;
+    color: #046dcd;
+}
