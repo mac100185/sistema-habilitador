@@ -1,555 +1,1043 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es" style="background: #192229">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="api-host" content="" />
+        <title>Seguridad Defensiva</title>
 
-<head>
-    <meta charset="UTF-8">
-    <script src="./pentest/prism/prism.js"></script>
+        <!-- ===== Configuración Global - DEBE CARGARSE PRIMERO ===== -->
+        <script src="./config.js"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- ===== Datatable -->
+        <link rel="stylesheet" href="./librerias/datatable/datatables.css" />
+        <link
+            rel="stylesheet"
+            href="./librerias/datatable/Buttons-2.3.3/css/buttons.bootstrap.css"
+        />
 
-    <title>Seguridad Defensiva</title>
+        <!-- ===== DIST =====para bootstrap5 -->
+        <link rel="stylesheet" href="./dist/css/menu.css" />
+        <link rel="stylesheet" href="./pentest/css/union.css" />
+        <link rel="stylesheet" href="./pentest/css/pentest.css" />
+        <link rel="stylesheet" href="./seguridad/css/seguridad.css" />
 
-    <!-- ===== Datatable -->
-    <link rel="stylesheet" href="./librerias/datatable/datatables.css">
-    <link rel="stylesheet" href="./librerias/datatable/Buttons-2.3.3/css/buttons.bootstrap.css">
+        <!-- ===== Font -->
+        <link
+            rel="stylesheet"
+            href="./librerias/fontawesome-free-6.2.0-web/css/all.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./librerias/fontawesome-free-6.2.0-web/css/v4-shims.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./librerias/fontawesome-free-6.2.0-web/css/brands.css"
+        />
 
-    <!-- ===== DIST =====para bootstrap5 -->
-    <link rel="stylesheet" href="./dist/css/menu.css">
-    <link rel="stylesheet" href="./pentest/css/union.css">
-    <link rel="stylesheet" href="./pentest/css/pentest.css">
-    <link rel="stylesheet" href="./seguridad/css/seguridad.css">
+        <!-- Bootstrap v5 CSS -->
+        <link
+            rel="stylesheet"
+            href="./librerias/bootstrap_5.2.3/css/bootstrap_whatch.css"
+        />
 
-    <!-- ===== Font -->
-    <link rel="stylesheet" href="./librerias/fontawesome-free-6.2.0-web/css/all.css">
-    <link rel="stylesheet" href="./librerias/fontawesome-free-6.2.0-web/css/v4-shims.css">
-    <link rel="stylesheet" href="./librerias/fontawesome-free-6.2.0-web/css/brands.css">
+        <!-- add icon  -->
+        <link rel="icon" href="./dist/img/ko.png" type="image/x-icon" />
 
-    <!-- Bootstrap v5 CSS -->
-    <link rel="stylesheet" href="./librerias/bootstrap_5.2.3/css/bootstrap_whatch.css">
+        <!-- Colores  -->
+        <link rel="stylesheet" href="./pentest/prism/prism.css" />
 
-    <!-- add icon  -->
-    <link rel="icon" href="./dist/img/ko.png" type="image/x-icon">
+        <!-- sweetAlert -->
+        <script src="./librerias/sweetalert2/sweetalert2.all.js"></script>
+        <link rel="stylesheet" href="./librerias/sweetalert2/sweetalert2.css" />
 
-    <!-- Colores  -->
-    <link rel="stylesheet" href="./pentest/prism/prism.css">
+        <!-- Iconos Google-->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
 
-    <!-- sweetAlert -->
-    <script src="./librerias/sweetalert2/sweetalert2.all.js"></script>
-    <link rel="stylesheet" href="./librerias/sweetalert2/sweetalert2.css">
+        <!--===== Code mirror =====-->
+        <link
+            rel="stylesheet"
+            href="./librerias/codemirror/lib/codemirror.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./librerias/codemirror/addon/display/fullscreen.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./librerias/codemirror/theme/rubyblue.css"
+        />
 
-    <!-- Iconos Google-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <!--  Summer sin Bootstrap -->
+        <link
+            href="./librerias/summernote/summernote-lite.css"
+            rel="stylesheet"
+        />
+    </head>
 
-    <!--===== Code mirror =====-->
-    <link rel="stylesheet" href="./librerias/codemirror/lib/codemirror.css" />
-    <link rel="stylesheet" href="./librerias/codemirror/addon/display/fullscreen.css" />
-    <link rel="stylesheet" href="./librerias/codemirror/theme/rubyblue.css">
-
-    <!--  Summer sin Bootstrap -->
-    <link href="./librerias/summernote/summernote-lite.css" rel="stylesheet">
-
-</head>
-
-<body>
-    <div class="wrapper hover_collapse">
-        <!-- ===== Header ===== -->
-        <div class="top_navbar">
-            <div class="logo notranslate">Seguridad Defensiva</div>
-            <div class="menu">
-                <div class="hamburger">
-                    <svg enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="20px" fill="#a4b1cd">
-                        <g>
-                            <rect fill="none" height="24" width="24" />
+    <body>
+        <div class="wrapper hover_collapse">
+            <!-- ===== Header ===== -->
+            <div class="top_navbar">
+                <div class="logo notranslate">Seguridad Defensiva</div>
+                <div class="menu">
+                    <div class="hamburger">
+                        <svg
+                            enable-background="new 0 0 24 24"
+                            height="24px"
+                            viewBox="0 0 24 24"
+                            width="20px"
+                            fill="#a4b1cd"
+                        >
                             <g>
-                                <path d="M2,4v16h20V4H2z M20,8.67h-2.5V6H20V8.67z M17.5,10.67H20v2.67h-2.5V10.67z M4,6h11.5v12H4V6z M17.5,18v-2.67H20V18H17.5z" />
+                                <rect fill="none" height="24" width="24" />
+                                <g>
+                                    <path
+                                        d="M2,4v16h20V4H2z M20,8.67h-2.5V6H20V8.67z M17.5,10.67H20v2.67h-2.5V10.67z M4,6h11.5v12H4V6z M17.5,18v-2.67H20V18H17.5z"
+                                    />
+                                </g>
                             </g>
-                        </g>
-                    </svg>
-                </div>
-                <li style="width: 75%">
-                </li>
-                <div class="profile_wrap">
-                    <div class="profile">
-                        <img src="./dist/img/hack.png" alt="profile_pic">
-                        <span class="name">Jim KO</span>
-                        <span class="icon">
-                            <i class="fas fa-angle-down"></i>
-                        </span>
+                        </svg>
+                    </div>
+                    <li style="width: 75%"></li>
+                    <div class="profile_wrap">
+                        <div class="profile">
+                            <img src="./dist/img/hack.png" alt="profile_pic" />
+                            <span class="name">Jim KO</span>
+                            <span class="icon">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- ===== Side bar ===== -->
-        <div class="sidebar">
-            <div id="menuPrincipal" class="sidebar_inner notranslate">
-                <ul>
-
-
-                    <li>
-                        <a href="index.html">
-                            <span class="icon"><i class="logo-icon p-l-10"><img src="./dist/img/control.png" style="height: 25px"></i></span>
-                            <span class="text">Controles Nube</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="seguridad.html" style="background: var(--fondoDark6); border-left: 3px solid var(--hoverDark1); border-right: 1px solid var(--hoverDark1);">
-                            <span class="icon"><i class="logo-icon p-l-10"><img src="./dist/img/seguridad.png" style="height: 25px"></i></span>
-                            <span class="text">Seguridad Defensiva</span>
-                        </a>
-                    </li>
-
-                </ul>
+            <!-- ===== Side bar ===== -->
+            <div class="sidebar">
+                <div id="menuPrincipal" class="sidebar_inner notranslate">
+                    <ul>
+                        <li>
+                            <a href="index.html">
+                                <span class="icon"
+                                    ><i class="logo-icon p-l-10"
+                                        ><img
+                                            src="./dist/img/control.png"
+                                            style="height: 25px" /></i
+                                ></span>
+                                <span class="text">Controles Nube</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="seguridad.html"
+                                style="
+                                    background: var(--fondoDark6);
+                                    border-left: 3px solid var(--hoverDark1);
+                                    border-right: 1px solid var(--hoverDark1);
+                                "
+                            >
+                                <span class="icon"
+                                    ><i class="logo-icon p-l-10"
+                                        ><img
+                                            src="./dist/img/seguridad.png"
+                                            style="height: 25px" /></i
+                                ></span>
+                                <span class="text">Seguridad Defensiva</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="main_container">
-            <div class="container-fluid" style="padding: 0px; background: #1a2332;">
-
-                <div class="row" style=" margin: auto;">
-                    <!-- ===== Menu A ===== -->
-                    <div id="menuDerecha" class="col-lg-2" style="padding-left: 5px;padding-right: 1px;">
-
-                        <div class="superiorSide">
-                            <div id="titulosSubtitulos" class='sidenav notranslate'>
+            <div class="main_container">
+                <div
+                    class="container-fluid"
+                    style="padding: 0px; background: #1a2332"
+                >
+                    <div class="row" style="margin: auto">
+                        <!-- ===== Menu A ===== -->
+                        <div
+                            id="menuDerecha"
+                            class="col-lg-2"
+                            style="padding-left: 5px; padding-right: 1px"
+                        >
+                            <div class="superiorSide">
+                                <div
+                                    id="titulosSubtitulos"
+                                    class="sidenav notranslate"
+                                ></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="testConta" class="col-lg-8" style="padding-left: 15px;padding-right: 15px;">
-                        <div class="tituloSVG">
+                        <div
+                            id="testConta"
+                            class="col-lg-8"
+                            style="padding-left: 15px; padding-right: 15px"
+                        >
+                            <div class="tituloSVG">
+                                <button
+                                    id="btnEditar"
+                                    class="btn btn-outline-info btn-sm"
+                                    style="
+                                        color: var(--colorDark2);
+                                        border-color: var(--hoverDrak);
+                                    "
+                                >
+                                    <i
+                                        class="fa-regular fa-pen-to-square"
+                                        style="padding: 0px"
+                                    ></i>
+                                </button>
 
-                            <button id="btnEditar" class="btn btn-outline-info btn-sm" style="color: var(--colorDark2); border-color: var(--hoverDrak);">
-                                <i class="fa-regular fa-pen-to-square" style="padding: 0px;"></i>
+                                <button
+                                    id="modoLectura"
+                                    class="btn btn-outline-info btn-sm"
+                                    style="
+                                        color: var(--colorDark2);
+                                        border-color: var(--hoverDrak);
+                                    "
+                                >
+                                    <i class="fa-brands fa-readme"></i>
+                                </button>
+
+                                <input
+                                    type="text"
+                                    class="textoBusPent"
+                                    id="buscarDetalle"
+                                    placeholder="Buscar..."
+                                />
+
+                                <svg
+                                    version="1.1"
+                                    id="Capa_1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    x="0px"
+                                    y="0px"
+                                    viewBox="0 0 700 40"
+                                    style="enable-background: new 0 0 700 40"
+                                    xml:space="preserve"
+                                >
+                                    <style type="text/css">
+                                        .st0 {
+                                            fill: #141d2b;
+                                        }
+
+                                        .st1 {
+                                            fill: #141d2b;
+                                            stroke: #a4b1cd;
+                                            stroke-miterlimit: 10;
+                                        }
+
+                                        .st2 {
+                                            fill: #a4b1cd;
+                                            cursor: pointer;
+                                        }
+
+                                        .st3 {
+                                            font-family: "Arial";
+                                        }
+
+                                        .st4 {
+                                            font-size: 8px;
+                                        }
+
+                                        .st5 {
+                                            font-size: 12px;
+                                        }
+
+                                        .st6 {
+                                            fill: #83c607;
+                                        }
+
+                                        .st7 {
+                                            font-size: 6px;
+                                        }
+                                    </style>
+                                    <rect class="st0" width="700" height="40" />
+                                    <path
+                                        class="st1"
+                                        d="M691,4.5H81.5c-1.95,1.95-3.05,3.05-5,5h-40c-1.95-1.95-3.05-3.05-5-5H9c-1.95,1.95-3.05,3.05-5,5v19 c1.95,1.95,3.05,3.05,5,5h215c1.95-1.95,3.05-3.05,5-5h242c1.95,1.95,3.05,3.05,5,5h150.5c1.95-1.95,3.05-3.05,5-5h32 c1.95,1.95,3.05,3.05,5,5H691c1.95-1.95,3.05-3.05,5-5v-19C694.05,7.55,692.95,6.45,691,4.5z"
+                                    />
+                                    <text
+                                        id="hTipoPri"
+                                        transform="matrix(0.9806 0 0 1 317.8767 37.9639)"
+                                        class="st2 st3 st4"
+                                    >
+                                        Tipo...
+                                    </text>
+
+                                    <text
+                                        id="hNombrePri"
+                                        transform="matrix(1 0 0 1 285.4143 22.2842)"
+                                        class="st2 st3 st5"
+                                    >
+                                        Seleccionar...
+                                    </text>
+                                    <polygon
+                                        class="st6"
+                                        points="75.5,8 71.5,8 75.5,4 79.5,4 "
+                                    />
+                                    <polygon
+                                        class="st6"
+                                        points="70.5,8 66.5,8 70.5,4 74.5,4 "
+                                    />
+                                    <polygon
+                                        class="st6"
+                                        points="65.5,8 61.5,8 65.5,4 69.5,4 "
+                                    />
+                                    <polygon
+                                        class="st6"
+                                        points="60.5,8 56.5,8 60.5,4 64.5,4 "
+                                    />
+                                    <polygon
+                                        class="st6"
+                                        points="55.5,8 51.5,8 55.5,4 59.5,4 "
+                                    />
+                                    <polygon
+                                        class="st6"
+                                        points="50.5,8 46.5,8 50.5,4 54.5,4 "
+                                    />
+                                    <polygon
+                                        class="st6"
+                                        points="45.5,8 41.5,8 45.5,4 49.5,4 "
+                                    />
+                                    <text
+                                        id="hIdPri"
+                                        transform="matrix(0.9806 0 0 1 638.9317 36.8617)"
+                                        class="st6 st3 st7"
+                                    >
+                                        ID
+                                    </text>
+                                </svg>
+                            </div>
+
+                            <div
+                                id="hDetallePri"
+                                class="hojaDesCentral match-braces"
+                                data-prismjs-copy="Copiar"
+                                data-prismjs-copy-error="Presiona Ctrl+C, para copiar"
+                                data-prismjs-copy-success="Copiado!"
+                            ></div>
+                        </div>
+                        <div
+                            class="col-lg-2"
+                            style="padding-left: 1px; padding-right: 6px"
+                        >
+                            <div class="subMenuTiulo">
+                                <input
+                                    type="text"
+                                    class="textoBusqueda"
+                                    id="buscarEnlace"
+                                    placeholder="Buscar..."
+                                />
+                                <svg
+                                    version="1.1"
+                                    id="Capa_1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    x="0px"
+                                    y="0px"
+                                    viewBox="0 0 180 32"
+                                    style="enable-background: new 0 0 180 32"
+                                    xml:space="preserve"
+                                >
+                                    <style type="text/css">
+                                        .st0B {
+                                            fill: #141d2b;
+                                        }
+
+                                        .st1B {
+                                            fill: #83c607;
+                                        }
+
+                                        .st2B {
+                                            fill: #141d2b;
+                                            stroke: #a4b1cd;
+                                            stroke-miterlimit: 10;
+                                        }
+
+                                        .st3B {
+                                            fill: #a4b1cd;
+                                        }
+
+                                        .st4B {
+                                            font-family: "Arial";
+                                        }
+
+                                        .st5B {
+                                            font-size: 6.5px;
+                                        }
+                                    </style>
+                                    <rect
+                                        class="st0B"
+                                        width="180"
+                                        height="32"
+                                    />
+                                    <polygon
+                                        class="st1B"
+                                        points="156.1,6 152.1,6 155.3,2.7 159.3,2.7 "
+                                    />
+                                    <polygon
+                                        class="st1B"
+                                        points="151.1,6 147.1,6 150.3,2.7 154.3,2.7 "
+                                    />
+                                    <polygon
+                                        class="st1B"
+                                        points="146.1,6 141.8,6 138.6,2.7 149.3,2.7 "
+                                    />
+                                    <polygon
+                                        class="st1B"
+                                        points="131.9,6 135.9,6 132.7,2.7 128.7,2.7 "
+                                    />
+                                    <polygon
+                                        class="st1B"
+                                        points="136.9,6 140.9,6 137.7,2.7 133.7,2.7 "
+                                    />
+                                    <path
+                                        class="st2B"
+                                        d="M175.5,3h-15c-1.56,1.56-2.44,2.44-4,4h-25c-1.56-1.56-2.44-2.44-4-4H4.5c-1.56,1.56-2.44,2.44-4,4v18 c1.56,1.56,2.44,2.44,4,4h53c1.95-1.95,3.05-3.05,5-5h56c1.95,1.95,3.05,3.05,5,5h52c1.56-1.56,2.44-2.44,4-4V7 C177.94,5.44,177.06,4.56,175.5,3z"
+                                    />
+                                    <text
+                                        transform="matrix(0.9806 0 0 1 76.7505 29.7635)"
+                                        class="st3B st4B st5B"
+                                    >
+                                        Búsqueda
+                                    </text>
+                                    <polygon
+                                        class="st1B"
+                                        points="118.1,29.65 122.1,29.65 117.9,25.35 113.9,25.35 "
+                                    />
+                                    <polygon
+                                        class="st1B"
+                                        points="62.9,29.65 58.9,29.65 63.1,25.35 67.1,25.35 "
+                                    />
+                                </svg>
+                            </div>
+
+                            <div id="hEnlaceIntPri" class="hojaDes"></div>
+                            <button
+                                title="Servicios"
+                                id="ayudaServicio"
+                                type="button"
+                                class="btn btn-outline-primary float1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#AyudaServicio"
+                                style="
+                                    color: var(--colorDark1);
+                                    border-color: var(--hoverDrak);
+                                "
+                            >
+                                <i
+                                    class="fa-solid fa-globe"
+                                    style="height: auto"
+                                ></i>
                             </button>
-
-                            <button id="modoLectura" class="btn btn-outline-info btn-sm" style="color: var(--colorDark2); border-color: var(--hoverDrak);">
-                                <i class="fa-brands fa-readme"></i>
+                            <button
+                                title="Comandos"
+                                id="ayudaComando"
+                                type="button"
+                                class="btn btn-outline-primary float2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalAyuda"
+                                style="
+                                    color: var(--colorDark1);
+                                    border-color: var(--hoverDrak);
+                                "
+                            >
+                                <i
+                                    class="fa-solid fa-terminal"
+                                    style="height: auto"
+                                ></i>
                             </button>
-
-
-                            <input type="text" class="textoBusPent" id="buscarDetalle" placeholder="Buscar...">
-
-
-
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 700 40" style="enable-background:new 0 0 700 40;" xml:space="preserve">
-                                <style type="text/css">
-                                    .st0 {
-                                        fill: #141D2B;
-                                    }
-
-                                    .st1 {
-                                        fill: #141D2B;
-                                        stroke: #A4B1CD;
-                                        stroke-miterlimit: 10;
-                                    }
-
-                                    .st2 {
-                                        fill: #A4B1CD;
-                                        cursor: pointer;
-                                    }
-
-                                    .st3 {
-                                        font-family: 'Arial';
-                                    }
-
-                                    .st4 {
-                                        font-size: 8px;
-                                    }
-
-                                    .st5 {
-                                        font-size: 12px;
-                                    }
-
-                                    .st6 {
-                                        fill: #83C607;
-                                    }
-
-                                    .st7 {
-                                        font-size: 6px;
-                                    }
-                                </style>
-                                <rect class="st0" width="700" height="40" />
-                                <path class="st1" d="M691,4.5H81.5c-1.95,1.95-3.05,3.05-5,5h-40c-1.95-1.95-3.05-3.05-5-5H9c-1.95,1.95-3.05,3.05-5,5v19 c1.95,1.95,3.05,3.05,5,5h215c1.95-1.95,3.05-3.05,5-5h242c1.95,1.95,3.05,3.05,5,5h150.5c1.95-1.95,3.05-3.05,5-5h32 c1.95,1.95,3.05,3.05,5,5H691c1.95-1.95,3.05-3.05,5-5v-19C694.05,7.55,692.95,6.45,691,4.5z" />
-                                <text id="hTipoPri" transform="matrix(0.9806 0 0 1 317.8767 37.9639)" class="st2 st3 st4">Tipo...</text>
-
-                                <text id="hNombrePri" transform="matrix(1 0 0 1 285.4143 22.2842)" class="st2 st3 st5">Seleccionar... </text>
-                                <polygon class="st6" points="75.5,8 71.5,8 75.5,4 79.5,4 " />
-                                <polygon class="st6" points="70.5,8 66.5,8 70.5,4 74.5,4 " />
-                                <polygon class="st6" points="65.5,8 61.5,8 65.5,4 69.5,4 " />
-                                <polygon class="st6" points="60.5,8 56.5,8 60.5,4 64.5,4 " />
-                                <polygon class="st6" points="55.5,8 51.5,8 55.5,4 59.5,4 " />
-                                <polygon class="st6" points="50.5,8 46.5,8 50.5,4 54.5,4 " />
-                                <polygon class="st6" points="45.5,8 41.5,8 45.5,4 49.5,4 " />
-                                <text id="hIdPri" transform="matrix(0.9806 0 0 1 638.9317 36.8617)" class="st6 st3 st7">ID</text>
-                            </svg>
+                            <button
+                                title="Herramientas"
+                                id="ayudaHerramienta"
+                                type="button"
+                                class="btn btn-outline-primary float3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#AyudaHerra"
+                                style="
+                                    color: var(--colorDark2);
+                                    border-color: var(--hoverDrak);
+                                "
+                            >
+                                <i
+                                    class="fa-solid fa-toolbox"
+                                    style="height: auto"
+                                ></i>
+                            </button>
                         </div>
-
-
-
-
-
-                        <div id="hDetallePri" class="hojaDesCentral match-braces" data-prismjs-copy="Copiar" data-prismjs-copy-error="Presiona Ctrl+C, para copiar" data-prismjs-copy-success="Copiado!">
-                        </div>
-
-                    </div>
-                    <div class="col-lg-2" style="padding-left: 1px;padding-right: 6px;">
-
-                        <div class="subMenuTiulo">
-                            <input type="text" class="textoBusqueda" id="buscarEnlace" placeholder="Buscar...">
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 180 32" style="enable-background:new 0 0 180 32;" xml:space="preserve">
-                                <style type="text/css">
-                                    .st0B {
-                                        fill: #141D2B;
-                                    }
-
-                                    .st1B {
-                                        fill: #83C607;
-                                    }
-
-                                    .st2B {
-                                        fill: #141D2B;
-                                        stroke: #A4B1CD;
-                                        stroke-miterlimit: 10;
-                                    }
-
-                                    .st3B {
-                                        fill: #A4B1CD;
-                                    }
-
-                                    .st4B {
-                                        font-family: 'Arial';
-                                    }
-
-                                    .st5B {
-                                        font-size: 6.5px;
-                                    }
-                                </style>
-                                <rect class="st0B" width="180" height="32" />
-                                <polygon class="st1B" points="156.1,6 152.1,6 155.3,2.7 159.3,2.7 " />
-                                <polygon class="st1B" points="151.1,6 147.1,6 150.3,2.7 154.3,2.7 " />
-                                <polygon class="st1B" points="146.1,6 141.8,6 138.6,2.7 149.3,2.7 " />
-                                <polygon class="st1B" points="131.9,6 135.9,6 132.7,2.7 128.7,2.7 " />
-                                <polygon class="st1B" points="136.9,6 140.9,6 137.7,2.7 133.7,2.7 " />
-                                <path class="st2B" d="M175.5,3h-15c-1.56,1.56-2.44,2.44-4,4h-25c-1.56-1.56-2.44-2.44-4-4H4.5c-1.56,1.56-2.44,2.44-4,4v18 c1.56,1.56,2.44,2.44,4,4h53c1.95-1.95,3.05-3.05,5-5h56c1.95,1.95,3.05,3.05,5,5h52c1.56-1.56,2.44-2.44,4-4V7 C177.94,5.44,177.06,4.56,175.5,3z" />
-                                <text transform="matrix(0.9806 0 0 1 76.7505 29.7635)" class="st3B st4B st5B">Búsqueda</text>
-                                <polygon class="st1B" points="118.1,29.65 122.1,29.65 117.9,25.35 113.9,25.35 " />
-                                <polygon class="st1B" points="62.9,29.65 58.9,29.65 63.1,25.35 67.1,25.35 " />
-                            </svg>
-                        </div>
-
-                        <div id="hEnlaceIntPri" class="hojaDes">
-                        </div>
-                        <button title="Servicios" id="ayudaServicio" type="button" class="btn btn-outline-primary float1" data-bs-toggle="modal" data-bs-target="#AyudaServicio" style="color: var(--colorDark1); border-color: var(--hoverDrak);">
-                            <i class="fa-solid fa-globe" style="height: auto;"></i>
-                        </button>
-                        <button title="Comandos" id="ayudaComando" type="button" class="btn btn-outline-primary float2" data-bs-toggle="modal" data-bs-target="#modalAyuda" style="color: var(--colorDark1); border-color: var(--hoverDrak);">
-                            <i class="fa-solid fa-terminal" style="height: auto;"></i>
-                        </button>
-                        <button title="Herramientas" id="ayudaHerramienta" type="button" class="btn btn-outline-primary float3" data-bs-toggle="modal" data-bs-target="#AyudaHerra" style="color: var(--colorDark2); border-color: var(--hoverDrak);">
-                            <i class="fa-solid fa-toolbox" style="height: auto;"></i>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!--Modal para CRUD-->
-    <div id="modalEditar" class="modal" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <form id="formMetodologia">
-                    <div class="modal-header" id="cabeceraPentest" style="padding-top: 5px; padding-bottom: 5px; border: none;">
-                        <h5 class="modal-title" id="tituloPentest"></h5>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" id="btnGuardar" class="btn btn-success btn-sm">
-                                Guardar
-                            </button>
+        <!--Modal para CRUD-->
+        <div id="modalEditar" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <form id="formMetodologia">
+                        <div
+                            class="modal-header"
+                            id="cabeceraPentest"
+                            style="
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                                border: none;
+                            "
+                        >
+                            <h5 class="modal-title" id="tituloPentest"></h5>
+                            <div
+                                class="btn-group"
+                                role="group"
+                                aria-label="Basic example"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    id="btnGuardar"
+                                    class="btn btn-success btn-sm"
+                                >
+                                    Guardar
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="modal-body" style="padding: 2px; background: var(--header);">
-                        <div class="row" style=" margin-right: auto;  margin-left: auto;">
-                            <div class="col-lg-3 modalNombre">
-                                <div class="input-group mb-1">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text" style="  width: 90px;justify-content: center; font-size: 12px; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">
-                                            Nombre
+                        <div
+                            class="modal-body"
+                            style="padding: 2px; background: var(--header)"
+                        >
+                            <div
+                                class="row"
+                                style="margin-right: auto; margin-left: auto"
+                            >
+                                <div class="col-lg-3 modalNombre">
+                                    <div class="input-group mb-1">
+                                        <div class="input-group-prepend">
+                                            <div
+                                                class="input-group-text"
+                                                style="
+                                                    width: 90px;
+                                                    justify-content: center;
+                                                    font-size: 12px;
+                                                    background: var(
+                                                        --fondoDark
+                                                    );
+                                                    font-weight: 500;
+                                                    color: var(--colorDark1);
+                                                    border: none;
+                                                "
+                                            >
+                                                Nombre
+                                            </div>
                                         </div>
+                                        <input
+                                            type="hidden"
+                                            autocomplete="off"
+                                            class="form-control"
+                                            id="mIdPri"
+                                            style="
+                                                font-size: 12px;
+                                                color: #454545;
+                                            "
+                                        />
+                                        <input
+                                            required
+                                            autocomplete="off"
+                                            class="form-control textAreaPent"
+                                            id="mNombrePri"
+                                            style="
+                                                font-size: 12px;
+                                                color: var(--colorDark1);
+                                                background: var(--fondoDark6);
+                                                border: none;
+                                            "
+                                        />
                                     </div>
-                                    <input type="hidden" autocomplete="off" class="form-control" id="mIdPri" style="font-size:12px; color:#454545;" />
-                                    <input required autocomplete="off" class="form-control textAreaPent" id="mNombrePri" style="font-size:12px; color:var(--colorDark1); background: var(--fondoDark6); border: none;" />
+
+                                    <div class="input-group mb-1">
+                                        <div class="input-group-prepend">
+                                            <div
+                                                class="input-group-text"
+                                                style="
+                                                    width: 90px;
+                                                    justify-content: center;
+                                                    font-size: 12px;
+                                                    background: var(
+                                                        --fondoDark
+                                                    );
+                                                    font-weight: 500;
+                                                    color: var(--colorDark1);
+                                                    border: none;
+                                                "
+                                            >
+                                                Tipo
+                                            </div>
+                                        </div>
+                                        <select
+                                            id="mTipoPri"
+                                            required
+                                            class="form-control"
+                                            style="
+                                                font-size: 12px;
+                                                font-weight: 500;
+                                                background: var(--fondoDark6);
+                                                color: var(--colorDark1);
+                                                border: none;
+                                            "
+                                        >
+                                            <option value="Nota">Nota</option>
+                                            <option value="Detalle">
+                                                Detalle
+                                            </option>
+                                            <option value="Tareas">
+                                                Tareas
+                                            </option>
+                                            <option value="Actividades">
+                                                Actividades
+                                            </option>
+                                            <option value="Tutoriales">
+                                                Tutoriales
+                                            </option>
+                                            <option value="Linea_Base">
+                                                Linea_Base
+                                            </option>
+                                            <option value="Manual">
+                                                Manual
+                                            </option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+                                        <div class="input-group-prepend">
+                                            <div
+                                                class="input-group-text"
+                                                style="
+                                                    width: 90px;
+                                                    justify-content: center;
+                                                    font-size: 12px;
+                                                    background: var(
+                                                        --fondoDark
+                                                    );
+                                                    font-weight: 500;
+                                                    color: var(--colorDark1);
+                                                    border: none;
+                                                "
+                                            >
+                                                Orden
+                                            </div>
+                                        </div>
+
+                                        <input
+                                            type="number"
+                                            required
+                                            autocomplete="off"
+                                            class="form-control textAreaPent"
+                                            id="mOrdenPri"
+                                            style="
+                                                font-size: 12px;
+                                                color: var(--colorDark1);
+                                                background: var(--fondoDark6);
+                                                border: none;
+                                            "
+                                        />
+                                    </div>
+                                    <div class="tituloPen">Nota</div>
+                                    <textarea
+                                        id="mNotaPri"
+                                        class="textAreaPent"
+                                        rows="33"
+                                    ></textarea>
                                 </div>
-
-                                <div class="input-group mb-1">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text" style="width: 90px;  justify-content: center; font-size: 12px;background: var(--fondoDark);  font-weight: 500;color: var(--colorDark1); border: none;">
-                                            Tipo
-                                        </div>
-                                    </div>
-                                    <select id="mTipoPri" required class="form-control" style="font-size: 12px; font-weight: 500; background: var(--fondoDark6); color: var(--colorDark1); border: none;">
-                                        <option value="Nota">Nota</option>
-                                        <option value="Detalle">Detalle</option>
-                                        <option value="Tareas">Tareas</option>
-                                        <option value="Actividades">Actividades</option>
-                                        <option value="Tutoriales">Tutoriales</option>
-                                        <option value="Linea_Base">Linea_Base</option>
-                                        <option value="Manual">Manual</option>
-                                        <option value="Otros">Otros</option>
-                                    </select>
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text" style="  width: 90px;justify-content: center; font-size: 12px; background: var(--fondoDark);font-weight: 500; color: var(--colorDark1); border: none;  ">
-                                            Orden
-                                        </div>
-                                    </div>
-
-                                    <input type="number" required autocomplete="off" class="form-control textAreaPent" id="mOrdenPri" style="font-size:12px; color:var(--colorDark1); background: var(--fondoDark6); border: none;" />
+                                <div class="col-lg-9" style="padding: 2px">
+                                    <div id="mDetallePri"></div>
                                 </div>
-                                <div class="tituloPen">Nota</div>
-                                <textarea id="mNotaPri" class="textAreaPent" rows="33"></textarea>
-                            </div>
-                            <div class="col-lg-9" style="padding: 2px;">
-                                <div id="mDetallePri"></div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Ver Herramienta-->
-    <div class="modal fade" id="modalHerramienta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header" style="background: #192229; color:aqua; padding: 5px 10px; border: solid 1px #404040;">
-                    <h1 class="modal-title fs-5" id="herraNombre">Modal title</h1>
-                    <div class="btn-group input-group-sm" role="group" aria-label="Basic mixed styles example">
-                        <span class="input-group-text  " style="color: aliceblue; background:#192229; border: none; ">ID:</span>
-                        <span class="input-group-text" id="idHerraMod" style="color: aliceblue; background:#192229; border: none; ">-</span>
-
-                        <button type="button" class="btn  btn-danger btn-sm" data-bs-dismiss="modal"><i class="fa-regular fa-rectangle-xmark"></i></button>
-                    </div>
-                </div>
-                <div class="modal-body" style="background: #192229; padding: 5px;">
-                    <div id="hHEDetalleHerra" class="hojaDesHerramien" data-prismjs-copy="Copiar" data-prismjs-copy-error="Presiona Ctrl+C, para copiar" data-prismjs-copy-success="Copiado!">-
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Servicios Unico-->
-    <div class="modal fade" id="modalServicioUni" tabindex="-1" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content" style="width: 1550px; right: 520px;">
-                <div class="modal-header" style="background: #192229;">
-                    <h1 class="modal-title fs-5" id="NombreServiUnico">Servicios Pentest</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="background: #192229;">
-                    <div class="row">
+        <!-- Modal Ver Herramienta-->
+        <div
+            class="modal fade"
+            id="modalHerramienta"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div
+                        class="modal-header"
+                        style="
+                            background: #192229;
+                            color: aqua;
+                            padding: 5px 10px;
+                            border: solid 1px #404040;
+                        "
+                    >
+                        <h1 class="modal-title fs-5" id="herraNombre">
+                            Modal title
+                        </h1>
+                        <div
+                            class="btn-group input-group-sm"
+                            role="group"
+                            aria-label="Basic mixed styles example"
+                        >
+                            <span
+                                class="input-group-text"
+                                style="
+                                    color: aliceblue;
+                                    background: #192229;
+                                    border: none;
+                                "
+                                >ID:</span
+                            >
+                            <span
+                                class="input-group-text"
+                                id="idHerraMod"
+                                style="
+                                    color: aliceblue;
+                                    background: #192229;
+                                    border: none;
+                                "
+                                >-</span
+                            >
 
-                        <div class="col-9">
-                            <div class="hojaAyuda">
-
-                                <div id="DetalleServicioUnico"></div>
-                            </div>
+                            <button
+                                type="button"
+                                class="btn btn-danger btn-sm"
+                                data-bs-dismiss="modal"
+                            >
+                                <i class="fa-regular fa-rectangle-xmark"></i>
+                            </button>
                         </div>
-
-                        <div class="col-3" style="padding-right: 1px;">
-
-                            <div class="hojaAyuda">
-
-                                <div id="MenuServiUnico"></div>
-                            </div>
-
-                        </div>
-
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Comandos -->
-    <div class="modal fade" id="modalAyuda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content" style="width: 1450px; right: 450px;">
-                <div class="modal-header" style="background: #192229;">
-                    <h1 class="modal-title fs-5" id="">Comandos</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="background: #192229;">
-                    <div class="row">
-                        <div class="col-3" style="padding-right: 1px;">
-                            <div class="hojaAyuda">
-                                <table id="tablaComando" class="table table-striped" style="width: 100%; border: none;">
-                                    <thead style="border: none;">
-                                        <tr>
-                                            <th class="text-center" style="color: aliceblue">ID</th>
-                                            <th style="color: aliceblue">Nombre</th>
-                                            <th style="color: aliceblue">Tipo</th>
-                                            <th style="color: aliceblue">Lenguaje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-9">
-                            <div class="hojaAyuda">
-                                <div id="eCODetalleComan"></div>
-                            </div>
+                    <div
+                        class="modal-body"
+                        style="background: #192229; padding: 5px"
+                    >
+                        <div
+                            id="hHEDetalleHerra"
+                            class="hojaDesHerramien"
+                            data-prismjs-copy="Copiar"
+                            data-prismjs-copy-error="Presiona Ctrl+C, para copiar"
+                            data-prismjs-copy-success="Copiado!"
+                        >
+                            -
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Herramientas -->
-    <div class="modal fade" id="AyudaHerra" tabindex="-1" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content" style="width: 1550px; right: 520px;">
-                <div class="modal-header" style="background: #192229;">
-                    <h1 class="modal-title fs-5" id="">Herramientas</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="background: #192229;">
-                    <div class="row">
-                        <div class="col-3" style="padding-right: 1px;">
-
-                            <div class="hojaAyuda">
-
-                                <table id="tablaHerramienta" class="table table-striped" style="width: 100%; border: none;">
-                                    <thead style="border: none;">
-                                        <tr>
-                                            <th class="text-center" style="color: aliceblue">ID</th>
-                                            <th style="color: aliceblue">Nombre</th>
-                                            <th style="color: aliceblue">Tipo</th>
-                                            <th style="color: aliceblue">Categoria</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+        <!-- Modal Servicios Unico-->
+        <div
+            class="modal fade"
+            id="modalServicioUni"
+            tabindex="-1"
+            aria-labelledby=""
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 1550px; right: 520px">
+                    <div class="modal-header" style="background: #192229">
+                        <h1 class="modal-title fs-5" id="NombreServiUnico">
+                            Servicios Pentest
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body" style="background: #192229">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="hojaAyuda">
+                                    <div id="DetalleServicioUnico"></div>
+                                </div>
                             </div>
 
-                        </div>
-                        <div class="col-9">
-                            <div class="hojaAyuda">
-
-                                <div id="eHEDetalleHerra"></div>
+                            <div class="col-3" style="padding-right: 1px">
+                                <div class="hojaAyuda">
+                                    <div id="MenuServiUnico"></div>
+                                </div>
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Servicios -->
-    <div class="modal fade" id="AyudaServicio" tabindex="-1" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content" style="width: 1550px; right: 520px;">
-                <div class="modal-header" style="background: #192229;">
-                    <h1 class="modal-title fs-5" id="">Servicios Pentest</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="background: #192229;">
-                    <div class="row">
-                        <div class="col-3" style="padding-right: 1px;">
-
-                            <div class="hojaAyuda">
-
-                                <table id="tablaServicio" class="table table-striped" style="width: 100%; border: none;">
-                                    <thead style="border: none;">
-                                        <tr>
-                                            <th class="text-center" style="color: aliceblue">ID</th>
-                                            <th style="color: aliceblue">Nombre</th>
-                                            <th style="color: aliceblue">Tipo</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+        <!-- Modal Comandos -->
+        <div
+            class="modal fade"
+            id="modalAyuda"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 1450px; right: 450px">
+                    <div class="modal-header" style="background: #192229">
+                        <h1 class="modal-title fs-5" id="">Comandos</h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body" style="background: #192229">
+                        <div class="row">
+                            <div class="col-3" style="padding-right: 1px">
+                                <div class="hojaAyuda">
+                                    <table
+                                        id="tablaComando"
+                                        class="table table-striped"
+                                        style="width: 100%; border: none"
+                                    >
+                                        <thead style="border: none">
+                                            <tr>
+                                                <th
+                                                    class="text-center"
+                                                    style="color: aliceblue"
+                                                >
+                                                    ID
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Nombre
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Tipo
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Lenguaje
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
                             </div>
-
-                        </div>
-                        <div class="col-9">
-                            <div class="hojaAyuda">
-
-                                <div id="eSEDetalleServicio"></div>
+                            <div class="col-9">
+                                <div class="hojaAyuda">
+                                    <div id="eCODetalleComan"></div>
+                                </div>
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-    <!--===== MAIN JS =====-->
-    <script src="./librerias/jquery/jquery-3.6.0.min.js"></script>
-    <script src="./seguridad/js/seguridad.js"></script>
-    <script src="./pentest/js/pentest_union.js"></script>
 
-    <script src="./dist/js/jim.js"></script>
+        <!-- Modal Herramientas -->
+        <div
+            class="modal fade"
+            id="AyudaHerra"
+            tabindex="-1"
+            aria-labelledby=""
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 1550px; right: 520px">
+                    <div class="modal-header" style="background: #192229">
+                        <h1 class="modal-title fs-5" id="">Herramientas</h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body" style="background: #192229">
+                        <div class="row">
+                            <div class="col-3" style="padding-right: 1px">
+                                <div class="hojaAyuda">
+                                    <table
+                                        id="tablaHerramienta"
+                                        class="table table-striped"
+                                        style="width: 100%; border: none"
+                                    >
+                                        <thead style="border: none">
+                                            <tr>
+                                                <th
+                                                    class="text-center"
+                                                    style="color: aliceblue"
+                                                >
+                                                    ID
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Nombre
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Tipo
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Categoria
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="hojaAyuda">
+                                    <div id="eHEDetalleHerra"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!--===== Bootstratp 5 =====-->
-    <!--===== Bootstratp 5 =====-->
-    <script src="./librerias/bootstrap_5.2.3/js/bootstrap.bundle.js"></script>
-    <script src="./librerias/bootstrap_5.2.3/js/bootstrap.js"></script>
+        <!-- Modal Servicios -->
+        <div
+            class="modal fade"
+            id="AyudaServicio"
+            tabindex="-1"
+            aria-labelledby=""
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 1550px; right: 520px">
+                    <div class="modal-header" style="background: #192229">
+                        <h1 class="modal-title fs-5" id="">
+                            Servicios Pentest
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body" style="background: #192229">
+                        <div class="row">
+                            <div class="col-3" style="padding-right: 1px">
+                                <div class="hojaAyuda">
+                                    <table
+                                        id="tablaServicio"
+                                        class="table table-striped"
+                                        style="width: 100%; border: none"
+                                    >
+                                        <thead style="border: none">
+                                            <tr>
+                                                <th
+                                                    class="text-center"
+                                                    style="color: aliceblue"
+                                                >
+                                                    ID
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Nombre
+                                                </th>
+                                                <th style="color: aliceblue">
+                                                    Tipo
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="hojaAyuda">
+                                    <div id="eSEDetalleServicio"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--===== MAIN JS =====-->
+        <script src="./librerias/jquery/jquery-3.6.0.min.js"></script>
 
-    <!--===== Code mirror =====-->
-    <script src="./librerias/codemirror/lib/codemirror.js"></script>
-    <script src="./librerias/codemirror/mode/javascript/javascript.js"></script>
-    <script src="./librerias/codemirror/mode/shell/shell.js"></script>
-    <script src="./librerias/codemirror/mode/powershell/powershell.js"></script>
-    <script src="./librerias/codemirror/mode/python/python.js"></script>
-    <script src="./librerias/codemirror/mode/xml/xml.js"></script>
-    <script src="./librerias/codemirror/mode/ruby/ruby.js"></script>
-    <script src="./librerias/codemirror/mode/php/php.js"></script>
-    <script src="./librerias/codemirror/mode/perl/perl.js"></script>
-    <script src="./librerias/codemirror/mode/nginx/nginx.js"></script>
-    <script src="./librerias/codemirror/mode/http/http.js"></script>
-    <script src="./librerias/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="./librerias/codemirror/mode/sql/sql.js"></script>
-    <script src="./librerias/codemirror/addon/display/fullscreen.js"></script>
+        <!-- Inicializar host para compatibilidad con código existente -->
+        <script>
+            // Variable global para compatibilidad con código existente
+            var host = window.APP_CONFIG
+                ? window.APP_CONFIG.API_HOST
+                : "http://localhost:7777";
+        </script>
 
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+        <script src="./seguridad/js/seguridad.js"></script>
+        <script src="./pentest/js/pentest_union.js"></script>
 
-    <!-- Datatables -->
-    <script type="text/javascript" language="javascript" src="./librerias/datatable/datatables.min.js"></script>
+        <script src="./dist/js/jim.js"></script>
 
-    <!--  Summer sin Bootstrap -->
-    <script src="/librerias/summernote/summernote-lite.js"></script>
+        <!--===== Bootstratp 5 =====-->
+        <!--===== Bootstratp 5 =====-->
+        <script src="./librerias/bootstrap_5.2.3/js/bootstrap.bundle.js"></script>
+        <script src="./librerias/bootstrap_5.2.3/js/bootstrap.js"></script>
 
-    <!--  Summer Add Header Table -->
-    <script src="/librerias/summernote/summernote-table-headers-master/summernote-table-headers.js"></script>
+        <!--===== Code mirror =====-->
+        <script src="./librerias/codemirror/lib/codemirror.js"></script>
+        <script src="./librerias/codemirror/mode/javascript/javascript.js"></script>
+        <script src="./librerias/codemirror/mode/shell/shell.js"></script>
+        <script src="./librerias/codemirror/mode/powershell/powershell.js"></script>
+        <script src="./librerias/codemirror/mode/python/python.js"></script>
+        <script src="./librerias/codemirror/mode/xml/xml.js"></script>
+        <script src="./librerias/codemirror/mode/ruby/ruby.js"></script>
+        <script src="./librerias/codemirror/mode/php/php.js"></script>
+        <script src="./librerias/codemirror/mode/perl/perl.js"></script>
+        <script src="./librerias/codemirror/mode/nginx/nginx.js"></script>
+        <script src="./librerias/codemirror/mode/http/http.js"></script>
+        <script src="./librerias/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="./librerias/codemirror/mode/sql/sql.js"></script>
+        <script src="./librerias/codemirror/addon/display/fullscreen.js"></script>
 
-    <script src="/librerias/summernote/plugin/plugin_iframe.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css"
+        />
 
-    <script src="/librerias/summernote/plugin/autocomplete.js"></script>
+        <!-- Datatables -->
+        <script
+            type="text/javascript"
+            language="javascript"
+            src="./librerias/datatable/datatables.min.js"
+        ></script>
 
+        <!--  Summer sin Bootstrap -->
+        <script src="./librerias/summernote/summernote-lite.js"></script>
 
-    <script src="/librerias/summernote/plugin/etiquetas.js"></script>
+        <!--  Summer Add Header Table -->
+        <script src="./librerias/summernote/summernote-table-headers-master/summernote-table-headers.js"></script>
 
+        <script src="./librerias/summernote/plugin/plugin_iframe.js"></script>
 
-    <script src="./pentest/prism/prism.js"></script>
-    <script src="./pentest/js/menu_resaltado.js"></script>
+        <script src="./librerias/summernote/plugin/autocomplete.js"></script>
 
-    <script src="./pentest/js/menu_resal_modal.js"></script>
-    <!--  FontAs -->
-    <script src="./librerias/fontawesome-free-6.2.0-web/js/all.js"></script>
-    <script src="./librerias/fontawesome-free-6.2.0-web/js/v4-shims.js"></script>
+        <script src="./librerias/summernote/plugin/etiquetas.js"></script>
 
-</body>
+        <script src="./pentest/prism/prism.js"></script>
+        <script src="./pentest/js/menu_resaltado.js"></script>
 
+        <script src="./pentest/js/menu_resal_modal.js"></script>
+        <!--  FontAs -->
+        <script src="./librerias/fontawesome-free-6.2.0-web/js/all.js"></script>
+        <script src="./librerias/fontawesome-free-6.2.0-web/js/v4-shims.js"></script>
+    </body>
 </html>
