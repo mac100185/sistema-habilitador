@@ -82,7 +82,7 @@ cd sistema-habilitador
 **Opción B - Descarga directa:**
 ```bash
 # Descargar archivo comprimido
-wget http://CualquierDominio:3000/agarcia/sistema-habilitador/archive/main.zip
+wget https://github.com/mac100185/sistema-habilitador/archive/main.zip
 
 # Descomprimir
 unzip main.zip
@@ -988,7 +988,7 @@ docker logs sistema-habilitador-web
 ### Información del Proyecto
 - **Nombre:** Sistema Habilitador
 - **Versión:** 1.1.0
-- **Repositorio:** http://CualquierDominio:3000/agarcia/sistema-habilitador
+- **Repositorio:** https://github.com/mac100185/sistema-habilitador
 
 ### Recursos Adicionales
 - **Documentación de Cambios:** Ver `CAMBIOS_SEGURIDAD.md`

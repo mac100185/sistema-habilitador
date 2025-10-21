@@ -600,7 +600,7 @@ Para dudas o problemas:
 
 ### Información del Proyecto
 
-- **Repositorio:** http://CualquierDominio:3000/agarcia/sistema-habilitador
+- **Repositorio:** https://github.com/mac100185/sistema-habilitador
 - **Versión:** 1.1.0
 
 ---
