@@ -332,7 +332,7 @@ Para instrucciones detalladas paso a paso sobre cómo instalar y desplegar el Si
 **Pasos básicos:**
 ```bash
 # 1. Clonar repositorio
-git clone http://CualquierDominio:3000/agarcia/sistema-habilitador.git
+git clone https://github.com/mac100185/sistema-habilitador.git
 cd sistema-habilitador
 
 # 2. Configurar variables de entorno
@@ -478,12 +478,12 @@ Agregar línea:
 <script>
 $('#miFormulario').submit(function(e) {
     e.preventDefault();
-    
+
     // Validar formulario
     if (!validateForm('miFormulario')) {
         return false;
     }
-    
+
     // Hacer petición
     apiRequest({
         url: buildApiUrl('/api/mi-endpoint'),
@@ -508,16 +508,16 @@ $('#miFormulario').submit(function(e) {
 ```javascript
 $('#inputImagen').change(function(e) {
     const file = e.target.files[0];
-    
+
     // Validar archivo
     if (!validateFile(file)) {
         return;
     }
-    
+
     // Crear FormData
     const formData = new FormData();
     formData.append('image', file);
-    
+
     // Subir
     $.ajax({
         url: buildApiUrl('/seguridad_def/imagen/' + nombreImagen),

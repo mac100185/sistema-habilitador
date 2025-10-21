@@ -73,7 +73,7 @@ sudo netstat -tuln | grep -E ':(7777|82|3306|4200)'
 **Opción A - Usando Git (Recomendado):**
 ```bash
 # Clonar el repositorio
-git clone http://CualquierDominio:3000/agarcia/sistema-habilitador.git
+git clone https://github.com/mac100185/sistema-habilitador.git
 
 # Ingresar al directorio
 cd sistema-habilitador
@@ -420,7 +420,7 @@ sudo nano /etc/nginx/sites-available/sistema-habilitador
 server {
     listen 80;
     server_name hack_tool;
-    
+
     location / {
         proxy_pass http://localhost:7777;
         proxy_http_version 1.1;
@@ -486,7 +486,7 @@ sudo crontab -e
    ```bash
    # Ver logs en tiempo real
    docker logs -f sistema-habilitador-web
-   
+
    # Buscar errores
    docker logs sistema-habilitador-web | grep -i error
    ```
@@ -774,7 +774,7 @@ docker logs sistema-habilitador-web
    ```bash
    # En Windows
    notepad C:\Windows\System32\drivers\etc\hosts
-   
+
    # En Linux/Mac
    cat /etc/hosts | grep hack_tool
    ```
@@ -920,7 +920,7 @@ docker logs sistema-habilitador-web
    ```bash
    # Identificar proceso usando el puerto
    sudo lsof -i :7777
-   
+
    # Detener proceso (reemplazar PID)
    sudo kill -9 PID
    ```
