@@ -1,4 +1,20 @@
+/**
+ * JIMLG - Sistema de Login Simplificado
+ * Compatible con nuevo sistema de autenticación
+ * Sin dependencia de JSEncrypt
+ */
+
 $(document).ready(function () {
+  console.log("📋 jimlg.js: Sistema de login cargado");
+
+  // Verificar si login-handler.js ya está manejando el login
+  if (window.loginHandlerActive) {
+    console.log(
+      "ℹ️ jimlg.js: login-handler.js ya está activo, delegando funcionalidad",
+    );
+    return;
+  }
+
   // Función de inicio de sesión
   $("#erbo696").click(function (e) {
     e.preventDefault();
@@ -8,46 +24,38 @@ $(document).ready(function () {
 
     // Validación básica
     if (!usuario || !password) {
-      alert("Por favor, completa todos los campos");
+      if (typeof Swal !== "undefined") {
+        Swal.fire({
+          icon: "warning",
+          title: "Campos requeridos",
+          text: "Por favor, completa todos los campos",
+          confirmButtonText: "Aceptar",
+        });
+      } else {
+        alert("Por favor, completa todos los campos");
+      }
       return;
     }
 
-    // Preparar datos para cifrado
-    const data = {
-      user: usuario,
-      pass: password,
-    };
-    const datao = JSON.stringify(data);
-
-    // Cifrar con la clave pública RSA
-    const encrypt = new JSEncrypt();
-    encrypt.setPublicKey(
-      atob(
-        "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFqY1dlODVxdGhtZGxJK1h5MCtqMgoweWpGQTkxaXA4Yzd2Qy9Xb1hxc054UmlweXd2NHdPOTE2cEhzTEEwTWgydEF2R01zbU9QRzE4NHNoNngyQ2tECkRwNmpqd2wzSHAvUG1TVUMvREJiYlBORkh4aFEzcFdLTGlGMDhMbElqcHdxazhzY0htaldDWmc2TzEvWVVNZGUKVk9YREVYY29md1pFL3RpZzJjZ0RxT2N5dGxOS2oxa01XTmhMM1RjaU9KZEd2VmFOL2xSK2E3d0hGZDZSbnJSMQpkTFR3S21zMkptZm1pbjFZdS83dWFZZ0Rlc2VJcWc5eEpKek9GdTJXTGZjdWFpVER1ODZYbnlSYmxsR1VuSnhNCkJ1RzNkZ3EvQ2s1dGtIOWRHQVljVTZrc04yK0htdU55Wmx1OVJULytQekxDZTQ3MjJGR3I4bjlWSFhNMlZFVXAKZ1FJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t",
-      ),
-    );
-
-    const encrypted = encrypt.encrypt(datao);
-
-    if (!encrypted) {
-      alert("Error al cifrar los datos");
-      return;
-    }
-
-    // Limpiar el formulario
-    $("#ko895").trigger("reset");
+    // Deshabilitar botón mientras procesa
+    const $button = $("#erbo696");
+    const originalText = $button.text();
+    $button.prop("disabled", true).text("Ingresando...");
 
     // Obtener URL del API desde la configuración centralizada
     const apiUrl = window.APP_CONFIG
-      ? window.APP_CONFIG.API_HOST + window.APP_CONFIG.ENDPOINTS.TOKEN
-      : window.host + "/api/token";
+      ? window.APP_CONFIG.API_HOST + "/api/auth/login"
+      : "/api/auth/login";
 
-    // Mostrar indicador de carga (si existe Swal)
+    console.log("🔐 jimlg.js: Intentando login para usuario:", usuario);
+
+    // Mostrar indicador de carga
     if (typeof Swal !== "undefined") {
       Swal.fire({
         title: "Autenticando...",
         text: "Por favor espera",
         allowOutsideClick: false,
+        showConfirmButton: false,
         didOpen: () => {
           Swal.showLoading();
         },
@@ -61,60 +69,71 @@ $(document).ready(function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        oeiro: encrypted,
+        username: usuario,
+        password: password,
       }),
     })
       .then(function (response) {
-        if (response.ok) {
-          return response.text();
-        } else {
-          throw new Error("Error en la autenticación: " + response.status);
-        }
+        return response.json().then(function (data) {
+          return { status: response.status, data: data };
+        });
       })
-      .then(function (texto) {
-        console.log("Autenticación exitosa:", texto);
+      .then(function (result) {
+        if (result.status === 200 && result.data.success) {
+          console.log("✓ jimlg.js: Autenticación exitosa");
 
-        // Cerrar indicador de carga
-        if (typeof Swal !== "undefined") {
-          Swal.close();
-        }
+          // Guardar token y datos del usuario
+          if (result.data.token) {
+            localStorage.setItem("token", result.data.token);
+          }
+          if (result.data.user) {
+            localStorage.setItem("user", JSON.stringify(result.data.user));
+          }
 
-        // Guardar token si viene en la respuesta
-        try {
-          const data = JSON.parse(texto);
-          if (data.token) {
-            localStorage.setItem("authToken", data.token);
+          // Cerrar indicador de carga
+          if (typeof Swal !== "undefined") {
+            Swal.fire({
+              icon: "success",
+              title: "¡Bienvenido!",
+              text: "Redirigiendo...",
+              timer: 1500,
+              showConfirmButton: false,
+            });
           }
-          if (data.redirectUrl) {
-            window.location.href = data.redirectUrl;
-          } else {
-            // Redirigir al index por defecto
-            window.location.href = "index.html";
-          }
-        } catch (e) {
-          // Si no es JSON, solo redirigir
-          window.location.href = "index.html";
+
+          // Redirigir después de un breve delay
+          setTimeout(function () {
+            window.location.href = result.data.redirectUrl || "index.html";
+          }, 1500);
+        } else {
+          throw new Error(result.data.message || "Error de autenticación");
         }
       })
       .catch(function (err) {
-        console.error("Error en login:", err);
+        console.error("✗ jimlg.js: Error en login:", err);
+
+        // Rehabilitar botón
+        $button.prop("disabled", false).text(originalText);
 
         // Mostrar error al usuario
         if (typeof Swal !== "undefined") {
           Swal.fire({
             icon: "error",
             title: "Error de Autenticación",
-            text: "Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.",
+            text:
+              err.message ||
+              "Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.",
             confirmButtonText: "Aceptar",
           });
         } else {
           alert(
-            "Error de autenticación. Por favor, verifica tus credenciales.",
+            err.message ||
+              "Error de autenticación. Por favor, verifica tus credenciales.",
           );
         }
 
-        // Recargar el formulario
-        window.location.reload();
+        // Limpiar el campo de password
+        $("#dfs654").val("").focus();
       });
 
     return false;
@@ -122,9 +141,17 @@ $(document).ready(function () {
 
   // Permitir enviar con Enter en el campo de password
   $("#dfs654").keypress(function (e) {
-    if (e.which === 13) {
+    if (e.which === 13 || e.keyCode === 13) {
       e.preventDefault();
       $("#erbo696").click();
+    }
+  });
+
+  // Permitir enviar con Enter en el campo de usuario
+  $("#Usuario").keypress(function (e) {
+    if (e.which === 13 || e.keyCode === 13) {
+      e.preventDefault();
+      $("#dfs654").focus();
     }
   });
 
@@ -134,5 +161,14 @@ $(document).ready(function () {
   });
 
   // Focus automático en el campo de usuario al cargar
-  $("#Usuario").focus();
+  setTimeout(function () {
+    $("#Usuario").focus();
+  }, 100);
+
+  // Verificar si hay sesión activa
+  const token = localStorage.getItem("token");
+  if (token) {
+    console.log("ℹ️ jimlg.js: Token encontrado, verificando validez...");
+    // Dejar que auth-guard o login-handler lo manejen
+  }
 });
