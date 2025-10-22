@@ -1,2 +1,80 @@
+# Dependencias
 node_modules
 npm-debug.log
+yarn-error.log
+package-lock.json.bak
+
+# Logs
+*.log
+logs
+*.log.*
+
+# Archivos temporales
+tmp
+temp
+*.tmp
+*.temp
+.cache
+
+# Configuración local
+.env.local
+.env.*.local
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE y editores
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentación (no necesaria en imagen)
+*.md
+!README.md
+
+# Scripts que no se usan dentro del contenedor
+Scripts/logs_exportados
+Scripts/*.sh
+
+# Archivos de sistema
+Thumbs.db
+desktop.ini
+
+# Archivos de testing
+test
+tests
+*.test.js
+*.spec.js
+coverage
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+compose.yaml
+.dockerignore
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Archivos grandes innecesarios
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Backups
+*.bak
+*.backup
+*.old
+
+# Evidencias y archivos de usuario (se mapean como volumen)
+archivos
