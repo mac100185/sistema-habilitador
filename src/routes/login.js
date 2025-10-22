@@ -8,6 +8,26 @@ const captcha = require("@bestdon/nodejs-captcha");
 // Almacenamiento temporal de captchas (en producción usar Redis o sesiones)
 const captchaStore = new Map();
 
+// Limpieza automática de captchas expirados cada 5 minutos
+setInterval(
+  () => {
+    const now = Date.now();
+    let cleaned = 0;
+    for (const [key, data] of captchaStore.entries()) {
+      if (data.expires < now) {
+        captchaStore.delete(key);
+        cleaned++;
+      }
+    }
+    if (cleaned > 0) {
+      console.log(
+        `Limpieza de captchas: ${cleaned} captchas expirados eliminados`,
+      );
+    }
+  },
+  5 * 60 * 1000,
+); // 5 minutos
+
 /**
  * Generar captcha
  */
@@ -23,9 +43,10 @@ router.get("/api/auth/captcha", (req, res) => {
       expires: Date.now() + 5 * 60 * 1000,
     });
 
-    // Limpiar captchas expirados
+    // Limpiar captchas expirados (redundante, pero útil en alta carga)
+    const now = Date.now();
     for (const [key, data] of captchaStore.entries()) {
-      if (data.expires < Date.now()) {
+      if (data.expires < now) {
         captchaStore.delete(key);
       }
     }
@@ -101,6 +122,7 @@ router.post("/api/auth/login", async (req, res) => {
   try {
     // Validar campos requeridos
     if (!username || !password) {
+      console.log("Login fallido: Campos requeridos faltantes");
       return res.status(400).json({
         success: false,
         message: "Usuario y contraseña son requeridos",
@@ -111,12 +133,14 @@ router.post("/api/auth/login", async (req, res) => {
     if (captchaId && captchaValue) {
       const storedCaptcha = captchaStore.get(captchaId);
       if (!storedCaptcha || storedCaptcha.expires < Date.now()) {
+        console.log("Login fallido: Captcha expirado o inválido");
         return res.status(400).json({
           success: false,
           message: "Captcha expirado o inválido",
         });
       }
       if (storedCaptcha.value.toLowerCase() !== captchaValue.toLowerCase()) {
+        console.log("Login fallido: Captcha incorrecto");
         return res.status(400).json({
           success: false,
           message: "Captcha incorrecto",
@@ -139,6 +163,7 @@ router.post("/api/auth/login", async (req, res) => {
         }
 
         if (rows.length === 0) {
+          console.log(`Login fallido: Usuario no encontrado: ${username}`);
           return res.status(401).json({
             success: false,
             message: "Usuario o contraseña incorrectos",
@@ -151,11 +176,16 @@ router.post("/api/auth/login", async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
+          console.log(
+            `Login fallido: Contraseña incorrecta para usuario: ${username}`,
+          );
           return res.status(401).json({
             success: false,
             message: "Usuario o contraseña incorrectos",
           });
         }
+
+        console.log(`Login exitoso: Usuario ${username} (ID: ${user.id})`);
 
         // Actualizar último acceso
         mysqlConnection.query(
@@ -176,7 +206,7 @@ router.post("/api/auth/login", async (req, res) => {
           role: user.role,
         });
 
-        // Responder con token y datos del usuario
+        // Responder con token y datos del usuario (sin incluir password)
         res.json({
           success: true,
           message: "Login exitoso",
@@ -246,6 +276,9 @@ router.post("/api/auth/register", async (req, res) => {
         }
 
         if (rows.length > 0) {
+          console.log(
+            `Registro fallido: Usuario o email ya existe: ${username} / ${email}`,
+          );
           return res.status(409).json({
             success: false,
             message: "El usuario o email ya existe",
@@ -268,6 +301,9 @@ router.post("/api/auth/register", async (req, res) => {
               });
             }
 
+            console.log(
+              `Usuario registrado exitosamente: ${username} (ID: ${result.insertId})`,
+            );
             res.status(201).json({
               success: true,
               message: "Usuario registrado exitosamente",
@@ -358,6 +394,9 @@ router.post("/api/auth/change-password", async (req, res) => {
               });
             }
 
+            console.log(
+              `Contraseña actualizada para usuario: ${username} (ID: ${user.id})`,
+            );
             res.json({
               success: true,
               message: "Contraseña actualizada exitosamente",
@@ -380,6 +419,10 @@ router.post("/api/auth/change-password", async (req, res) => {
  */
 router.post("/api/auth/logout", (req, res) => {
   // El logout real se hace en el cliente eliminando el token
+  // Aquí se podría implementar blacklist de tokens si fuera necesario
+  const userId = req.userId || "unknown";
+  console.log(`Logout: Usuario ${userId}`);
+
   res.json({
     success: true,
     message: "Logout exitoso",

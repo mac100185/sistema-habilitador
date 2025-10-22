@@ -4,8 +4,20 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
+const { checkConfiguration } = require("./utils/config-check");
 
 const app = express();
+
+// Verificar configuración antes de iniciar
+console.log("===========================================");
+console.log("Sistema Habilitador - Iniciando...");
+console.log("===========================================");
+
+const configOk = checkConfiguration();
+if (!configOk && process.env.NODE_ENV === "production") {
+  console.error("\n⚠️  ADVERTENCIA: Se detectaron problemas de configuración");
+  console.error("Continuando de todos modos, pero revisa los errores arriba\n");
+}
 
 // Importar middleware de autenticación
 const { verifyToken } = require("./middleware/auth");
@@ -28,20 +40,50 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // Deshabilitar X-Powered-By por seguridad
 app.disable("X-Powered-By");
 
-// Configurar cabeceras y cors
+// Configurar CORS según el ambiente
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : ["http://localhost:7777", "http://127.0.0.1:7777"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Permitir requests sin origin (como mobile apps o curl)
+    if (!origin) return callback(null, true);
+
+    // En desarrollo, permitir todos los orígenes
+    if (process.env.NODE_ENV !== "production") {
+      return callback(null, true);
+    }
+
+    // En producción, solo permitir orígenes específicos
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes("*")) {
+      callback(null, true);
+    } else {
+      callback(new Error("No permitido por CORS"));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Authorization",
+    "x-access-token",
+  ],
+};
+
+app.use(cors(corsOptions));
+
+// Configurar cabeceras adicionales
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-access-token",
-  );
   res.removeHeader("X-Powered-By");
   next();
 });
 
 app.use(express.json());
-app.use(cors());
 
 // Settings
 app.set("port", process.env.PORT || 7777);
@@ -78,17 +120,20 @@ app.get("/api/health", (req, res) => {
         status: "error",
         message: "Database connection failed",
         timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV || "development",
+        environment: process.env.NODE_ENV || "production",
         version: "1.0.0",
       });
     }
 
-    connection.release();
+    if (connection) {
+      connection.release();
+    }
+
     res.json({
       status: "ok",
       database: "connected",
       timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV || "development",
+      environment: process.env.NODE_ENV || "production",
       version: "1.0.0",
     });
   });
@@ -156,9 +201,12 @@ app.use("*.html", (req, res, next) => {
   }
 
   // Para otros archivos HTML, verificar si hay token en el query string o header
+  const authHeader = req.headers["authorization"];
   const token =
     req.query.token ||
-    req.headers["authorization"]?.split(" ")[1] ||
+    (authHeader && authHeader.startsWith("Bearer ")
+      ? authHeader.substring(7)
+      : null) ||
     req.headers["x-access-token"];
 
   if (!token) {
@@ -171,9 +219,13 @@ app.use("*.html", (req, res, next) => {
   const { JWT_SECRET } = require("./middleware/auth");
 
   try {
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.userId = decoded.id;
+    req.userEmail = decoded.email;
+    req.userRole = decoded.role;
     next();
   } catch (error) {
+    console.error("Error verificando token en HTML:", error.message);
     // Si el token es inválido, redirigir a login
     return res.redirect("/login.html?error=session_expired");
   }
@@ -185,7 +237,12 @@ app.use("*.html", (req, res, next) => {
 
 // Manejador de errores global
 app.use((err, req, res, next) => {
-  console.error("Error:", err.stack);
+  console.error("Error global:", err.message);
+
+  // Log completo solo en desarrollo
+  if (process.env.NODE_ENV !== "production") {
+    console.error("Stack trace:", err.stack);
+  }
 
   // Si es un error de JWT
   if (err.name === "JsonWebTokenError") {
@@ -206,12 +263,26 @@ app.use((err, req, res, next) => {
     });
   }
 
+  // Error de base de datos
+  if (err.code && err.code.startsWith("ER_")) {
+    console.error("Error de base de datos:", err.code, err.sqlMessage);
+    return res.status(500).json({
+      success: false,
+      error: "Error de base de datos",
+      message: "Ocurrió un error al procesar la solicitud",
+    });
+  }
+
   // Error genérico
-  res.status(err.status || 500).json({
+  const statusCode = err.status || err.statusCode || 500;
+  res.status(statusCode).json({
     success: false,
     error: "Error interno del servidor",
-    message: err.message || "Ha ocurrido un error inesperado",
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+    message:
+      process.env.NODE_ENV === "production"
+        ? "Ha ocurrido un error inesperado"
+        : err.message || "Ha ocurrido un error inesperado",
+    ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
   });
 });
 
@@ -232,9 +303,13 @@ app.use((req, res) => {
 const PORT = app.get("port");
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`===========================================`);
-  console.log(`Server corriendo en puerto ${PORT}`);
-  console.log(`Ambiente: ${process.env.NODE_ENV || "development"}`);
+  console.log(`✅ Servidor corriendo exitosamente`);
+  console.log(`===========================================`);
+  console.log(`Puerto: ${PORT}`);
+  console.log(`Ambiente: ${process.env.NODE_ENV || "production"}`);
   console.log(`Timestamp: ${new Date().toISOString()}`);
+  console.log(`URL: http://localhost:${PORT}`);
+  console.log(`Health Check: http://localhost:${PORT}/api/health`);
   console.log(`===========================================`);
 });
 

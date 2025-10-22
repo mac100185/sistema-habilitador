@@ -1,100 +1,122 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const path = require('path');
-const multer = require('multer');
-const fs = require('fs');
+const path = require("path");
+const multer = require("multer");
+const fs = require("fs");
 
+// Configuración de almacenamiento de archivos
 
-// UPLOAD V1 - general Middlware
-// router.post('/images/upload', (req, res) => {
-//     console.log(req.file);
-//     res.send('received');
-// });
-
-// UPLOAD V2 - pre execution of a function
-// saving with its original name
-// router.post('/images/upload', multer({
-//     dest: path.join(__dirname, '../public/uploads'),
-// }).single('image'), (req, res, next) => {
-//     console.log(req.file);
-//     const ext = path.extname(req.file.originalname).toLocaleLowerCase();
-//     fs.rename(req.file.path, `./src/public/uploads/${req.file.originalname}`, () => {
-//         res.send('received');
-//     });
-// });
-
-// UPLOAD V3- using general middleware
-// router.post('/images/upload', (req, res) => {
-//     res.send('uploaded');
-// });
-/*let jim = "";
 const storage = multer.diskStorage({
-
-    
-    destination: path.join(__dirname, '../publico/imagen2'),
-    filename: (req, file, cb) => {
-       cb(null, Date.now()+jim+ file.originalname);       
-        //cb(null, generateName());
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, "../publico/imagen2");
+    // Verificar si el directorio existe, si no, crearlo
+    if (!fs.existsSync(uploadDir)) {
+      try {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      } catch (err) {
+        console.error("Error creando directorio de uploads:", err);
+        return cb(err);
+      }
     }
-})
-
-const uploadImage = multer({
-    storage,
-    limits: { fileSize: 3000000 }
-}).single('imageData');  //upload es el nombre de archivo frontend //Nombre del Form
-
-router.post('/evidencia/', (req, res) => { 
-  
-    uploadImage(req, res, (err) => {
-        //console.log(req.body.lana)
-        jim = req.body.lana;
-
-        if (err) {
-            err.message = 'El archivo es muy pesado para mi servicio.';
-            return res.send(err);
-        }
-        console.log(req.file);
-        let nombre = req.file.filename;
-        let respuesta = { status: "success", imageUrl: "/imagen2/" + nombre }
-        res.json(respuesta);
-        // res.send("http://localhost:4000/uploads/"+"1627546329845image.png");
-    });
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const fileName = req.params.id;
+    const timestamp = Date.now();
+    const extension = path.extname(file.originalname) || ".png";
+    const sanitizedFileName = `${fileName}.${timestamp}${extension}`;
+    cb(null, sanitizedFileName);
+  },
 });
 
-*/
-
-
-//==============================================otro metodo==========================================
-
-
-const storage = multer.diskStorage({     
-    destination: path.join(__dirname, '../publico/imagen2'),
-    filename: (req, file, cb) => {
-        const fileName = req.params.id 
-        console.log(file)        
-       cb(null, fileName+"."+Date.now()+".png");                   
-    }
-});
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-}
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+  const allowedMimeTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+  ];
 
-//Upload route
-router.post('/evidencia/:id', upload.single('imageData'), (req, res, next) => {
-   
-    let nombre = req.file.filename;
-    try {
-        return res.status(200).json({            
-            status: "success", imageUrl: "/imagen2/" + nombre
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error(
+        "Tipo de archivo no permitido. Solo se permiten imágenes (JPEG, PNG, GIF, WEBP)",
+      ),
+      false,
+    );
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB máximo
+  },
+});
+
+// Endpoint para subir evidencias
+router.post("/evidencia/:id", (req, res, next) => {
+  // Validar que el ID sea válido
+  if (!req.params.id || req.params.id.trim() === "") {
+    return res.status(400).json({
+      success: false,
+      message: "ID de evidencia requerido",
+    });
+  }
+
+  upload.single("imageData")(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      // Error de Multer
+      console.error("Error de Multer:", err);
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({
+          success: false,
+          message: "El archivo es demasiado grande. Tamaño máximo: 5MB",
         });
-    } catch (error) {
-        console.error(error);
+      }
+      return res.status(400).json({
+        success: false,
+        message: "Error al procesar el archivo: " + err.message,
+      });
+    } else if (err) {
+      // Otro tipo de error
+      console.error("Error subiendo archivo:", err);
+      return res.status(400).json({
+        success: false,
+        message: err.message || "Error al subir el archivo",
+      });
     }
+
+    // Validar que se haya subido un archivo
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No se proporcionó ningún archivo",
+      });
+    }
+
+    try {
+      const nombre = req.file.filename;
+      return res.status(200).json({
+        success: true,
+        status: "success",
+        imageUrl: "/imagen2/" + nombre,
+        fileName: nombre,
+        fileSize: req.file.size,
+        mimeType: req.file.mimetype,
+      });
+    } catch (error) {
+      console.error("Error procesando respuesta:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Error interno del servidor",
+      });
+    }
+  });
 });
 
 module.exports = router;

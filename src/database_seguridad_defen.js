@@ -7,15 +7,12 @@ const pool = mysql.createPool({
   user: process.env.DB_USER || "quanium",
   password: process.env.DB_PASSWORD || "quanium",
   database: process.env.DB_NAME || "sisthabpro",
-  insecureAuth: true,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
   connectTimeout: 60000,
-  acquireTimeout: 60000,
-  timeout: 60000,
 });
 
 // Manejo de errores del pool

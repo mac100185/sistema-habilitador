@@ -6,230 +6,374 @@ const fs = require("fs");
 
 const mysqlConnection2 = require("../database_seguridad_defen.js");
 
+// Helper para manejo de errores en queries
+const handleQueryError = (res, err, customMessage = "Error en la consulta") => {
+  console.error(customMessage + ":", err);
+  return res.status(500).json({
+    success: false,
+    message: customMessage,
+    error: process.env.NODE_ENV !== "production" ? err.message : undefined,
+  });
+};
+
+// Helper para validar parámetros
+const validateParams = (params, res) => {
+  for (const [key, value] of Object.entries(params)) {
+    if (!value || (typeof value === "string" && value.trim() === "")) {
+      res.status(400).json({
+        success: false,
+        message: `Parámetro requerido: ${key}`,
+      });
+      return false;
+    }
+  }
+  return true;
+};
+
 //Combo Squads
 router.get("/api/seguridad_def/combo/squads", (req, res) => {
-  //const { id } = req.params;
   mysqlConnection2.query(
-    'SELECT IdPrin,NombrePrin FROM principal WHERE Habilitador = "SI"',
-    (err, rows, fields) => {
-      if (!err) {
-        res.json(rows);
-      } else {
-        console.log(err);
+    'SELECT IdPrin, NombrePrin FROM principal WHERE Habilitador = "SI"',
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo squads");
       }
-    }
+      res.json({
+        success: true,
+        data: rows,
+      });
+    },
   );
 });
 
 //Combo Iniciativas
 router.get("/api/seguridad_def/combo/squads/iniciativa/:id", (req, res) => {
   const { id } = req.params;
+
+  if (!validateParams({ id }, res)) return;
+
   mysqlConnection2.query(
-    "SELECT Id,Nombre FROM inicitiva_squad WHERE Id_Squad  = ?",
+    "SELECT Id, Nombre FROM inicitiva_squad WHERE Id_Squad = ?",
     [id],
-    (err, rows, fields) => {
-      if (!err) {
-        res.json(rows);
-      } else {
-        console.log(err);
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo iniciativas");
       }
-    }
+      res.json({
+        success: true,
+        data: rows,
+      });
+    },
   );
 });
 
 //Combo cumplimiento
-
 router.get("/api/seguridad_def/combo/squads/cumplimiento/:id", (req, res) => {
   const { id } = req.params;
+
+  if (!validateParams({ id }, res)) return;
+
   mysqlConnection2.query(
     "SELECT DISTINCT EstadoHabSquad AS Nombre FROM habilita_squad WHERE IdSquad = ?",
     [id],
-    (err, rows, fields) => {
-      if (!err) {
-        let data = rows;
-
-        //Agregar Aplica // All
-        data.push({ Nombre: "All", Nombre: "Total" });
-
-        //Quitar Deprecado No Aprobado
-        let newData = data.filter((object) => {
-          return (
-            object.Nombre !== "No Aprobado" && object.Nombre !== "Deprecado"
-          );
-        });
-        res.json(newData);
-      } else {
-        console.log(err);
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo cumplimiento");
       }
-    }
+
+      let data = rows;
+
+      // Agregar opción "Total"
+      data.push({ Nombre: "Total" });
+
+      // Quitar Deprecado y No Aprobado
+      let newData = data.filter((object) => {
+        return object.Nombre !== "No Aprobado" && object.Nombre !== "Deprecado";
+      });
+
+      res.json({
+        success: true,
+        data: newData,
+      });
+    },
   );
 });
 
 // Agregar Iniciativa
 router.post("/api/seguridad_def/combo/squads/iniciativa/", (req, res) => {
-  let Nombre = req.body.Nombre;
-  let Tipo = req.body.Tipo;
-  let Nota = req.body.Nota;
-  let Id_Squad = req.body.Id_Squad;
+  const { Nombre, Tipo, Nota, Id_Squad } = req.body;
 
-  let sql =
+  if (!validateParams({ Nombre, Id_Squad }, res)) return;
+
+  const sql =
     "INSERT INTO inicitiva_squad SET Nombre = ?, Tipo = ?, Nota = ?, Id_Squad = ?";
-  mysqlConnection2.query(
-    sql,
-    [Nombre, Tipo, Nota, Id_Squad],
-    (err, rows, fields) => {
-      if (!err) {
-        console.log(rows.insertId);
-        mysqlConnection2.query(
-          "CALL generar_habilitadores(?)",
-          [rows.insertId],
-          (err, rows, fields) => {
-            if (!err) {
-              res.json({ status: "Iniciativa Agregada" });
-            } else {
-              console.log(err);
-            }
-          }
-        );
-      } else {
-        console.log(err);
-      }
+
+  mysqlConnection2.query(sql, [Nombre, Tipo, Nota, Id_Squad], (err, result) => {
+    if (err) {
+      return handleQueryError(res, err, "Error agregando iniciativa");
     }
-  );
+
+    const insertId = result.insertId;
+    console.log("Iniciativa creada con ID:", insertId);
+
+    mysqlConnection2.query(
+      "CALL generar_habilitadores(?)",
+      [insertId],
+      (err) => {
+        if (err) {
+          return handleQueryError(res, err, "Error generando habilitadores");
+        }
+        res.json({
+          success: true,
+          message: "Iniciativa agregada exitosamente",
+          id: insertId,
+        });
+      },
+    );
+  });
 });
 
 // GET Una Metodología Principal
 router.get("/api/seguridad_def/principal/:id", (req, res) => {
   const { id } = req.params;
+
+  if (!validateParams({ id }, res)) return;
+
   mysqlConnection2.query(
-    "SELECT * FROM principal WHERE  IdPrin = ?",
+    "SELECT * FROM principal WHERE IdPrin = ?",
     [id],
-    (err, rows, fields) => {
-      if (!err) {
-        res.json(rows[0]);
-      } else {
-        console.log(err);
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo principal");
       }
-    }
+      if (!rows || rows.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Metodología principal no encontrada",
+        });
+      }
+      res.json({
+        success: true,
+        data: rows[0],
+      });
+    },
   );
 });
 
 // GET Una Metodología Secundario
 router.get("/api/seguridad_def/secundario/:id", (req, res) => {
   const { id } = req.params;
+
+  if (!validateParams({ id }, res)) return;
+
   mysqlConnection2.query(
-    "SELECT * FROM secundario WHERE  IdSecu = ?",
+    "SELECT * FROM secundario WHERE IdSecu = ?",
     [id],
-    (err, rows, fields) => {
-      if (!err) {
-        res.json(rows[0]);
-      } else {
-        console.log(err);
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo secundario");
       }
-    }
+      if (!rows || rows.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Metodología secundaria no encontrada",
+        });
+      }
+      res.json({
+        success: true,
+        data: rows[0],
+      });
+    },
   );
 });
 
-//Para Titulo y sibtitulo HTML
+//Para Titulo y subtitulo HTML
 router.get("/api/seguridad_def/titulos/", (req, res) => {
-  //const { id } = req.params;
   mysqlConnection2.query(
-    'SELECT principal.IdPrin, principal.NombrePrin,  CASE WHEN secundario.IdSecu is NULL THEN "" ELSE secundario.IdSecu END AS IdSecu, CASE WHEN secundario.NombreSecu is NULL THEN "" ELSE secundario.NombreSecu END AS NombreSecu,CASE WHEN secundario.OrdenSecu is NULL THEN "" ELSE secundario.OrdenSecu END AS OrdenSecu FROM principal LEFT JOIN secundario ON principal.IdPrin = secundario.IdPrinci ORDER BY principal.IdPrin, secundario.OrdenSecu',
-    (err, rows, fields) => {
-      if (!err) {
-        res.json(rows);
-      } else {
-        console.log(err);
+    `SELECT
+      principal.IdPrin,
+      principal.NombrePrin,
+      CASE WHEN secundario.IdSecu IS NULL THEN "" ELSE secundario.IdSecu END AS IdSecu,
+      CASE WHEN secundario.NombreSecu IS NULL THEN "" ELSE secundario.NombreSecu END AS NombreSecu,
+      CASE WHEN secundario.OrdenSecu IS NULL THEN "" ELSE secundario.OrdenSecu END AS OrdenSecu
+    FROM principal
+    LEFT JOIN secundario ON principal.IdPrin = secundario.IdPrinci
+    ORDER BY principal.IdPrin, secundario.OrdenSecu`,
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo títulos");
       }
-    }
+      res.json({
+        success: true,
+        data: rows,
+      });
+    },
   );
 });
 
-//Actulizar Metodología Princial
+//Actualizar Metodología Principal
 router.put("/api/seguridad_def/add/principal", (req, res) => {
-  let IdPrin = req.body.IdPrin;
-  let OrdenPrin = req.body.OrdenPrin;
-  let DetallePrin = req.body.DetallePrin;
-  let NombrePrin = req.body.NombrePrin;
-  let TipoPrin = req.body.TipoPrin;
-  let NotaPrin = req.body.NotaPrin;
-  //let AuxPri = req.body.AuxPri;
+  const { IdPrin, OrdenPrin, DetallePrin, NombrePrin, TipoPrin, NotaPrin } =
+    req.body;
 
-  let sql =
-    "UPDATE principal SET  DetallePrin = ?, OrdenPrin = ?,  NombrePrin = ?,  TipoPrin = ?, NotaPrin = ? WHERE IdPrin = ?";
+  if (!validateParams({ IdPrin, NombrePrin }, res)) return;
+
+  const sql =
+    "UPDATE principal SET DetallePrin = ?, OrdenPrin = ?, NombrePrin = ?, TipoPrin = ?, NotaPrin = ? WHERE IdPrin = ?";
+
   mysqlConnection2.query(
     sql,
     [DetallePrin, OrdenPrin, NombrePrin, TipoPrin, NotaPrin, IdPrin],
-    (err, rows, fields) => {
-      if (!err) {
-        res.json({ status: "Seguridad Principal Actualizada" });
-      } else {
-        console.log(err);
+    (err, result) => {
+      if (err) {
+        return handleQueryError(
+          res,
+          err,
+          "Error actualizando metodología principal",
+        );
       }
-    }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Metodología principal no encontrada",
+        });
+      }
+      res.json({
+        success: true,
+        message: "Seguridad Principal actualizada exitosamente",
+      });
+    },
   );
 });
 
 //================================================================================
 
-//Actulizar Metodología Secundario
+//Actualizar Metodología Secundario
 router.put("/api/seguridad_def/add/secundario", (req, res) => {
-  let IdSecu = req.body.IdSecu;
-  let NombreSecu = req.body.NombreSecu;
-  let OrdenSecu = req.body.OrdenSecu;
-  let TipoSecu = req.body.TipoSecu;
-  let DetalleSecu = req.body.DetalleSecu;
-  let NotaSecu = req.body.NotaSecu;
-  let IdPrinci = req.body.IdPrinci;
-  let sql =
-    "UPDATE secundario SET  NombreSecu = ?,OrdenSecu	= ?,TipoSecu	=	?,DetalleSecu	= ?,NotaSecu = ? WHERE IdSecu = ?";
+  const { IdSecu, NombreSecu, OrdenSecu, TipoSecu, DetalleSecu, NotaSecu } =
+    req.body;
+
+  if (!validateParams({ IdSecu, NombreSecu }, res)) return;
+
+  const sql =
+    "UPDATE secundario SET NombreSecu = ?, OrdenSecu = ?, TipoSecu = ?, DetalleSecu = ?, NotaSecu = ? WHERE IdSecu = ?";
+
   mysqlConnection2.query(
     sql,
     [NombreSecu, OrdenSecu, TipoSecu, DetalleSecu, NotaSecu, IdSecu],
-    (err, rows, fields) => {
-      if (!err) {
-        res.json({ status: "Seguridad Secundario Actualizada" });
-      } else {
-        console.log(err);
+    (err, result) => {
+      if (err) {
+        return handleQueryError(
+          res,
+          err,
+          "Error actualizando metodología secundaria",
+        );
       }
-    }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Metodología secundaria no encontrada",
+        });
+      }
+      res.json({
+        success: true,
+        message: "Seguridad Secundaria actualizada exitosamente",
+      });
+    },
   );
 });
 //==============================================Imagenes==========================================
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, "../publico/imagen4"),
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, "../publico/imagen4");
+    if (!fs.existsSync(uploadDir)) {
+      try {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      } catch (err) {
+        console.error("Error creando directorio de uploads:", err);
+        return cb(err);
+      }
+    }
+    cb(null, uploadDir);
+  },
   filename: (req, file, cb) => {
     const fileName = req.params.id;
-    console.log(file);
-    cb(null, fileName + "." + Date.now() + ".png");
+    const timestamp = Date.now();
+    const extension = path.extname(file.originalname) || ".png";
+    cb(null, `${fileName}.${timestamp}${extension}`);
   },
 });
+
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype == "image/jpeg" || file.mimetype == "image/png") {
+  const allowedMimeTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+  ];
+  if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(null, false);
+    cb(
+      new Error("Tipo de archivo no permitido. Solo imágenes JPEG, PNG o GIF"),
+      false,
+    );
   }
 };
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB
+  },
+});
+
 //Upload route
-router.post(
-  "/seguridad_def/imagen/:id",
-  upload.single("imageData"),
-  //upload.single("files[0]"),
-  (req, res, next) => {
-    let nombre = req.file.filename;
-    console.log(nombre);
-    try {
-      return res.status(200).json({
-        status: "success",
-        imageUrl: "/imagen4/" + nombre,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+router.post("/seguridad_def/imagen/:id", (req, res) => {
+  if (!req.params.id) {
+    return res.status(400).json({
+      success: false,
+      message: "ID requerido",
+    });
   }
-);
+
+  upload.single("imageData")(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      console.error("Error de Multer:", err);
+      return res.status(400).json({
+        success: false,
+        message:
+          err.code === "LIMIT_FILE_SIZE"
+            ? "Archivo demasiado grande (máx 5MB)"
+            : "Error al procesar archivo",
+      });
+    } else if (err) {
+      console.error("Error subiendo archivo:", err);
+      return res.status(400).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No se proporcionó archivo",
+      });
+    }
+
+    const nombre = req.file.filename;
+    console.log("Imagen subida:", nombre);
+
+    return res.status(200).json({
+      success: true,
+      status: "success",
+      imageUrl: "/imagen4/" + nombre,
+      fileName: nombre,
+    });
+  });
+});
 
 //------------------------------------------------------
 //Control
@@ -238,32 +382,35 @@ router.post(
 // GET Control Tabla
 router.get("/api/seguridad_def/controles/:id", (req, res) => {
   const { id } = req.params;
+
+  if (!validateParams({ id }, res)) return;
+
   if (id === "all") {
     mysqlConnection2.query(
-      "SELECT Id,Dimension,Dominio,Titulo FROM control_nube",
-      (err, rows, fields) => {
-        if (!err) {
-          res.json(rows);
-        } else {
-          console.log(err);
+      "SELECT Id, Dimension, Dominio, Titulo FROM control_nube",
+      (err, rows) => {
+        if (err) {
+          return handleQueryError(res, err, "Error obteniendo controles");
         }
-      }
+        res.json({
+          success: true,
+          data: rows,
+        });
+      },
     );
   } else {
-    const { id } = req.params;
-    //console.log(id)
     mysqlConnection2.query(
-      "SELECT Id,Dimension,Dominio,Titulo FROM control_nube WHERE Id IN" +
-        "(" +
-        id +
-        ")",
-      (err, rows, fields) => {
-        if (!err) {
-          res.json(rows);
-        } else {
-          console.log(err);
+      "SELECT Id, Dimension, Dominio, Titulo FROM control_nube WHERE Id IN (?)",
+      [id.split(",")],
+      (err, rows) => {
+        if (err) {
+          return handleQueryError(res, err, "Error obteniendo controles");
         }
-      }
+        res.json({
+          success: true,
+          data: rows,
+        });
+      },
     );
   }
 });
@@ -271,16 +418,27 @@ router.get("/api/seguridad_def/controles/:id", (req, res) => {
 // GET Un Control
 router.get("/api/seguridad_def/controles/unico/:id", (req, res) => {
   const { id } = req.params;
+
+  if (!validateParams({ id }, res)) return;
+
   mysqlConnection2.query(
-    "SELECT * FROM control_nube WHERE  Id = ?",
+    "SELECT * FROM control_nube WHERE Id = ?",
     [id],
-    (err, rows, fields) => {
-      if (!err) {
-        res.json(rows[0]);
-      } else {
-        console.log(err);
+    (err, rows) => {
+      if (err) {
+        return handleQueryError(res, err, "Error obteniendo control");
       }
-    }
+      if (!rows || rows.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Control no encontrado",
+        });
+      }
+      res.json({
+        success: true,
+        data: rows[0],
+      });
+    },
   );
 });
 
@@ -341,7 +499,7 @@ router.put("/api/seguridad_def/controles/up", (req, res) => {
       } else {
         console.log(err);
       }
-    }
+    },
   );
 });
 
@@ -363,7 +521,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Si Cumple") {
       mysqlConnection2.query(
@@ -375,7 +533,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Con Observaciones") {
       mysqlConnection2.query(
@@ -387,7 +545,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Cumple Parcial") {
       mysqlConnection2.query(
@@ -399,7 +557,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "No Cumple") {
       mysqlConnection2.query(
@@ -411,7 +569,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "No Aplica") {
       mysqlConnection2.query(
@@ -423,7 +581,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Deprecado") {
       mysqlConnection2.query(
@@ -435,7 +593,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Falta Evidencia") {
       mysqlConnection2.query(
@@ -447,7 +605,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Dependencia") {
       mysqlConnection2.query(
@@ -459,7 +617,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "En Progreso") {
       mysqlConnection2.query(
@@ -471,7 +629,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id2 == "All") {
       mysqlConnection2.query(
@@ -483,7 +641,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     }
   } else {
@@ -497,7 +655,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Si Cumple") {
       mysqlConnection2.query(
@@ -509,7 +667,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Con Observaciones") {
       mysqlConnection2.query(
@@ -521,7 +679,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Cumple Parcial") {
       mysqlConnection2.query(
@@ -533,7 +691,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "No Cumple") {
       mysqlConnection2.query(
@@ -545,7 +703,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "No Aplica") {
       mysqlConnection2.query(
@@ -557,7 +715,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Deprecado") {
       mysqlConnection2.query(
@@ -569,7 +727,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Falta Evidencia") {
       mysqlConnection2.query(
@@ -581,7 +739,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "Dependencia") {
       mysqlConnection2.query(
@@ -593,7 +751,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "En Progreso") {
       mysqlConnection2.query(
@@ -605,7 +763,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else if (id3 == "All") {
       mysqlConnection2.query(
@@ -617,7 +775,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     } else {
       mysqlConnection2.query(
@@ -629,7 +787,7 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
           } else {
             console.log(err);
           }
-        }
+        },
       );
     }
   }
@@ -649,9 +807,9 @@ router.get(
         } else {
           console.log(err);
         }
-      }
+      },
     );
-  }
+  },
 );
 
 //Actulizar Estado Habilitador Squad
@@ -672,7 +830,7 @@ router.put("/api/seguridad_def/controles_squad/unico", (req, res) => {
       } else {
         console.log(err);
       }
-    }
+    },
   );
 });
 
@@ -714,9 +872,9 @@ router.get(
         } else {
           console.log(err);
         }
-      }
+      },
     );
-  }
+  },
 );
 
 // GET Habilitadores Grafica Imprecindible
@@ -757,9 +915,9 @@ router.get(
         } else {
           console.log(err);
         }
-      }
+      },
     );
-  }
+  },
 );
 /*===============================Tabla===========================*/
 
@@ -777,9 +935,9 @@ router.get(
         } else {
           console.log(err);
         }
-      }
+      },
     );
-  }
+  },
 );
 
 /*============================Etapa====================*/
@@ -796,7 +954,7 @@ router.get("/api/seguridad_def/habilitadores/etapa/:id", (req, res) => {
       } else {
         console.log(err);
       }
-    }
+    },
   );
 });
 
@@ -814,9 +972,9 @@ router.get(
         } else {
           console.log(err);
         }
-      }
+      },
     );
-  }
+  },
 );
 
 module.exports = router;

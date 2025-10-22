@@ -1,3 +1,6 @@
+# Nombre del proyecto (evita prefijos redundantes)
+name: sist-hab
+
 services:
   dbsh:
     image: mysql:8.1.0
@@ -33,7 +36,7 @@ services:
       start_period: 90s
     command: --default-authentication-plugin=mysql_native_password --wait_timeout=28800 --interactive_timeout=28800 --max_allowed_packet=256M --log-error-verbosity=2
     networks:
-      - sistema-habilitador-network
+      - app-network
 
   phpmyadminsh:
     image: phpmyadmin/phpmyadmin
@@ -50,7 +53,7 @@ services:
       dbsh:
         condition: service_healthy
     networks:
-      - sistema-habilitador-network
+      - app-network
 
   websh:
     image: sistema-habilitador-prod:latest
@@ -76,8 +79,12 @@ services:
       - PORT=7777
       - NODE_ENV=production
       # Seguridad JWT
+      # ⚠️ IMPORTANTE: Cambiar JWT_SECRET en producción por un valor único y seguro
+      # Generar con: openssl rand -base64 32
       - JWT_SECRET=sistema-habilitador-secret-key-prod-2024-change-this
       - JWT_EXPIRES_IN=8h
+      # CORS Origins permitidos (separados por coma, usar * para permitir todos)
+      - ALLOWED_ORIGINS=*
       # NPM Configuration
       - NPM_CONFIG_LOGLEVEL=info
       - NPM_CONFIG_REGISTRY=https://registry.npmjs.org
@@ -95,7 +102,7 @@ services:
       retries: 5
       start_period: 120s
     networks:
-      - sistema-habilitador-network
+      - app-network
     logging:
       driver: "json-file"
       options:
@@ -110,7 +117,7 @@ services:
       - "83:8080"
       - "84:8443"
     networks:
-      - sistema-habilitador-network
+      - app-network
 
 volumes:
   mysql_data:
@@ -119,5 +126,6 @@ volumes:
     driver: local
 
 networks:
-  sistema-habilitador-network:
+  app-network:
+    name: sist-hab-network
     driver: bridge
