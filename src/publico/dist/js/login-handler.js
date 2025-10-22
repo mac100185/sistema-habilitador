@@ -13,8 +13,11 @@
   const API_BASE_URL = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : "";
   let captchaData = null;
 
-  // Elementos del DOM
-  const loginForm = document.getElementById("login-form");
+  // Elementos del DOM - soportar múltiples IDs de formulario
+  let loginForm = document.getElementById("login-form");
+  if (!loginForm) {
+    loginForm = document.getElementById("ko895"); // Fallback al ID antiguo
+  }
   const usernameInput = document.getElementById("Usuario");
   const passwordInput = document.getElementById("dfs654");
   const loginButton = document.getElementById("erbo696");
@@ -31,8 +34,17 @@
     // Configurar evento de submit del formulario
     if (loginForm) {
       loginForm.addEventListener("submit", handleLogin);
+      console.log("✓ Formulario de login encontrado y eventos configurados");
     } else {
       console.log("ℹ️ Formulario no encontrado, jimlg.js manejará el login");
+    }
+
+    // También configurar evento click del botón como backup
+    if (loginButton && loginForm) {
+      loginButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        handleLogin(e);
+      });
     }
 
     // Cargar captcha si está disponible
@@ -108,10 +120,15 @@
    * Manejar el evento de login
    */
   async function handleLogin(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     const username = usernameInput ? usernameInput.value.trim() : "";
     const password = passwordInput ? passwordInput.value : "";
+
+    console.log("🔐 login-handler: Procesando login para usuario:", username);
 
     // Validar campos
     if (!username || !password) {

@@ -15,11 +15,11 @@ $(document).ready(function () {
     return;
   }
 
-  // Función de inicio de sesión
-  $("#erbo696").click(function (e) {
+  // Función de inicio de sesión - Manejar tanto submit del formulario como click del botón
+  function handleLoginSubmit(e) {
     e.preventDefault();
 
-    const usuario = $("#Usuario").val();
+    const usuario = $("#Usuario").val().trim();
     const password = $("#dfs654").val();
 
     // Validación básica
@@ -137,13 +137,17 @@ $(document).ready(function () {
       });
 
     return false;
-  });
+  }
+
+  // Vincular eventos al formulario y al botón
+  $("#login-form, #ko895").on("submit", handleLoginSubmit);
+  $("#erbo696").on("click", handleLoginSubmit);
 
   // Permitir enviar con Enter en el campo de password
   $("#dfs654").keypress(function (e) {
     if (e.which === 13 || e.keyCode === 13) {
       e.preventDefault();
-      $("#erbo696").click();
+      handleLoginSubmit(e);
     }
   });
 
