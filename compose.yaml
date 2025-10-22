@@ -12,7 +12,8 @@ services:
     restart: always
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./db/sisthabpro.sql:/docker-entrypoint-initdb.d/sisthabpro.sql
+      - ./db/sisthabpro.sql:/docker-entrypoint-initdb.d/01-sisthabpro.sql
+      - ./db/usuarios.sql:/docker-entrypoint-initdb.d/02-usuarios.sql
     healthcheck:
       test:
         [
@@ -27,8 +28,12 @@ services:
         ]
       interval: 10s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 10
+      start_period: 60s
+    command: --default-authentication-plugin=mysql_native_password --wait_timeout=28800 --interactive_timeout=28800
+    networks:
+      - sistema-habilitador-network
+
   phpmyadminsh:
     image: phpmyadmin/phpmyadmin
     container_name: sist-hab-phpmyadmin-prod
@@ -38,12 +43,19 @@ services:
     environment:
       - PMA_HOST=dbsh
       - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=quanium
     depends_on:
       dbsh:
         condition: service_healthy
+    networks:
+      - sistema-habilitador-network
+
   websh:
     image: sistema-habilitador-prod:latest
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: sist-hab-prod
     restart: always
     volumes:
@@ -51,21 +63,34 @@ services:
     ports:
       - "7777:7777"
     environment:
+      # Base de datos principal (sisthabpro)
       - DB_HOST=dbsh
       - DB_PORT=3306
       - DB_USER=quanium
       - DB_PASSWORD=quanium
       - DB_NAME=sisthabpro
-      - DB_HOST_API=192.168.1.105
-      - DB_PORT_API=3306
-      - DB_USER_API=root
-      - DB_PASSWORD_API=quanium
-      - DB_NAME_API=seguridadapi
+      # Configuración de la aplicación
       - PORT=7777
       - NODE_ENV=production
+      # Seguridad JWT
+      - JWT_SECRET=sistema-habilitador-secret-key-prod-2024-change-this
+      - JWT_EXPIRES_IN=8h
     depends_on:
       dbsh:
         condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --quiet --tries=1 --spider http://localhost:7777/api/health || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - sistema-habilitador-network
+
   drawio:
     image: jgraph/drawio
     container_name: sist-hab-drawio-prod
@@ -73,9 +98,15 @@ services:
     ports:
       - "83:8080"
       - "84:8443"
+    networks:
+      - sistema-habilitador-network
 
 volumes:
   mysql_data:
     driver: local
   imagen_data:
     driver: local
+
+networks:
+  sistema-habilitador-network:
+    driver: bridge

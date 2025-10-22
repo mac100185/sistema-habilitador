@@ -3,17 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bestdon/nodejs-captcha": "^1.0.3",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "express-session": "^1.17.3",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
@@ -22,11 +28,14 @@
     "multiparty": "^4.2.3",
     "mysql2": "^3.6.5",
     "node-forge": "^1.3.1",
-    "node-jsencrypt": "^1.0.0",
-    "@bestdon/nodejs-captcha": "^1.0.3"
+    "node-jsencrypt": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
   },
-  "description": ""
+  "description": "Sistema Habilitador - Gestión de Seguridad y Controles",
+  "engines": {
+    "node": "18.16.1",
+    "npm": ">=9.5.0 <10.0.0"
+  }
 }
