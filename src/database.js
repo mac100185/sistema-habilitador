@@ -2,7 +2,7 @@ const mysql = require("mysql2");
 
 // Crear pool de conexiones en lugar de una sola conexión
 const pool = mysql.createPool({
-  host: process.env.DB_HOST_API || "10.10.0.112",
+  host: process.env.DB_HOST_API || "192.168.1.105",
   port: process.env.DB_PORT_API || 3306,
   user: process.env.DB_USER_API || "root",
   password: process.env.DB_PASSWORD_API || "quanium",

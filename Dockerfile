@@ -1,6 +1,6 @@
 #Dependientes
-#Node (Recomendado v18.16.1)
-FROM node:latest
+#Node LTS v20 (Compatible y estable)
+FROM node:20-slim
 
 #Directorio de trabajo
 WORKDIR /quanium/app

@@ -57,6 +57,13 @@ services:
       - DB_USER=quanium
       - DB_PASSWORD=quanium
       - DB_NAME=sisthabpro
+      - DB_HOST_API=192.168.1.105
+      - DB_PORT_API=3306
+      - DB_USER_API=root
+      - DB_PASSWORD_API=quanium
+      - DB_NAME_API=seguridadapi
+      - PORT=7777
+      - NODE_ENV=production
     depends_on:
       dbsh:
         condition: service_healthy
