@@ -9,6 +9,7 @@ services:
       - MYSQL_DATABASE=sisthabpro
       - MYSQL_USER=quanium
       - MYSQL_PASSWORD=quanium
+      - TZ=America/Bogota
     restart: always
     volumes:
       - mysql_data:/var/lib/mysql
@@ -29,8 +30,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-      start_period: 60s
-    command: --default-authentication-plugin=mysql_native_password --wait_timeout=28800 --interactive_timeout=28800
+      start_period: 90s
+    command: --default-authentication-plugin=mysql_native_password --wait_timeout=28800 --interactive_timeout=28800 --max_allowed_packet=256M --log-error-verbosity=2
     networks:
       - sistema-habilitador-network
 
@@ -91,8 +92,8 @@ services:
         ]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 60s
+      retries: 5
+      start_period: 120s
     networks:
       - sistema-habilitador-network
     logging:

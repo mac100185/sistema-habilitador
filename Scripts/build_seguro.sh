@@ -121,19 +121,21 @@ hacer_build() {
         echo ""
 
         docker compose build --no-cache --progress=plain 2>&1
-
-        BUILD_EXIT=$?
+        echo $? > /tmp/build_exit_code.txt
 
         echo ""
         echo "============================================================================"
-        echo "Build Exit Code: $BUILD_EXIT"
+        echo "Build Exit Code: $(cat /tmp/build_exit_code.txt)"
         echo "============================================================================"
 
     } | tee -a "${BUILD_LOG}"
 
+    BUILD_EXIT=$(cat /tmp/build_exit_code.txt 2>/dev/null || echo "1")
+    rm -f /tmp/build_exit_code.txt
+
     cd Scripts
 
-    if [ $BUILD_EXIT -eq 0 ]; then
+    if [ "$BUILD_EXIT" -eq 0 ] 2>/dev/null; then
         print_message "${GREEN}" "✓ BUILD EXITOSO"
         return 0
     else
@@ -223,12 +225,14 @@ iniciar_contenedores() {
 
     print_message "${CYAN}" "Ejecutando: docker compose up -d"
     docker compose up -d 2>&1 | tee -a "${BUILD_LOG}"
+    echo ${PIPESTATUS[0]} > /tmp/compose_exit_code.txt
 
-    COMPOSE_EXIT=$?
+    COMPOSE_EXIT=$(cat /tmp/compose_exit_code.txt 2>/dev/null || echo "1")
+    rm -f /tmp/compose_exit_code.txt
 
     cd Scripts
 
-    if [ $COMPOSE_EXIT -eq 0 ]; then
+    if [ "$COMPOSE_EXIT" -eq 0 ] 2>/dev/null; then
         print_message "${GREEN}" "✓ Contenedores iniciados"
         echo ""
         docker compose ps

@@ -68,11 +68,29 @@ app.get("/", (req, res) => {
 
 // Health check (sin autenticación)
 app.get("/api/health", (req, res) => {
-  res.json({
-    status: "ok",
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || "development",
-    version: "1.0.0",
+  const mysqlConnection = require("./database_seguridad_defen");
+
+  // Verificar conexión a base de datos
+  mysqlConnection.getConnection((err, connection) => {
+    if (err) {
+      console.error("Health check: Error de conexión a BD:", err.message);
+      return res.status(503).json({
+        status: "error",
+        message: "Database connection failed",
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || "development",
+        version: "1.0.0",
+      });
+    }
+
+    connection.release();
+    res.json({
+      status: "ok",
+      database: "connected",
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || "development",
+      version: "1.0.0",
+    });
   });
 });
 
