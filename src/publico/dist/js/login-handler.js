@@ -6,27 +6,30 @@
 (function () {
   "use strict";
 
-  // Marcar que login-handler está activo
-  window.loginHandlerActive = true;
-
   // Configuración
   const API_BASE_URL = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : "";
   let captchaData = null;
 
-  // Elementos del DOM - soportar múltiples IDs de formulario
-  let loginForm = document.getElementById("login-form");
-  if (!loginForm) {
-    loginForm = document.getElementById("ko895"); // Fallback al ID antiguo
-  }
-  const usernameInput = document.getElementById("Usuario");
-  const passwordInput = document.getElementById("dfs654");
-  const loginButton = document.getElementById("erbo696");
+  // Elementos del DOM (se obtienen en init cuando el DOM está listo)
+  let loginForm = null;
+  let usernameInput = null;
+  let passwordInput = null;
+  let loginButton = null;
 
   /**
    * Inicializar el manejador de login
    */
   function init() {
     console.log("🔐 Inicializando sistema de login (login-handler)...");
+
+    // Obtener elementos del DOM ahora que está cargado
+    loginForm = document.getElementById("login-form");
+    if (!loginForm) {
+      loginForm = document.getElementById("ko895"); // Fallback al ID antiguo
+    }
+    usernameInput = document.getElementById("Usuario");
+    passwordInput = document.getElementById("dfs654");
+    loginButton = document.getElementById("erbo696");
 
     // Verificar si ya hay sesión activa
     checkExistingSession();
@@ -35,12 +38,17 @@
     if (loginForm) {
       loginForm.addEventListener("submit", handleLogin);
       console.log("✓ Formulario de login encontrado y eventos configurados");
+
+      // Marcar que login-handler está manejando el login activamente
+      window.loginHandlerActive = true;
     } else {
       console.log("ℹ️ Formulario no encontrado, jimlg.js manejará el login");
+      window.loginHandlerActive = false;
+      return; // Salir de init si no hay formulario
     }
 
     // También configurar evento click del botón como backup
-    if (loginButton && loginForm) {
+    if (loginButton) {
       loginButton.addEventListener("click", function (e) {
         e.preventDefault();
         handleLogin(e);
@@ -306,9 +314,14 @@
   }
 
   // Inicializar cuando el DOM esté listo
+  // Siempre usar DOMContentLoaded o load para asegurar que el DOM esté completamente cargado
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
+  } else if (document.readyState === "interactive") {
+    // DOM está parseado pero recursos aún cargando, usar DOMContentLoaded como seguridad
+    document.addEventListener("DOMContentLoaded", init);
   } else {
+    // DOM completamente listo, ejecutar inmediatamente
     init();
   }
 
