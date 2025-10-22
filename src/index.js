@@ -1,3 +1,7 @@
+// Inicializar y cargar variables de entorno (autogenera JWT_SECRET si es necesario)
+const { initializeEnvironment } = require("./utils/env-init");
+initializeEnvironment();
+
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
@@ -90,8 +94,7 @@ app.set("port", process.env.PORT || 7777);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./vistas"));
 
-// Middlewares
-app.use(bodyParser.urlencoded({ extended: false }));
+// Middlewares (ya configurado arriba con limit de 50mb)
 
 // Servir archivos estáticos (públicos) - Sin autenticación para login
 app.use(express.static(path.join(__dirname, "./publico")));

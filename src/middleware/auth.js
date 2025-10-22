@@ -1,8 +1,14 @@
 const jwt = require("jsonwebtoken");
 const mysqlConnection = require("../database_seguridad_defen.js");
 
-// Clave secreta para JWT (en producción debe estar en variable de entorno)
-const JWT_SECRET = process.env.JWT_SECRET || "sistema-habilitador-secret-key-2024";
+// Clave secreta para JWT (autogenerada en el inicio si no existe)
+if (!process.env.JWT_SECRET) {
+  console.error("❌ CRÍTICO: JWT_SECRET no está configurado");
+  console.error("   El sistema debe reiniciarse para autogenerar el secret");
+  process.exit(1);
+}
+
+const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "8h";
 
 /**
@@ -10,13 +16,15 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "8h";
  */
 const verifyToken = (req, res, next) => {
   // Obtener token del header
-  const token = req.headers["authorization"]?.split(" ")[1] || req.headers["x-access-token"];
+  const token =
+    req.headers["authorization"]?.split(" ")[1] ||
+    req.headers["x-access-token"];
 
   if (!token) {
     return res.status(403).json({
       success: false,
       message: "No se proporcionó token de autenticación",
-      redirect: "/login.html"
+      redirect: "/login.html",
     });
   }
 
@@ -31,7 +39,7 @@ const verifyToken = (req, res, next) => {
     return res.status(401).json({
       success: false,
       message: "Token inválido o expirado",
-      redirect: "/login.html"
+      redirect: "/login.html",
     });
   }
 };
@@ -44,14 +52,14 @@ const verifyRole = (...allowedRoles) => {
     if (!req.userRole) {
       return res.status(403).json({
         success: false,
-        message: "Acceso denegado: No se pudo verificar el rol"
+        message: "Acceso denegado: No se pudo verificar el rol",
       });
     }
 
     if (!allowedRoles.includes(req.userRole)) {
       return res.status(403).json({
         success: false,
-        message: "Acceso denegado: No tiene permisos suficientes"
+        message: "Acceso denegado: No tiene permisos suficientes",
       });
     }
 
@@ -68,10 +76,10 @@ const generateToken = (user) => {
       id: user.id,
       email: user.email,
       username: user.username,
-      role: user.role
+      role: user.role,
     },
     JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN }
+    { expiresIn: JWT_EXPIRES_IN },
   );
 };
 
@@ -89,7 +97,7 @@ const verifyUserExists = (req, res, next) => {
         console.error("Error verificando usuario:", err);
         return res.status(500).json({
           success: false,
-          message: "Error al verificar usuario"
+          message: "Error al verificar usuario",
         });
       }
 
@@ -97,13 +105,13 @@ const verifyUserExists = (req, res, next) => {
         return res.status(401).json({
           success: false,
           message: "Usuario no encontrado o inactivo",
-          redirect: "/login.html"
+          redirect: "/login.html",
         });
       }
 
       req.user = rows[0];
       next();
-    }
+    },
   );
 };
 
@@ -113,5 +121,5 @@ module.exports = {
   generateToken,
   verifyUserExists,
   JWT_SECRET,
-  JWT_EXPIRES_IN
+  JWT_EXPIRES_IN,
 };

@@ -225,7 +225,13 @@ $(document).ready(function () {
     $("#mCCriterios_Cumpli").summernote("code", "");
     $("#mCAcciones_Comenta").summernote("code", "");
     $("#mCModelo_Evidencia").summernote("code", "");
-    fetch(host + "/api/seguridad_def/controles/unico/" + IdControl)
+    fetch(host + "/api/seguridad_def/controles/unico/" + IdControl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
+    })
       .then(function (response) {
         return response.text();
       })
@@ -295,7 +301,7 @@ $(document).ready(function () {
     if (opcion == "crear") {
       $.ajax({
         url: host + "/api/seguridad_def/controles/",
-        method: "post",
+        method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
           Dimension,
@@ -330,7 +336,7 @@ $(document).ready(function () {
     if (opcion == "editar") {
       $.ajax({
         url: host + "/api/seguridad_def/controles/up",
-        method: "put",
+        method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({
           Id,
@@ -384,7 +390,13 @@ $(document).ready(function () {
 });
 
 function mostrarControles(id) {
-  fetch(host + "/api/seguridad_def/controles/unico/" + id)
+  fetch(host + "/api/seguridad_def/controles/unico/" + id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.json();
     })

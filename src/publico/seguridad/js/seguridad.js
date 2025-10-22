@@ -1,10 +1,17 @@
 // Configuración centralizada - usar window.host o APP_CONFIG
 // La variable host se obtiene de config.js
+const host = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : window.host || "";
 let autocompleteServi;
 let autocomplete;
 
 $(document).ready(function () {
-  fetch(host + "/api/seguridad_def/titulos")
+  fetch(host + "/api/seguridad_def/titulos", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.text();
     })
@@ -78,7 +85,13 @@ $(document).ready(function () {
 
       $(".dropdown-btn").dblclick(function () {
         let id = $(this).attr("id").slice(3);
-        fetch(host + "/api/seguridad_def/principal/" + id)
+        fetch(host + "/api/seguridad_def/principal/" + id, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+          },
+        })
           .then(function (response) {
             return response.text();
           })
@@ -337,7 +350,13 @@ $(document).on("click", "#btnEditar", function () {
       $("#tituloPentest").text("Editar Seguridad Principal");
       $("#modalEditar").modal("show");
 
-      fetch(host + "/api/seguridad_def/principal/" + id)
+      fetch(host + "/api/seguridad_def/principal/" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+        },
+      })
         .then(function (response) {
           return response.text();
         })
@@ -366,7 +385,13 @@ $(document).on("click", "#btnEditar", function () {
       $("#tituloPentest").text("Editar Seguridad Secundario");
       $("#modalEditar").modal("show");
 
-      fetch(host + "/api/seguridad_def/secundario/" + id)
+      fetch(host + "/api/seguridad_def/secundario/" + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+        },
+      })
         .then(function (response) {
           return response.text();
         })
@@ -400,8 +425,11 @@ $("#formMetodologia").submit(function (e) {
 
     $.ajax({
       url: host + "/api/seguridad_def/add/principal",
-      method: "put",
+      method: "PUT",
       contentType: "application/json",
+      headers: {
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
       data: JSON.stringify({
         IdPrin,
         DetallePrin,
@@ -425,8 +453,11 @@ $("#formMetodologia").submit(function (e) {
 
     $.ajax({
       url: host + "/api/seguridad_def/add/secundario",
-      method: "put",
+      method: "PUT",
       contentType: "application/json",
+      headers: {
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
       data: JSON.stringify({
         IdSecu,
         NombreSecu,
@@ -454,7 +485,13 @@ function refrescar(Id) {
 //Mostrar Pentesting
 
 function mostrarSecundario(IdSecu) {
-  fetch(host + "/api/seguridad_def/secundario/" + IdSecu)
+  fetch(host + "/api/seguridad_def/secundario/" + IdSecu, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.text();
     })

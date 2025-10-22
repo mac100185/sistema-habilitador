@@ -6,7 +6,13 @@ $(document).ready(function () {
   renderDatatableHabi("0/All/Aplica");
   graficaHabil("0");
   graficaHabilImpre("0");
-  fetch(host + "/api/seguridad_def/combo/squads")
+  fetch(host + "/api/seguridad_def/combo/squads", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.text();
     })
@@ -51,7 +57,13 @@ $(document).ready(function () {
       iniciativa.innerHTML =
         '<option value="0">Seleccione una Iniciativa ...</option>';
     } else {
-      fetch(host + "/api/seguridad_def/combo/squads/iniciativa/" + squad)
+      fetch(host + "/api/seguridad_def/combo/squads/iniciativa/" + squad, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+        },
+      })
         .then(function (response) {
           return response.text();
         })
@@ -228,7 +240,13 @@ $(document).ready(function () {
       });
 
     /*Base*/
-    fetch(host + "/api/seguridad_def/controles/unico/" + IdHabBase)
+    fetch(host + "/api/seguridad_def/controles/unico/" + IdHabBase, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
+    })
       .then(function (response) {
         return response.text();
       })
@@ -258,7 +276,7 @@ $(document).ready(function () {
 
     $.ajax({
       url: host + "/api/seguridad_def/combo/squads/iniciativa/",
-      method: "post",
+      method: "POST",
       contentType: "application/json",
       data: JSON.stringify({
         Nombre,
@@ -480,7 +498,7 @@ $("#actualizarHabiliSq").on("click", function () {
   let EvidenciaHabSquad = $("#mCEvidenciaHabSquad").summernote("code");
   $.ajax({
     url: host + "/api/seguridad_def/controles_squad/unico",
-    method: "put",
+    method: "PUT",
     contentType: "application/json",
     data: JSON.stringify({
       IdHab,
@@ -543,7 +561,13 @@ $("#Hab_iniciativa").on("change", function () {
     // let iniciativa = document.getElementById('habiliCumpli')
     // vulnerabilidadInf.innerHTML = '<option value="0">Seleccione...</option>';
   } else {
-    fetch(host + "/api/seguridad_def/combo/squads/cumplimiento/" + iniciativa)
+    fetch(host + "/api/seguridad_def/combo/squads/cumplimiento/" + iniciativa, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
+    })
       .then(function (response) {
         return response.json();
       })
@@ -619,7 +643,13 @@ function graficaHabil(Id) {
   console.log(Id);
   let squad = $("#squadHabi option:selected").text();
   let iniciativa = $("#Hab_iniciativa option:selected").text();
-  fetch(host + "/api/seguridad_def/controles_squad/grafica/todo/todo/" + Id)
+  fetch(host + "/api/seguridad_def/controles_squad/grafica/todo/todo/" + Id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.text();
     })
@@ -834,7 +864,13 @@ $(document).on("click", "#agregarIniciativa", function () {
   $("#modalAddIniciativa").modal("show");
   $("#formAddIniciativa").trigger("reset");
 
-  fetch(host + "/api/seguridad_def/combo/squads")
+  fetch(host + "/api/seguridad_def/combo/squads", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.text();
     })
@@ -858,7 +894,13 @@ $(document).on("click", "#agregarIniciativa", function () {
 function tablaGrafi(Id) {
   let squad = $("#squadHabi option:selected").text();
   let iniciativa = $("#Hab_iniciativa option:selected").text();
-  fetch(host + "/api/seguridad_def/combo/squads/iniciativa/tabla/" + Id)
+  fetch(host + "/api/seguridad_def/combo/squads/iniciativa/tabla/" + Id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+    },
+  })
     .then(function (response) {
       return response.text();
     })
