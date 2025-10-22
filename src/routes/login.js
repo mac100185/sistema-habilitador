@@ -5,7 +5,7 @@ const JSEncrypt = require("node-jsencrypt");
 const bodyParser = require("body-parser");
 
 // import library
-var captcha = require("nodejs-captcha");
+var captcha = require("@bestdon/nodejs-captcha");
 
 // Create new Captcha
 var newCaptcha = captcha();
