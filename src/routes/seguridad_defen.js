@@ -510,11 +510,15 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
   console.log(id2);
   const { id3 } = req.params;
 
+  // Si id es 0, mostrar todos los registros sin filtrar por IdSquad
+  const whereIdSquad = id == "0" ? "" : "IdSquad = ? AND ";
+  const queryParams = id == "0" ? [] : [id];
+
   if (id2 == "SI") {
     if (id3 == "Aplica") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso", "Con Observaciones","Aplica");',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso", "Con Observaciones","Aplica");`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -525,8 +529,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Si Cumple") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "Si Cumple";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "Si Cumple";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -537,8 +541,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Con Observaciones") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "Con Observaciones";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "Con Observaciones";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -549,8 +553,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Cumple Parcial") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "Cumple Parcial";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "Cumple Parcial";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -561,8 +565,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "No Cumple") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "No Cumple";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "No Cumple";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -573,8 +577,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "No Aplica") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "No Aplica";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "No Aplica";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -585,8 +589,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Deprecado") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "Deprecado";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "Deprecado";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -597,8 +601,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Falta Evidencia") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "Falta Evidencia";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "Falta Evidencia";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -609,8 +613,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Dependencia") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "Dependencia";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "Dependencia";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -621,8 +625,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "En Progreso") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad = "En Progreso";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad = "En Progreso";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -633,8 +637,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id2 == "All") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","No Aplica","Con Observaciones");',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","No Aplica","Con Observaciones");`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -647,8 +651,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
   } else {
     if (id3 == "Aplica") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso", "Con Observaciones","Aplica");',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso", "Con Observaciones","Aplica");`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -659,8 +663,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Si Cumple") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "Si Cumple";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "Si Cumple";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -671,8 +675,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Con Observaciones") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "Con Observaciones";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "Con Observaciones";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -683,8 +687,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Cumple Parcial") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "Cumple Parcial";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "Cumple Parcial";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -695,8 +699,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "No Cumple") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "No Cumple";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "No Cumple";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -707,8 +711,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "No Aplica") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "No Aplica";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "No Aplica";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -719,8 +723,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Deprecado") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "Deprecado";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "Deprecado";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -731,8 +735,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Falta Evidencia") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "Falta Evidencia";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "Falta Evidencia";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -743,8 +747,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "Dependencia") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "Dependencia";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "Dependencia";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -755,8 +759,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "En Progreso") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad = "En Progreso";',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad = "En Progreso";`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -767,8 +771,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else if (id3 == "All") {
       mysqlConnection2.query(
-        'SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ? AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","No Aplica","Con Observaciones","Aplica");',
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","No Aplica","Con Observaciones","Aplica");`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -779,8 +783,8 @@ router.get("/api/seguridad_def/controles_squad/:id/:id2/:id3", (req, res) => {
       );
     } else {
       mysqlConnection2.query(
-        "SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE IdSquad = ?;",
-        [id],
+        `SELECT IdHab, HabSquad, TituloHabSquad,EstadoHabSquad,ObserHabSquad,EvidenciaHabSquad,ImprescindibleSquad FROM habilita_squad WHERE ${whereIdSquad}1=1;`,
+        queryParams,
         (err, rows, fields) => {
           if (!err) {
             res.json(rows);
@@ -839,9 +843,12 @@ router.get(
   "/api/seguridad_def/controles_squad/grafica/todo/todo/:id",
   (req, res) => {
     const { id } = req.params;
+    // Si id es 0, mostrar todos los registros sin filtrar por IdSquad
+    const whereIdSquad = id == "0" ? "" : "IdSquad = ? AND ";
+    const queryParams = id == "0" ? [] : [id];
     mysqlConnection2.query(
-      'SELECT EstadoHabSquad AS "name", COUNT(*) AS "y" , EstadoHabSquad AS "drilldown" , EstadoHabSquad AS "color" from habilita_squad  WHERE IdSquad = ? AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","No Aplica","Aplica","Con Observaciones") GROUP by EstadoHabSquad',
-      [id],
+      `SELECT EstadoHabSquad AS "name", COUNT(*) AS "y" , EstadoHabSquad AS "drilldown" , EstadoHabSquad AS "color" from habilita_squad  WHERE ${whereIdSquad}EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","No Aplica","Aplica","Con Observaciones") GROUP by EstadoHabSquad`,
+      queryParams,
       (err, rows, fields) => {
         if (!err) {
           let data = rows;
@@ -882,9 +889,12 @@ router.get(
   "/api/seguridad_def/controles_squad/grafica/lite/imprescindible/:id",
   (req, res) => {
     const { id } = req.params;
+    // Si id es 0, mostrar todos los registros sin filtrar por IdSquad
+    const whereIdSquad = id == "0" ? "" : "IdSquad = ? AND ";
+    const queryParams = id == "0" ? [] : [id];
     mysqlConnection2.query(
-      'SELECT EstadoHabSquad AS "name", COUNT(*) AS "y" , EstadoHabSquad AS "drilldown" , EstadoHabSquad AS "color" from habilita_squad  WHERE IdSquad = ? AND ImprescindibleSquad = "SI" AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","Aplica","No Aplica","Con Observaciones") GROUP by EstadoHabSquad',
-      [id],
+      `SELECT EstadoHabSquad AS "name", COUNT(*) AS "y" , EstadoHabSquad AS "drilldown" , EstadoHabSquad AS "color" from habilita_squad  WHERE ${whereIdSquad}ImprescindibleSquad = "SI" AND EstadoHabSquad IN ("Si Cumple","Cumple Parcial","No Cumple","Falta Evidencia","Dependencia","En Progreso","Aplica","No Aplica","Con Observaciones") GROUP by EstadoHabSquad`,
+      queryParams,
       (err, rows, fields) => {
         if (!err) {
           let data = rows;

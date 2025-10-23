@@ -363,6 +363,47 @@ END$$
 
 DELIMITER ;
 
+--
+-- Insertar datos de ejemplo para iniciativas y generar habilitadores
+--
+
+-- Insertar iniciativas de ejemplo para cada squad
+INSERT INTO `inicitiva_squad` (`Id`, `Nombre`, `Tipo`, `Nota`, `Id_Squad`) VALUES
+(1, 'Proyecto Alpha', 'Desarrollo', 'Proyecto de ejemplo para Il Divo', 1),
+(2, 'Proyecto Beta', 'Desarrollo', 'Proyecto de ejemplo para Bee Gees', 2),
+(3, 'Proyecto Gamma', 'Desarrollo', 'Proyecto de ejemplo para Green Day', 3),
+(4, 'Proyecto Delta', 'Seguridad', 'Proyecto de ejemplo para Chapter Seguridad', 4);
+
+-- Generar habilitadores para cada iniciativa
+CALL generar_habilitadores(1);
+CALL generar_habilitadores(2);
+CALL generar_habilitadores(3);
+CALL generar_habilitadores(4);
+
+-- Actualizar algunos estados para tener variedad en los datos
+UPDATE habilita_squad SET EstadoHabSquad = 'Si Cumple' WHERE IdSquad = 1 AND HabSquad <= 10;
+UPDATE habilita_squad SET EstadoHabSquad = 'En Progreso' WHERE IdSquad = 1 AND HabSquad > 10 AND HabSquad <= 20;
+UPDATE habilita_squad SET EstadoHabSquad = 'No Cumple' WHERE IdSquad = 1 AND HabSquad > 20 AND HabSquad <= 25;
+UPDATE habilita_squad SET EstadoHabSquad = 'Falta Evidencia' WHERE IdSquad = 1 AND HabSquad > 25 AND HabSquad <= 30;
+
+UPDATE habilita_squad SET EstadoHabSquad = 'Si Cumple' WHERE IdSquad = 2 AND HabSquad <= 15;
+UPDATE habilita_squad SET EstadoHabSquad = 'Cumple Parcial' WHERE IdSquad = 2 AND HabSquad > 15 AND HabSquad <= 25;
+UPDATE habilita_squad SET EstadoHabSquad = 'En Progreso' WHERE IdSquad = 2 AND HabSquad > 25 AND HabSquad <= 35;
+
+UPDATE habilita_squad SET EstadoHabSquad = 'Si Cumple' WHERE IdSquad = 3 AND HabSquad <= 12;
+UPDATE habilita_squad SET EstadoHabSquad = 'Con Observaciones' WHERE IdSquad = 3 AND HabSquad > 12 AND HabSquad <= 22;
+UPDATE habilita_squad SET EstadoHabSquad = 'En Progreso' WHERE IdSquad = 3 AND HabSquad > 22 AND HabSquad <= 32;
+
+UPDATE habilita_squad SET EstadoHabSquad = 'Si Cumple' WHERE IdSquad = 4 AND HabSquad <= 20;
+UPDATE habilita_squad SET EstadoHabSquad = 'En Progreso' WHERE IdSquad = 4 AND HabSquad > 20 AND HabSquad <= 30;
+UPDATE habilita_squad SET EstadoHabSquad = 'Falta Evidencia' WHERE IdSquad = 4 AND HabSquad > 30 AND HabSquad <= 35;
+
+-- Agregar algunas evidencias de ejemplo
+UPDATE habilita_squad SET EvidenciaHabSquad = '<p>Evidencia documentada en el sistema</p>' WHERE EstadoHabSquad = 'Si Cumple' AND IdSquad IN (1, 2);
+UPDATE habilita_squad SET ObserHabSquad = 'Requiere revisión adicional' WHERE EstadoHabSquad = 'Con Observaciones';
+UPDATE habilita_squad SET ObserHabSquad = 'Pendiente de implementación' WHERE EstadoHabSquad = 'En Progreso';
+UPDATE habilita_squad SET ObserHabSquad = 'No se encuentra evidencia' WHERE EstadoHabSquad = 'Falta Evidencia';
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
