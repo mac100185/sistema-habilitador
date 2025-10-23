@@ -21,16 +21,6 @@ SET time_zone = "+00:00";
 -- Base de datos: `sisthabpro`
 --
 
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`root`@`%` PROCEDURE `generar_habilitadores` (IN `Id_Iniciativa_` INT(11))   BEGIN
-INSERT INTO habilita_squad (HabSquad,TituloHabSquad,NombreHabSquad,ImprescindibleSquad,EstadoHabSquad,IdSquad) SELECT Id,Titulo,Nombre,Imprescindible,ParaAdd,Id_Iniciativa_ FROM control_nube;
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -355,6 +345,24 @@ ALTER TABLE `inicitiva_squad`
 --
 ALTER TABLE `secundario`
   ADD CONSTRAINT `secundario_ibfk_1` FOREIGN KEY (`IdPrinci`) REFERENCES `principal` (`IdPrin`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Procedimientos almacenados (después de crear todas las tablas)
+--
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`%` PROCEDURE `generar_habilitadores` (IN `Id_Iniciativa_` INT(11))
+BEGIN
+  INSERT INTO habilita_squad (HabSquad,TituloHabSquad,NombreHabSquad,ImprescindibleSquad,EstadoHabSquad,IdSquad)
+  SELECT Id,Titulo,Nombre,Imprescindible,ParaAdd,Id_Iniciativa_
+  FROM control_nube;
+END$$
+
+DELIMITER ;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

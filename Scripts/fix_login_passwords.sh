@@ -7,13 +7,9 @@
 # permitir el login con las credenciales documentadas.
 #
 # Problema: Los hashes bcrypt almacenados en la base de datos no coincidían
-#           con las contraseñas documentadas
+#           con las contraseñas documentadas (Admin2024! y Analista2024!)
 #
-# Solución: Actualizar los hashes con valores correctos generados con bcrypt
-#
-# CREDENCIALES ACTUALES:
-#   admin / admin
-#   analista / analista
+# Solución: Generar hashes correctos usando el contenedor y actualizar BD
 #
 # Uso:
 #   ./Scripts/fix_login_passwords.sh
@@ -31,8 +27,9 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Configuración
-DB_CONTAINER="${DB_CONTAINER:-sisthabpro_dbsh}"
-DB_USER="${DB_USER:-quanium}"
+DB_CONTAINER="${DB_CONTAINER:-sist-hab-db-prod}"
+WEB_CONTAINER="${WEB_CONTAINER:-sist-hab-prod}"
+DB_USER="${DB_USER:-root}"
 DB_PASSWORD="${DB_PASSWORD:-quanium}"
 DB_NAME="${DB_NAME:-sisthabpro}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -76,10 +73,19 @@ check_docker() {
 check_database_container() {
     if ! docker ps | grep -q "$DB_CONTAINER"; then
         print_error "Contenedor de base de datos '$DB_CONTAINER' no está corriendo"
-        print_info "Ejecuta: docker-compose up -d"
+        print_info "Ejecuta: docker compose up -d"
         exit 1
     fi
     print_success "Contenedor de base de datos está corriendo"
+}
+
+check_web_container() {
+    if ! docker ps | grep -q "$WEB_CONTAINER"; then
+        print_error "Contenedor web '$WEB_CONTAINER' no está corriendo"
+        print_info "Ejecuta: docker compose up -d"
+        exit 1
+    fi
+    print_success "Contenedor web está corriendo"
 }
 
 verify_database_connection() {
@@ -129,51 +135,67 @@ show_current_users() {
     echo ""
 }
 
-update_passwords() {
-    print_info "Actualizando contraseñas con hashes correctos..."
+generate_correct_hashes() {
+    print_info "Generando hashes bcrypt correctos usando el contenedor..."
 
-    # Ejecutar el script SQL de actualización
-    if [ -f "$PROJECT_ROOT/db/update_passwords.sql" ]; then
-        docker exec -i "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" < "$PROJECT_ROOT/db/update_passwords.sql" 2>/dev/null
+    local temp_file="/tmp/generated_hashes_$$.txt"
 
-        if [ $? -eq 0 ]; then
-            print_success "Contraseñas actualizadas correctamente"
+    if docker exec "$WEB_CONTAINER" node "$SCRIPT_DIR/generate_correct_hashes.js" > "$temp_file" 2>&1; then
+        print_success "Hashes generados correctamente"
+
+        # Extraer los hashes del output
+        ADMIN_HASH=$(grep -A 1 "Usuario: admin" "$temp_file" | grep "Hash:" | awk '{print $2}')
+        ANALISTA_HASH=$(grep -A 1 "Usuario: analista" "$temp_file" | grep "Hash:" | awk '{print $2}')
+
+        if [ -n "$ADMIN_HASH" ] && [ -n "$ANALISTA_HASH" ]; then
+            print_success "Hashes extraídos correctamente"
+            echo "  Admin hash: ${ADMIN_HASH:0:30}..."
+            echo "  Analista hash: ${ANALISTA_HASH:0:30}..."
+            rm -f "$temp_file"
             return 0
         else
-            print_error "Error ejecutando script de actualización"
+            print_error "No se pudieron extraer los hashes"
+            cat "$temp_file"
+            rm -f "$temp_file"
             return 1
         fi
     else
-        # Si no existe el archivo, ejecutar SQL directamente
-        print_warning "Archivo update_passwords.sql no encontrado, ejecutando SQL directo..."
+        print_error "Error generando hashes"
+        cat "$temp_file"
+        rm -f "$temp_file"
+        return 1
+    fi
+}
 
-        docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -e "
-            -- Actualizar contraseña del usuario admin
-            UPDATE usuarios
-            SET password = '\$2b\$10\$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-                fecha_actualizacion = NOW()
-            WHERE username = 'admin';
+update_passwords() {
+    print_info "Actualizando contraseñas con hashes generados..."
 
-            -- Actualizar contraseña del usuario analista
-            UPDATE usuarios
-            SET password = '\$2b\$10\$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-                fecha_actualizacion = NOW()
-            WHERE username = 'analista';
+    docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -e "
+        -- Actualizar contraseña del usuario admin
+        UPDATE usuarios
+        SET password = '$ADMIN_HASH',
+            fecha_actualizacion = NOW()
+        WHERE username = 'admin';
 
-            -- Resetear intentos fallidos y bloqueos
-            UPDATE usuarios
-            SET intentos_fallidos = 0,
-                bloqueado_hasta = NULL
-            WHERE username IN ('admin', 'analista');
-        " 2>/dev/null
+        -- Actualizar contraseña del usuario analista
+        UPDATE usuarios
+        SET password = '$ANALISTA_HASH',
+            fecha_actualizacion = NOW()
+        WHERE username = 'analista';
 
-        if [ $? -eq 0 ]; then
-            print_success "Contraseñas actualizadas correctamente"
-            return 0
-        else
-            print_error "Error actualizando contraseñas"
-            return 1
-        fi
+        -- Resetear intentos fallidos y bloqueos
+        UPDATE usuarios
+        SET intentos_fallidos = 0,
+            bloqueado_hasta = NULL
+        WHERE username IN ('admin', 'analista');
+    " 2>/dev/null
+
+    if [ $? -eq 0 ]; then
+        print_success "Contraseñas actualizadas correctamente"
+        return 0
+    else
+        print_error "Error actualizando contraseñas"
+        return 1
     fi
 }
 
@@ -183,23 +205,20 @@ verify_password_hashes() {
     local admin_hash=$(docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -sN -e "SELECT password FROM usuarios WHERE username='admin';" 2>/dev/null)
     local analista_hash=$(docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -sN -e "SELECT password FROM usuarios WHERE username='analista';" 2>/dev/null)
 
-    local admin_expected='$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
-    local analista_expected='$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
-
-    if [ "$admin_hash" = "$admin_expected" ]; then
+    if [ "$admin_hash" = "$ADMIN_HASH" ]; then
         print_success "Hash del usuario 'admin' es correcto"
     else
         print_error "Hash del usuario 'admin' NO coincide"
-        print_info "Esperado: $admin_expected"
+        print_info "Esperado: $ADMIN_HASH"
         print_info "Actual:   $admin_hash"
         return 1
     fi
 
-    if [ "$analista_hash" = "$analista_expected" ]; then
+    if [ "$analista_hash" = "$ANALISTA_HASH" ]; then
         print_success "Hash del usuario 'analista' es correcto"
     else
         print_error "Hash del usuario 'analista' NO coincide"
-        print_info "Esperado: $analista_expected"
+        print_info "Esperado: $ANALISTA_HASH"
         print_info "Actual:   $analista_hash"
         return 1
     fi
@@ -234,7 +253,7 @@ test_login() {
     # Probar login
     local response=$(curl -s -X POST "$api_url/api/auth/login" \
         -H "Content-Type: application/json" \
-        -d '{"username":"admin","password":"admin"}' \
+        -d '{"username":"admin","password":"Admin2024!"}' \
         -w "\n%{http_code}")
 
     local http_code=$(echo "$response" | tail -n1)
@@ -267,13 +286,13 @@ show_credentials() {
     echo ""
     echo "  Usuario Admin:"
     echo "    Username: admin"
-    echo "    Password: admin"
+    echo "    Password: Admin2024!"
     echo "    Email:    admin@sistemahabilitador.com"
     echo "    Role:     admin"
     echo ""
     echo "  Usuario Analista:"
     echo "    Username: analista"
-    echo "    Password: analista"
+    echo "    Password: Analista2024!"
     echo "    Email:    analista@sistemahabilitador.com"
     echo "    Role:     analista"
     echo ""
@@ -298,6 +317,7 @@ main() {
     print_header "1. VERIFICACIONES PREVIAS"
     check_docker
     check_database_container
+    check_web_container
     verify_database_connection || exit 1
 
     # Mostrar estado actual
@@ -321,26 +341,33 @@ main() {
         exit 0
     fi
 
+    # Generar hashes correctos
+    print_header "5. GENERACIÓN DE HASHES CORRECTOS"
+    if ! generate_correct_hashes; then
+        print_error "Error generando hashes correctos"
+        exit 1
+    fi
+
     # Actualizar contraseñas
-    print_header "5. ACTUALIZACIÓN DE CONTRASEÑAS"
+    print_header "6. ACTUALIZACIÓN DE CONTRASEÑAS"
     if ! update_passwords; then
         print_error "Error actualizando contraseñas"
         exit 1
     fi
 
     # Verificar hashes
-    print_header "6. VERIFICACIÓN DE HASHES"
+    print_header "7. VERIFICACIÓN DE HASHES"
     if ! verify_password_hashes; then
         print_error "Los hashes no coinciden con los esperados"
         exit 1
     fi
 
     # Mostrar usuarios actualizados
-    print_header "7. USUARIOS ACTUALIZADOS"
+    print_header "8. USUARIOS ACTUALIZADOS"
     show_current_users
 
     # Probar login
-    print_header "8. PRUEBA DE LOGIN"
+    print_header "9. PRUEBA DE LOGIN"
     test_login || print_warning "No se pudo probar el login automáticamente"
 
     # Mostrar credenciales
@@ -354,8 +381,8 @@ main() {
     echo ""
     echo "Próximos pasos:"
     echo "  1. Accede a: http://localhost:7777/login.html"
-    echo "  2. Ingresa con usuario 'admin' y password 'admin'"
-    echo "  3. IMPORTANTE: Cambia la contraseña inmediatamente desde el sistema"
+    echo "  2. Ingresa con usuario 'admin' y password 'Admin2024!'"
+    echo "  3. Cambia la contraseña desde el sistema"
     echo ""
     echo "================================================================================"
 

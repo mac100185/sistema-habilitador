@@ -7,7 +7,61 @@ Este directorio contiene scripts para la gestión, instalación, diagnóstico y 
 - [Scripts de Instalación](#scripts-de-instalación)
 - [Scripts de Logs y Diagnóstico](#scripts-de-logs-y-diagnóstico)
 - [Scripts de Gestión](#scripts-de-gestión)
+- [Scripts de Corrección de Login](#scripts-de-corrección-de-login)
 - [Solución de Problemas](#solución-de-problemas)
+
+---
+
+## 🔐 Scripts de Corrección de Login
+
+### `generate_correct_hashes.js` ⚠️ IMPORTANTE
+**Propósito:** Genera los hashes bcrypt correctos para las contraseñas Admin2024! y Analista2024!
+
+**Cuándo usar:** Si no puedes hacer login con las credenciales documentadas.
+
+**Uso:**
+```bash
+# Generar hashes correctos
+docker exec sist-hab-prod node Scripts/generate_correct_hashes.js
+
+# El script mostrará los comandos SQL UPDATE que debes ejecutar
+```
+
+### `fix_login_passwords.sh`
+**Propósito:** Script automático que actualiza las contraseñas en la base de datos.
+
+**Uso:**
+```bash
+cd Scripts
+./fix_login_passwords.sh
+```
+
+### Solución Manual de Login
+Si los scripts anteriores no funcionan, usa este proceso manual:
+
+**Paso 1:** Generar hashes correctos
+```bash
+docker exec sist-hab-prod node Scripts/generate_correct_hashes.js > hashes.txt
+```
+
+**Paso 2:** Actualizar base de datos
+```bash
+# Conectar a MySQL
+docker exec -it sist-hab-db-prod mysql -u root -pquanium sisthabpro
+
+# Ejecutar los UPDATE que genera el script
+# Ejemplo:
+# UPDATE usuarios SET password = '$2b$10$...' WHERE username = 'admin';
+# UPDATE usuarios SET password = '$2b$10$...' WHERE username = 'analista';
+# COMMIT;
+```
+
+**Paso 3:** Verificar
+```bash
+curl -X POST http://localhost:7777/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"Admin2024!"}'
+```
 
 ---
 

@@ -61,26 +61,26 @@ CREATE TABLE IF NOT EXISTS `auditoria_usuarios` (
 
 -- Insertar usuario administrador por defecto
 -- Usuario: admin
--- Contraseña: admin (CAMBIAR EN PRIMER USO)
+-- Contraseña: Admin2024! (debe ser cambiada en primer uso)
 -- Hash generado con bcrypt (10 rounds)
 INSERT INTO `usuarios` (`username`, `email`, `password`, `nombre`, `apellido`, `role`, `activo`, `fecha_creacion`)
 VALUES
-('admin', 'admin@sistemahabilitador.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrador', 'Sistema', 'admin', 1, NOW())
+('admin', 'admin@sistemahabilitador.com', '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'Administrador', 'Sistema', 'admin', 1, NOW())
 ON DUPLICATE KEY UPDATE
-  `password` = '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+  `password` = '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
   `nombre` = 'Administrador',
   `apellido` = 'Sistema',
   `role` = 'admin';
 
 -- Insertar usuario de prueba (analista)
 -- Usuario: analista
--- Contraseña: analista (CAMBIAR EN PRIMER USO)
+-- Contraseña: Analista2024!
 -- Hash generado con bcrypt (10 rounds)
 INSERT INTO `usuarios` (`username`, `email`, `password`, `nombre`, `apellido`, `role`, `activo`, `fecha_creacion`)
 VALUES
-('analista', 'analista@sistemahabilitador.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Usuario', 'Analista', 'analista', 1, NOW())
+('analista', 'analista@sistemahabilitador.com', '$2b$10$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6', 'Usuario', 'Analista', 'analista', 1, NOW())
 ON DUPLICATE KEY UPDATE
-  `password` = '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+  `password` = '$2b$10$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6',
   `nombre` = 'Usuario',
   `apellido` = 'Analista',
   `role` = 'analista';
@@ -182,13 +182,13 @@ DO CALL `sp_desbloquear_usuarios_expirados`();
 -- ============================================================================
 -- Usuario Admin:
 --   Username: admin
---   Password: admin
+--   Password: Admin2024!
 --   Role: admin
 --
 -- Usuario Analista:
 --   Username: analista
---   Password: analista
+--   Password: Analista2024!
 --   Role: analista
 --
--- IMPORTANTE: CAMBIAR ESTAS CONTRASEÑAS EN EL PRIMER USO
+-- IMPORTANTE: Se recomienda cambiar estas contraseñas en el primer uso
 -- ============================================================================

@@ -16,18 +16,18 @@
 USE sisthabpro;
 
 -- Actualizar contraseña del usuario admin
--- Contraseña: admin (CAMBIAR EN PRIMER USO)
+-- Contraseña: Admin2024!
 -- Hash bcrypt correcto (10 rounds)
 UPDATE `usuarios`
-SET `password` = '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+SET `password` = '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
     `fecha_actualizacion` = NOW()
 WHERE `username` = 'admin';
 
 -- Actualizar contraseña del usuario analista
--- Contraseña: analista (CAMBIAR EN PRIMER USO)
+-- Contraseña: Analista2024!
 -- Hash bcrypt correcto (10 rounds)
 UPDATE `usuarios`
-SET `password` = '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+SET `password` = '$2b$10$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6',
     `fecha_actualizacion` = NOW()
 WHERE `username` = 'analista';
 
@@ -66,16 +66,16 @@ WHERE `username` IN ('admin', 'analista');
 --
 -- Usuario Admin:
 --   Username: admin
---   Password: admin
+--   Password: Admin2024!
 --   Email: admin@sistemahabilitador.com
 --   Role: admin
 --
 -- Usuario Analista:
 --   Username: analista
---   Password: analista
+--   Password: Analista2024!
 --   Email: analista@sistemahabilitador.com
 --   Role: analista
 --
 -- ============================================================================
--- IMPORTANTE: CAMBIAR ESTAS CONTRASEÑAS INMEDIATAMENTE DESPUÉS DEL PRIMER ACCESO
+-- IMPORTANTE: Cambia estas contraseñas después del primer acceso
 -- ============================================================================

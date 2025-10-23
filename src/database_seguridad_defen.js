@@ -13,8 +13,6 @@ const poolConfig = {
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
   connectTimeout: 60000,
-  acquireTimeout: 60000,
-  timeout: 60000,
   // Configuraciones adicionales para mejorar estabilidad
   multipleStatements: false,
   namedPlaceholders: false,
