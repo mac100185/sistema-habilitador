@@ -1,3 +1,6 @@
+// Configuración centralizada - usar window.host o APP_CONFIG
+const host = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : window.host || "";
+
 $("#testEtapa").click(function () {
   let iniciativa = $("#Hab_iniciativa option:selected").val();
 

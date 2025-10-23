@@ -1,4 +1,5 @@
 // Configuración centralizada - usar window.host o APP_CONFIG
+const host = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : window.host || "";
 // let opcion = null;
 // let fila = null;
 // let controlesSe = null;
@@ -359,6 +360,9 @@ function renderDatatableHabi(id) {
     ajax: {
       url: host + "/api/seguridad_def/controles_squad/" + id, //se concatena la pagina
       dataSrc: "",
+      headers: {
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
     },
     columns: [
       {

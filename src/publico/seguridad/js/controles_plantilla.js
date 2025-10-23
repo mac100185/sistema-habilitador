@@ -1,5 +1,6 @@
 // Configuración centralizada - usar window.host o APP_CONFIG
 // La variable host se obtiene de config.js
+const host = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : window.host || "";
 let opcion = null;
 let fila = null;
 let controlesSe = null;

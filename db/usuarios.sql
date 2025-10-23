@@ -65,9 +65,9 @@ CREATE TABLE IF NOT EXISTS `auditoria_usuarios` (
 -- Hash generado con bcrypt (10 rounds)
 INSERT INTO `usuarios` (`username`, `email`, `password`, `nombre`, `apellido`, `role`, `activo`, `fecha_creacion`)
 VALUES
-('admin', 'admin@sistemahabilitador.com', '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'Administrador', 'Sistema', 'admin', 1, NOW())
+('admin', 'admin@sistemahabilitador.com', '$2b$10$TbGDDXvnwbzhRoRS7NuKEOqMe8t9ymutVAq4Y/do2tL31v6EGXnPC', 'Administrador', 'Sistema', 'admin', 1, NOW())
 ON DUPLICATE KEY UPDATE
-  `password` = '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+  `password` = '$2b$10$TbGDDXvnwbzhRoRS7NuKEOqMe8t9ymutVAq4Y/do2tL31v6EGXnPC',
   `nombre` = 'Administrador',
   `apellido` = 'Sistema',
   `role` = 'admin';
@@ -78,9 +78,9 @@ ON DUPLICATE KEY UPDATE
 -- Hash generado con bcrypt (10 rounds)
 INSERT INTO `usuarios` (`username`, `email`, `password`, `nombre`, `apellido`, `role`, `activo`, `fecha_creacion`)
 VALUES
-('analista', 'analista@sistemahabilitador.com', '$2b$10$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6', 'Usuario', 'Analista', 'analista', 1, NOW())
+('analista', 'analista@sistemahabilitador.com', '$2b$10$aFcjy02mkzs3DxSOVErn1.UWw06B.ywSBoVmau7GfKMprV8JtDypO', 'Usuario', 'Analista', 'analista', 1, NOW())
 ON DUPLICATE KEY UPDATE
-  `password` = '$2b$10$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6',
+  `password` = '$2b$10$aFcjy02mkzs3DxSOVErn1.UWw06B.ywSBoVmau7GfKMprV8JtDypO',
   `nombre` = 'Usuario',
   `apellido` = 'Analista',
   `role` = 'analista';
