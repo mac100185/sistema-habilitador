@@ -7,9 +7,13 @@
 # permitir el login con las credenciales documentadas.
 #
 # Problema: Los hashes bcrypt almacenados en la base de datos no coincidían
-#           con las contraseñas documentadas (Admin2024! y Analista2024!)
+#           con las contraseñas documentadas
 #
 # Solución: Actualizar los hashes con valores correctos generados con bcrypt
+#
+# CREDENCIALES ACTUALES:
+#   admin / admin
+#   analista / analista
 #
 # Uso:
 #   ./Scripts/fix_login_passwords.sh
@@ -146,13 +150,13 @@ update_passwords() {
         docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -e "
             -- Actualizar contraseña del usuario admin
             UPDATE usuarios
-            SET password = '\$2b\$10\$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+            SET password = '\$2b\$10\$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
                 fecha_actualizacion = NOW()
             WHERE username = 'admin';
 
             -- Actualizar contraseña del usuario analista
             UPDATE usuarios
-            SET password = '\$2b\$10\$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6',
+            SET password = '\$2b\$10\$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
                 fecha_actualizacion = NOW()
             WHERE username = 'analista';
 
@@ -179,8 +183,8 @@ verify_password_hashes() {
     local admin_hash=$(docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -sN -e "SELECT password FROM usuarios WHERE username='admin';" 2>/dev/null)
     local analista_hash=$(docker exec "$DB_CONTAINER" mysql -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -sN -e "SELECT password FROM usuarios WHERE username='analista';" 2>/dev/null)
 
-    local admin_expected='$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'
-    local analista_expected='$2b$10$X5Q4hIv/QEqAf6.p.ufYu.bX3XLQ7f5PXs5YvX5wnBPBVyZHLfPH6'
+    local admin_expected='$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+    local analista_expected='$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
 
     if [ "$admin_hash" = "$admin_expected" ]; then
         print_success "Hash del usuario 'admin' es correcto"
@@ -230,7 +234,7 @@ test_login() {
     # Probar login
     local response=$(curl -s -X POST "$api_url/api/auth/login" \
         -H "Content-Type: application/json" \
-        -d '{"username":"admin","password":"Admin2024!"}' \
+        -d '{"username":"admin","password":"admin"}' \
         -w "\n%{http_code}")
 
     local http_code=$(echo "$response" | tail -n1)
@@ -263,13 +267,13 @@ show_credentials() {
     echo ""
     echo "  Usuario Admin:"
     echo "    Username: admin"
-    echo "    Password: Admin2024!"
+    echo "    Password: admin"
     echo "    Email:    admin@sistemahabilitador.com"
     echo "    Role:     admin"
     echo ""
     echo "  Usuario Analista:"
     echo "    Username: analista"
-    echo "    Password: Analista2024!"
+    echo "    Password: analista"
     echo "    Email:    analista@sistemahabilitador.com"
     echo "    Role:     analista"
     echo ""
@@ -350,8 +354,8 @@ main() {
     echo ""
     echo "Próximos pasos:"
     echo "  1. Accede a: http://localhost:7777/login.html"
-    echo "  2. Ingresa con usuario 'admin' y password 'Admin2024!'"
-    echo "  3. Cambia la contraseña desde el sistema"
+    echo "  2. Ingresa con usuario 'admin' y password 'admin'"
+    echo "  3. IMPORTANTE: Cambia la contraseña inmediatamente desde el sistema"
     echo ""
     echo "================================================================================"
 

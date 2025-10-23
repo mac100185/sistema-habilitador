@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `generar_habilitadores` (IN `Id_Iniciativa_` INT(11))   BEGIN
+CREATE DEFINER=`root`@`%` PROCEDURE `generar_habilitadores` (IN `Id_Iniciativa_` INT(11))   BEGIN
 INSERT INTO habilita_squad (HabSquad,TituloHabSquad,NombreHabSquad,ImprescindibleSquad,EstadoHabSquad,IdSquad) SELECT Id,Titulo,Nombre,Imprescindible,ParaAdd,Id_Iniciativa_ FROM control_nube;
 END$$
 

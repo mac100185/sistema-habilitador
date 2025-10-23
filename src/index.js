@@ -119,9 +119,24 @@ app.get("/api/health", (req, res) => {
   mysqlConnection.getConnection((err, connection) => {
     if (err) {
       console.error("Health check: Error de conexión a BD:", err.message);
+
+      const dbStatus = mysqlConnection.getConnectionStatus
+        ? mysqlConnection.getConnectionStatus()
+        : {
+            host: process.env.DB_HOST || "dbsh",
+            database: process.env.DB_NAME || "sisthabpro",
+          };
+
       return res.status(503).json({
         status: "error",
         message: "Database connection failed",
+        error: err.code || "CONNECTION_ERROR",
+        database: {
+          status: "disconnected",
+          host: dbStatus.host,
+          database: dbStatus.database,
+          message: err.message,
+        },
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || "production",
         version: "1.0.0",
@@ -129,16 +144,58 @@ app.get("/api/health", (req, res) => {
     }
 
     if (connection) {
-      connection.release();
-    }
+      // Verificar que la conexión funcione con una query simple
+      connection.query("SELECT 1 as test", (queryErr, results) => {
+        connection.release();
 
-    res.json({
-      status: "ok",
-      database: "connected",
-      timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV || "production",
-      version: "1.0.0",
-    });
+        if (queryErr) {
+          console.error(
+            "Health check: Error en query de prueba:",
+            queryErr.message,
+          );
+          return res.status(503).json({
+            status: "error",
+            message: "Database query failed",
+            database: {
+              status: "connected but not responding",
+              error: queryErr.message,
+            },
+            timestamp: new Date().toISOString(),
+            environment: process.env.NODE_ENV || "production",
+            version: "1.0.0",
+          });
+        }
+
+        const dbStatus = mysqlConnection.getConnectionStatus
+          ? mysqlConnection.getConnectionStatus()
+          : {
+              host: process.env.DB_HOST || "dbsh",
+              database: process.env.DB_NAME || "sisthabpro",
+            };
+
+        res.json({
+          status: "ok",
+          message: "Service is healthy",
+          database: {
+            status: "connected",
+            host: dbStatus.host,
+            database: dbStatus.database,
+            responsive: true,
+          },
+          timestamp: new Date().toISOString(),
+          environment: process.env.NODE_ENV || "production",
+          version: "1.0.0",
+        });
+      });
+    } else {
+      return res.status(503).json({
+        status: "error",
+        message: "No database connection available",
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || "production",
+        version: "1.0.0",
+      });
+    }
   });
 });
 
