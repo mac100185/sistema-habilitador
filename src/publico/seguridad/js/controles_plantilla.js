@@ -581,7 +581,12 @@ function renderDatatable(id) {
     scrollY: "710px",
     ajax: {
       url: host + "/api/seguridad_def/controles/" + id, //se concatena la pagina
-      dataSrc: "",
+      dataSrc: function (json) {
+        return json.success && json.data ? json.data : [];
+      },
+      headers: {
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
     },
     columns: [
       {

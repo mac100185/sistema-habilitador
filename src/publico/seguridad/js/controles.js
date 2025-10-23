@@ -4,9 +4,15 @@ const host = window.APP_CONFIG ? window.APP_CONFIG.API_HOST : window.host || "";
 // let fila = null;
 // let controlesSe = null;
 $(document).ready(function () {
-  renderDatatableHabi("0/All/Aplica");
-  graficaHabil("0");
-  graficaHabilImpre("0");
+  // Restaurar estado desde localStorage
+  const savedSquad = localStorage.getItem("selectedSquad") || "0";
+  const savedIniciativa = localStorage.getItem("selectedIniciativa") || "0";
+  const savedImprescindible =
+    localStorage.getItem("selectedImprescindible") || "All";
+  const savedCumplimiento =
+    localStorage.getItem("selectedCumplimiento") || "Aplica";
+
+  // Cargar squads primero
   fetch(host + "/api/seguridad_def/combo/squads", {
     method: "GET",
     headers: {
@@ -18,25 +24,43 @@ $(document).ready(function () {
       return response.text();
     })
     .then(function (data) {
-      let vulnerabilidades = JSON.parse(data);
+      let response = JSON.parse(data);
 
-      if (vulnerabilidades == "") {
-        console.log("No hay data");
+      if (!response.success || !response.data || response.data.length === 0) {
+        console.log("No hay data de squads");
       } else {
-        $(vulnerabilidades).each(function () {
+        $(response.data).each(function () {
           let option = $(document.createElement("option"));
 
           option.text(this.NombrePrin);
           option.val(this.IdPrin);
           $("#squadHabi").append(option);
         });
+
+        // Restaurar selección guardada
+        if (savedSquad && savedSquad !== "0") {
+          $("#squadHabi").val(savedSquad);
+          $("#squadHabi").trigger("change");
+        } else {
+          // Si no hay selección guardada, cargar datos con valores por defecto
+          renderDatatableHabi("0/All/Aplica");
+          graficaHabil("0");
+          graficaHabilImpre("0");
+        }
       }
     })
     .catch(function (error) {
       console.error("Error al cargar squads:", error);
+      // Si hay error, cargar con valores por defecto
+      renderDatatableHabi("0/All/Aplica");
+      graficaHabil("0");
+      graficaHabilImpre("0");
     });
 
   $("#squadHabi").on("change", function () {
+    // Guardar selección en localStorage
+    const squadValue = $(this).val();
+    localStorage.setItem("selectedSquad", squadValue);
     /*Limpiar combo*/
     let comboIniciativa = document.getElementById("Hab_iniciativa");
     comboIniciativa.innerHTML =
@@ -48,6 +72,11 @@ $(document).ready(function () {
     let squad = $("#squadHabi option:selected").val();
 
     $("#cumpSquad").html($("#squadHabi option:selected").text());
+
+    // Resetear iniciativa guardada cuando cambia el squad
+    localStorage.removeItem("selectedIniciativa");
+    localStorage.removeItem("selectedImprescindible");
+    localStorage.removeItem("selectedCumplimiento");
 
     if (squad == "0") {
       renderDatatableHabi("0/All/Aplica");
@@ -69,18 +98,32 @@ $(document).ready(function () {
           return response.text();
         })
         .then(function (data) {
-          let iniciativa_ = JSON.parse(data);
+          let response = JSON.parse(data);
           let iniciaInf = document.getElementById("Hab_iniciativa");
-          if (iniciativa_ == "") {
+          if (
+            !response.success ||
+            !response.data ||
+            response.data.length === 0
+          ) {
             iniciaInf.innerHTML =
               '<option value="0">Seleccione una Iniciativa ...</option>';
           } else {
-            $(iniciativa_).each(function () {
+            $(response.data).each(function () {
               let option = $(document.createElement("option"));
               option.text(this.Nombre);
               option.val(this.Id);
               $("#Hab_iniciativa").append(option);
             });
+
+            // Restaurar iniciativa guardada si existe
+            if (
+              savedIniciativa &&
+              savedIniciativa !== "0" &&
+              squadValue === savedSquad
+            ) {
+              $("#Hab_iniciativa").val(savedIniciativa);
+              $("#Hab_iniciativa").trigger("change");
+            }
           }
         })
         .catch(function (error) {
@@ -88,9 +131,16 @@ $(document).ready(function () {
         });
     }
 
-    renderDatatableHabi("0/All/Aplica");
-    graficaHabil("0");
-    graficaHabilImpre("0");
+    // Solo cargar con valores por defecto si no hay iniciativa guardada
+    if (
+      !savedIniciativa ||
+      savedIniciativa === "0" ||
+      squadValue !== savedSquad
+    ) {
+      renderDatatableHabi("0/All/Aplica");
+      graficaHabil("0");
+      graficaHabilImpre("0");
+    }
 
     $("#cumpSquad").html($("#squadHabi option:selected").text());
     $("#cumpIniciativa").html($("#Hab_iniciativa option:selected").text());
@@ -285,10 +335,59 @@ $(document).ready(function () {
         Nota,
         Id_Squad,
       }),
-      success: function (data) {
-        //Para actualizar la tabla
-        proyVulne.ajax.reload(null, false);
-        Swal.fire("¡Se Agregó la Iniciativa!", "", "success");
+      success: function (response) {
+        if (response.success) {
+          Swal.fire("¡Se Agregó la Iniciativa!", "", "success");
+          // Recargar el combo de iniciativas si el squad está seleccionado
+          let squadSeleccionado = $("#squadHabi option:selected").val();
+          if (squadSeleccionado && squadSeleccionado !== "0") {
+            fetch(
+              host +
+                "/api/seguridad_def/combo/squads/iniciativa/" +
+                squadSeleccionado,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization:
+                    "Bearer " + (localStorage.getItem("token") || ""),
+                },
+              },
+            )
+              .then(function (response) {
+                return response.text();
+              })
+              .then(function (data) {
+                let result = JSON.parse(data);
+                $("#Hab_iniciativa").empty();
+                $("#Hab_iniciativa").append(
+                  '<option value="0">Seleccione una Iniciativa ...</option>',
+                );
+                if (result.success && result.data) {
+                  $(result.data).each(function () {
+                    let option = $(document.createElement("option"));
+                    option.text(this.Nombre);
+                    option.val(this.Id);
+                    $("#Hab_iniciativa").append(option);
+                  });
+                }
+              });
+          }
+        } else {
+          Swal.fire(
+            "Error",
+            response.message || "No se pudo agregar la iniciativa",
+            "error",
+          );
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Error al agregar iniciativa:", error);
+        Swal.fire(
+          "Error",
+          "No se pudo agregar la iniciativa. Verifica que hayas seleccionado un Squad válido.",
+          "error",
+        );
       },
     });
     $("#modalAddIniciativa").modal("hide");
@@ -512,9 +611,9 @@ $("#actualizarHabiliSq").on("click", function () {
     }),
     success: function (data) {
       Swal.fire("¡Habilitador Actualizado!", "", "success");
-      let idIniciativa = $("#Hab_iniciativa option:selected").val();
-      let idInpreci = $("#habiliImpre option:selected").val();
-      let idCumpli = $("#habiliCumpli option:selected").val();
+      let idIniciativa = $("#Hab_iniciativa option:selected").val() || "0";
+      let idInpreci = $("#habiliImpre option:selected").val() || "All";
+      let idCumpli = $("#habiliCumpli option:selected").val() || "Aplica";
       renderDatatableHabi(idIniciativa + "/" + idInpreci + "/" + idCumpli);
       //tablaComando.ajax.reload(null, false);
     },
@@ -561,6 +660,9 @@ $("#Hab_iniciativa").on("change", function () {
 
   let iniciativa = $("#Hab_iniciativa option:selected").val();
 
+  // Guardar iniciativa seleccionada en localStorage
+  localStorage.setItem("selectedIniciativa", iniciativa);
+
   if (iniciativa == "0") {
     // let iniciativa = document.getElementById('habiliCumpli')
     // vulnerabilidadInf.innerHTML = '<option value="0">Seleccione...</option>';
@@ -575,12 +677,11 @@ $("#Hab_iniciativa").on("change", function () {
       .then(function (response) {
         return response.json();
       })
-      .then(function (data) {
-        let iniciativa_ = data.reverse();
-        let iniciaInf = document.getElementById("Hab_iniciativa");
-        if (iniciativa_ == "") {
-          iniciaInf.innerHTML = '<option value="0">Sellecione ...</option>';
+      .then(function (response) {
+        if (!response.success || !response.data || response.data.length === 0) {
+          console.log("No hay data de cumplimiento");
         } else {
+          let iniciativa_ = response.data.reverse();
           $(iniciativa_).each(function () {
             let option = $(document.createElement("option"));
             option.text(this.Nombre);
@@ -588,12 +689,39 @@ $("#Hab_iniciativa").on("change", function () {
             $("#habiliCumpli").append(option);
           });
         }
+      })
+      .catch(function (error) {
+        console.error("Error al cargar cumplimiento:", error);
       });
   }
 
-  let idIniciativa = $("#Hab_iniciativa option:selected").val();
-  let idInpreci = $("#habiliImpre option:selected").val();
-  let idCumpli = $("#habiliCumpli option:selected").val();
+  let idIniciativa = $("#Hab_iniciativa option:selected").val() || "0";
+  let idInpreci = $("#habiliImpre option:selected").val() || "All";
+  let idCumpli = $("#habiliCumpli option:selected").val() || "Aplica";
+
+  // Restaurar valores guardados si coincide la iniciativa
+  const savedIniciativa = localStorage.getItem("selectedIniciativa");
+  if (iniciativa === savedIniciativa) {
+    const savedImprescindible = localStorage.getItem("selectedImprescindible");
+    const savedCumplimiento = localStorage.getItem("selectedCumplimiento");
+
+    if (
+      savedImprescindible &&
+      $("#habiliImpre option[value='" + savedImprescindible + "']").length > 0
+    ) {
+      $("#habiliImpre").val(savedImprescindible);
+      idInpreci = savedImprescindible;
+    }
+
+    if (
+      savedCumplimiento &&
+      $("#habiliCumpli option[value='" + savedCumplimiento + "']").length > 0
+    ) {
+      $("#habiliCumpli").val(savedCumplimiento);
+      idCumpli = savedCumplimiento;
+    }
+  }
+
   renderDatatableHabi(idIniciativa + "/" + idInpreci + "/" + idCumpli);
   graficaHabil(idIniciativa);
   graficaHabilImpre(idIniciativa);
@@ -607,16 +735,20 @@ $("#Hab_iniciativa").on("change", function () {
 });
 
 $("#habiliImpre").on("change", function () {
-  let idIniciativa = $("#Hab_iniciativa option:selected").val();
-  let idInpreci = $("#habiliImpre option:selected").val();
-  let idCumpli = $("#habiliCumpli option:selected").val();
+  let idIniciativa = $("#Hab_iniciativa option:selected").val() || "0";
+  let idInpreci = $("#habiliImpre option:selected").val() || "All";
+  let idCumpli = $("#habiliCumpli option:selected").val() || "Aplica";
+  // Guardar en localStorage
+  localStorage.setItem("selectedImprescindible", idInpreci);
   renderDatatableHabi(idIniciativa + "/" + idInpreci + "/" + idCumpli);
 });
 
 $("#habiliCumpli").on("change", function () {
-  let idIniciativa = $("#Hab_iniciativa option:selected").val();
-  let idInpreci = $("#habiliImpre option:selected").val();
-  let idCumpli = $("#habiliCumpli option:selected").val();
+  let idIniciativa = $("#Hab_iniciativa option:selected").val() || "0";
+  let idInpreci = $("#habiliImpre option:selected").val() || "All";
+  let idCumpli = $("#habiliCumpli option:selected").val() || "Aplica";
+  // Guardar en localStorage
+  localStorage.setItem("selectedCumplimiento", idCumpli);
   renderDatatableHabi(idIniciativa + "/" + idInpreci + "/" + idCumpli);
 });
 
@@ -644,6 +776,8 @@ function selectElementContents(el) {
 }
 
 function graficaHabil(Id) {
+  // Validar que Id no esté vacío
+  Id = Id || "0";
   console.log(Id);
   let squad = $("#squadHabi option:selected").text();
   let iniciativa = $("#Hab_iniciativa option:selected").text();
@@ -691,7 +825,8 @@ function graficaHabil(Id) {
             point: {
               events: {
                 click: function () {
-                  let idIniciativa = $("#Hab_iniciativa option:selected").val();
+                  let idIniciativa =
+                    $("#Hab_iniciativa option:selected").val() || "0";
                   renderDatatableHabi(idIniciativa + "/All/" + this.name);
                   $("#habiliCumpli").val(this.name);
                   $("#habiliImpre").val("All");
@@ -747,12 +882,21 @@ function graficaHabil(Id) {
 }
 
 function graficaHabilImpre(Id) {
+  // Validar que Id no esté vacío
+  Id = Id || "0";
   let squad = $("#squadHabi option:selected").text();
   let iniciativa = $("#Hab_iniciativa option:selected").text();
   fetch(
     host +
       "/api/seguridad_def/controles_squad/grafica/lite/imprescindible/" +
       Id,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (localStorage.getItem("token") || ""),
+      },
+    },
   )
     .then(function (response) {
       return response.text();
@@ -791,7 +935,8 @@ function graficaHabilImpre(Id) {
             point: {
               events: {
                 click: function () {
-                  let idIniciativa = $("#Hab_iniciativa option:selected").val();
+                  let idIniciativa =
+                    $("#Hab_iniciativa option:selected").val() || "0";
                   renderDatatableHabi(idIniciativa + "/SI/" + this.name);
                   $("#habiliCumpli").val(this.name);
                   $("#habiliImpre").val("SI");
@@ -849,16 +994,16 @@ function graficaHabilImpre(Id) {
 }
 
 $(document).on("click", ".sub80", function () {
-  let idIniciativa = $("#Hab_iniciativa option:selected").val();
-  let idInpreci = $("#habiliImpre option:selected").val();
+  let idIniciativa = $("#Hab_iniciativa option:selected").val() || "0";
+  let idInpreci = $("#habiliImpre option:selected").val() || "All";
   renderDatatableHabi(idIniciativa + "/" + idInpreci + "/Aplica");
   $("#habiliImpre").val("All");
   $("#habiliCumpli").val("Aplica");
 });
 
 $(document).on("click", ".sub34", function () {
-  let idIniciativa = $("#Hab_iniciativa option:selected").val();
-  let idInpreci = $("#habiliImpre option:selected").val();
+  let idIniciativa = $("#Hab_iniciativa option:selected").val() || "0";
+  let idInpreci = $("#habiliImpre option:selected").val() || "All";
   renderDatatableHabi(idIniciativa + "/SI/Aplica");
   $("#habiliImpre").val("SI");
   $("#habiliCumpli").val("Aplica");
@@ -867,6 +1012,12 @@ $(document).on("click", ".sub34", function () {
 $(document).on("click", "#agregarIniciativa", function () {
   $("#modalAddIniciativa").modal("show");
   $("#formAddIniciativa").trigger("reset");
+
+  // Limpiar y resetear el select de squads
+  $("#mAiId_Squad").empty();
+  $("#mAiId_Squad").append(
+    '<option value="0">Seleccione un Squad ...</option>',
+  );
 
   fetch(host + "/api/seguridad_def/combo/squads", {
     method: "GET",
@@ -879,12 +1030,12 @@ $(document).on("click", "#agregarIniciativa", function () {
       return response.text();
     })
     .then(function (data) {
-      let vulnerabilidades = JSON.parse(data);
+      let response = JSON.parse(data);
 
-      if (vulnerabilidades == "") {
-        console.log("No hay data");
+      if (!response.success || !response.data || response.data.length === 0) {
+        console.log("No hay data de squads");
       } else {
-        $(vulnerabilidades).each(function () {
+        $(response.data).each(function () {
           let option = $(document.createElement("option"));
 
           option.text(this.NombrePrin);
@@ -892,10 +1043,15 @@ $(document).on("click", "#agregarIniciativa", function () {
           $("#mAiId_Squad").append(option);
         });
       }
+    })
+    .catch(function (error) {
+      console.error("Error al cargar squads para modal:", error);
     });
 });
 
 function tablaGrafi(Id) {
+  // Validar que Id no esté vacío
+  Id = Id || "0";
   let squad = $("#squadHabi option:selected").text();
   let iniciativa = $("#Hab_iniciativa option:selected").text();
   fetch(host + "/api/seguridad_def/combo/squads/iniciativa/tabla/" + Id, {
